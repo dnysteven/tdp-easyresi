@@ -1,12 +1,59 @@
 {% extends "base.html" %}
 
-{% block title %}Home - My Application{% endblock %}
+{% block title %}Easy Resi - Pathways to Permanent Residency{% endblock %}
 
 {% block content %}
-  <h1>Easy Resi homepage</h1>
-  <p>Click the train if you want to train the model. Click the test if you want to test the model.</p>
-  <ul>
-    <li><a href="/train">Train the Model</a></li>
-    <li><a href="/test">Test the Model</a></li>
-  </ul>
+<!-- Hero Section -->
+<section id="hero">
+  <div class="hero-content">
+    <h1>Find the Easiest Pathway to Permanent Residency in Australia</h1>
+    <p>Personalized guidance for skilled migrants.</p>
+    <a href="#services" class="cta-button">Explore Your Options</a>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about">
+  <div class="container">
+    <h2>About Easy Resi</h2>
+    <p>Easy Resi is a platform designed to help skilled migrants find the most efficient and effective pathway to permanent residency in Australia.</p>
+    <p>We provide personalized recommendations based on your profile, skills, and preferences.</p>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section id="services">
+  <div class="container">
+    <h2>Our Services</h2>
+    <div class="service-cards">
+      <div class="card">
+        <h3>Personalized PR Pathways</h3>
+        <p>We assess your profile and provide personalized recommendations for study-to-PR pathways.</p>
+      </div>
+      <div class="card">
+        <h3>Course Recommendations</h3>
+        <p>Get course and location recommendations optimized for the quickest PR pathway.</p>
+      </div>
+      <div class="card">
+          <h3>Cost and Duration Estimates</h3>
+          <p>We give detailed estimates of the cost and duration for your PR journey.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact">
+    <div class="container">
+        <h2>Get in touch</h2>
+        <p>If you have any questions, feel free to reach out to us. We're here to help you every step of the way.</p>
+        <form action="#" method="post">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <input type="phone" placeholder="Your Phone number" required>
+            <textarea placeholder="Your Message" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</section>
 {% endblock %}

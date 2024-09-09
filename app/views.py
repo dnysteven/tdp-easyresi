@@ -101,12 +101,11 @@ def register():
 	return render_template('registration.html', roles=roles)
 
 @main.route('/')
-@login_required
 def index():
 	return render_template('index.html')
 
 @main.route('/train', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def train():
 	if request.method == 'POST':
 		# Get user-provided settings from the form
@@ -128,7 +127,7 @@ def train():
 	return render_template('training.html', data_entries=data_entries)
 
 @main.route('/test', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def test():
 	if request.method == 'POST':
 		# Fetch form data
