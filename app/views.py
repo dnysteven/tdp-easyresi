@@ -1,16 +1,58 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
 from app.models import Data, User, UserRole, Login, db
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from app.controllers import train_model, predict_model
 
 main = Blueprint('main', __name__)
 
-@main.route('/')
-def index():
-	return render_template('index.html')
+# Secret key for user session management
+SECRET_KEY = 'tdp_easyresi_session'
+main.secret_key = SECRET_KEY
+
+@main.route('/login', methods=['GET', 'POST'])
+def login():
+	# Check if user is already logged in
+	if 'username' in session:
+		return redirect(url_for('main.index'))
+
+	if request.method == 'POST':
+		# Get username and password from the form
+		username = request.form.get('username')
+		password = request.form.get('password')
+
+		# Fetch user from the login table
+		user_login = Login.query.filter_by(username=username).first()
+
+		if user_login and check_password_hash(user_login.hashed_password, password):
+			# If the password matches, store user info in session and redirect to index
+			session['username'] = username
+			return redirect(url_for('main.index'))
+		else:
+			# Invalid credentials
+			message = "Invalid username or password"
+			return render_template('login.html', message=message)
+
+	return render_template('login.html')
+
+@main.route('/logout')
+def logout():
+	session.pop('username', None)
+	return redirect(url_for('main.login'))
+
+def login_required(f):
+	def wrap(*args, **kwargs):
+		if 'username' not in session:
+			return redirect(url_for('main.login'))
+		return f(*args, **kwargs)
+	wrap.__name__ = f.__name__
+	return wrap
 
 @main.route('/register', methods=['GET', 'POST'])
 def register():
+  # Check if user is already logged in
+	if 'username' in session:
+		return redirect(url_for('main.index'))
+  
 	if request.method == 'POST':
 		# Get form data
 		username = request.form.get('username')
@@ -58,7 +100,13 @@ def register():
 	roles = UserRole.query.all()
 	return render_template('registration.html', roles=roles)
 
+@main.route('/')
+@login_required
+def index():
+	return render_template('index.html')
+
 @main.route('/train', methods=['GET', 'POST'])
+@login_required
 def train():
 	if request.method == 'POST':
 		# Get user-provided settings from the form
@@ -80,6 +128,7 @@ def train():
 	return render_template('training.html', data_entries=data_entries)
 
 @main.route('/test', methods=['GET', 'POST'])
+@login_required
 def test():
 	if request.method == 'POST':
 		# Fetch form data
