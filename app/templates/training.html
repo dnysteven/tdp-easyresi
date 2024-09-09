@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Train the Decision Tree Model{% endblock %}
+
+{% block content %}
+  <h1>Train the Decision Tree Model</h1>    
+  <form action="/train" method="POST">
+    <label for="max_depth">Max Depth:</label>
+    <input type="number" id="max_depth" name="max_depth" min="1" required><br>
+    <label for="criterion">Criterion:</label>
+    <select id="criterion" name="criterion" required>
+      <option value="gini">Gini</option>
+      <option value="entropy">Entropy</option>
+    </select><br>
+    <label for="test_size">Test Size (0.1 to 0.5):</label>
+    <input type="number" step="0.01" id="test_size" name="test_size" min="0.1" max="0.5" value="0.2" required><br>
+    <button type="submit">Start Training</button>
+  </form>
+
+  {% if message %}
+    <h2>{{ message }}</h2>
+  {% endif %}
+
+  <h2>Data Table</h2>
+  <table border="1">
+    <tr>
+      <th>ID</th>
+      <th>Occupation Pathway</th>
+      <th>Location</th>
+      <th>Commitment Regional</th>
+      <th>State Nomination</th>
+      <th>Course Duration</th>
+      <th>Course Cost</th>
+      <th>Cost of Living</th>
+      <th>Visa Processing Time</th>
+      <th>Visa Cost</th>
+      <th>Approval Probability</th>
+      <th>Recommended Visa</th>
+    </tr>
+    {% for entry in data_entries %}
+    <tr>
+      <td>{{ entry.id }}</td>
+      <td>{{ entry.occupation_pathway }}</td>
+      <td>{{ entry.location }}</td>
+      <td>{{ entry.commitment_regional }}</td>
+      <td>{{ entry.state_nomination }}</td>
+      <td>{{ entry.course_duration }}</td>
+      <td>{{ entry.course_cost }}</td>
+      <td>{{ entry.cost_of_living }}</td>
+      <td>{{ entry.visa_processing_time }}</td>
+      <td>{{ entry.visa_cost }}</td>
+      <td>{{ entry.approval_probability }}</td>
+      <td>{{ entry.recommended_visa }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

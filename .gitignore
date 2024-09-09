@@ -1,0 +1,21 @@
+# Ignore Python compiled files
+*.pyc
+__pycache__/
+
+# Ignore virtual environment directories
+venv/
+env/
+
+# Ignore macOS hidden files
+.DS_Store
+
+# Ignore database files and secrets
+*.sqlite3
+*.db
+*.log
+
+# Ignore VSCode settings (optional)
+.vscode/
+
+# Ignore Jupyter Notebook checkpoints (if using notebooks)
+.ipynb_checkpoints/
