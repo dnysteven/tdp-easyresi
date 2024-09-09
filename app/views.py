@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, request
-from app.models import Data, db
+from flask import Blueprint, render_template, request, redirect, url_for
+from app.models import Data, User, UserRole, Login, db
+from werkzeug.security import generate_password_hash
 from app.controllers import train_model, predict_model
 
 main = Blueprint('main', __name__)
@@ -7,6 +8,55 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def index():
 	return render_template('index.html')
+
+@main.route('/register', methods=['GET', 'POST'])
+def register():
+	if request.method == 'POST':
+		# Get form data
+		username = request.form.get('username')
+		first_name = request.form.get('first_name')
+		last_name = request.form.get('last_name')
+		email = request.form.get('email')
+		phone = request.form.get('phone')
+		user_role = request.form.get('user_role')
+		password = request.form.get('password')
+
+		# Check if username already exists
+		existing_user = User.query.filter_by(username=username).first()
+		if existing_user:
+			message = "Username already exists. Please choose another one."
+			roles = UserRole.query.all()
+			return render_template('registration.html', message=message, roles=roles)
+
+		# Create a new user entry in the users table
+		new_user = User(
+			username=username,
+			first_name=first_name,
+			last_name=last_name,
+			email=email,
+			phone=phone,
+			user_role=user_role
+		)
+		db.session.add(new_user)
+
+		# Hash the password and save it to the login table
+		hashed_password = generate_password_hash(password)
+		new_login = Login(
+			username=username,
+			password=password,
+			hashed_password=hashed_password
+		)
+		db.session.add(new_login)
+
+		# Commit changes to the database
+		db.session.commit()
+
+		# Redirect to a success page or homepage after registration
+		return redirect(url_for('main.index'))
+
+	# Fetch user roles for the dropdown
+	roles = UserRole.query.all()
+	return render_template('registration.html', roles=roles)
 
 @main.route('/train', methods=['GET', 'POST'])
 def train():
@@ -46,9 +96,9 @@ def test():
 		
 		# Prepare data for prediction (same format as what the model expects)
 		features = [
-				occupation_pathway, location, commitment_regional, state_nomination, 
-				course_duration, course_cost, cost_of_living, visa_processing_time, 
-				visa_cost, approval_probability
+			occupation_pathway, location, commitment_regional, state_nomination, 
+			course_duration, course_cost, cost_of_living, visa_processing_time, 
+			visa_cost, approval_probability
 		]
 			
 		# Get the prediction from the model (recommended_visa)
