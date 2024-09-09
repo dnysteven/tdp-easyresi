@@ -16,17 +16,17 @@ class UserRole(db.Model):
 class User(db.Model):
 	__tablename__ = 'users'
 
-	username = db.Column(db.String(50), primary_key=True)
-	first_name = db.Column(db.String(50), nullable=False)
-	last_name = db.Column(db.String(50), nullable=False)
-	email = db.Column(db.String(100), nullable=False)
-	phone = db.Column(db.String(20), nullable=False)
-	user_role = db.Column(db.String(20), db.ForeignKey('user_role.user_role'), nullable=False)
+	username = db.Column(db.String(50), primary_key=True) # Username as primary key
+	first_name = db.Column(db.String(50), nullable=False) # User first name
+	last_name = db.Column(db.String(50), nullable=False) # User last name
+	email = db.Column(db.String(100), nullable=False) # User email
+	phone = db.Column(db.String(20), nullable=False) # User phone number
+	user_role = db.Column(db.String(20), db.ForeignKey('user_role.user_role'), nullable=False) # e.g., IT, Engineering, etc.
 
 	# Define relationship with UserRole
 	role = db.relationship('UserRole', backref='users')
 	
-	# Define relationship with login
+	# Define relationship with Login
 	login = db.relationship('Login', back_populates='user')
 
 	def __init__(self, username, first_name, last_name, email, phone, user_role):
@@ -45,7 +45,7 @@ class Login(db.Model):
 	password = db.Column(db.String(255), nullable=False)
 	hashed_password = db.Column(db.String(255), nullable=False)
 
-	# One-to-one relationship with the User model
+	# Define relationship with User
 	user = db.relationship('User', back_populates='login')
 
 	def __init__(self, username, password, hashed_password):
