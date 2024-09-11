@@ -81,3 +81,113 @@ def predict_model(features):
   # Make a prediction
   prediction = model.predict([features])
   return prediction[0]
+
+def visa_points_calculator(data):
+  points = 0
+  
+  # Age points (this example uses hypothetical ranges)
+  if 18 <= data['age'] <= 25:
+    points += 25
+  elif 26 <= data['age'] <= 32:
+    points += 30
+  elif 33 <= data['age'] <= 39:
+    points += 25
+  elif 40 <= data['age'] <= 44:
+    points += 15
+
+  # English language level points
+  if data['english_language'] == 'competent':
+    points += 10
+  elif data['english_language'] == 'proficient':
+    points += 20
+  elif data['english_language'] == 'superior':
+    points += 30
+
+  # Overseas skilled employment points
+  if data['overseas_employment'] >= 9:
+    points += 15
+  elif data['overseas_employment'] >= 6:
+    points += 10
+  elif data['overseas_employment'] >= 3:
+    points += 5
+
+  # Australian skilled employment points
+  if data['australian_employment'] >= 9:
+    points += 20
+  elif data['australian_employment'] >= 6:
+    points += 15
+  elif data['australian_employment'] >= 3:
+    points += 10
+
+  # Education level points
+  if data['education_level'] == 'doctorate':
+    points += 20
+  elif data['education_level'] == 'bachelors':
+    points += 15
+  elif data['education_level'] == 'diploma_trade':
+    points += 10
+  elif data['education_level'] == 'other_recognised':
+    points += 5
+
+  # Specialist education qualification points
+  if data['specialist_education'] == 'yes':
+    points += 10
+
+  # Australian study requirement points
+  if data['australian_study'] == 'yes':
+    points += 10
+
+  # Professional year in Australia points
+  if data['professional_year'] == 'yes':
+      points += 10
+
+  # Community language points
+  if data['community_language'] == 'yes':
+    points += 10
+
+  # Regional study points
+  if data['regional_study'] == 'yes':
+    points += 10
+
+  # Partner skills points
+  if data['partner_skills'] == 'age_eng_skill':
+    points += 10
+  elif data['partner_skills'] == 'comp_eng':
+    points += 5
+  elif data['partner_skills'] == 'single_citizen_pr':
+    points += 15
+  
+  # Calculate points for visa 189
+  visa_189_points = points
+  
+  # Check if eligible for visa 189
+  visa_189_eligible = visa_189_points >= 65
+
+  # State nomination points (for visa 190)
+  state_nomination_points = 0
+  if data['state_nomination'] == 'yes':
+      state_nomination_points = 5
+      points += 5
+  visa_190_points = visa_189_points + state_nomination_points  # Adding state nomination points
+
+  # Check if eligible for visa 190 (visa 189 points >= 65 AND state nomination > 0)
+  visa_190_eligible = visa_189_points >= 65 and state_nomination_points > 0
+
+  # Regional nomination points (for visa 491)
+  regional_nomination_points = 0
+  if data['regional_nomination'] == 'yes':
+      regional_nomination_points = 15
+      points += 15
+  visa_491_points = visa_189_points + regional_nomination_points  # Adding regional nomination points
+
+  # Check if eligible for visa 491 (visa 189 points >= 65 AND regional nomination > 0)
+  visa_491_eligible = visa_189_points >= 65 and regional_nomination_points > 0
+
+  return {
+    'visa_189_points': visa_189_points,
+    'visa_190_points': visa_190_points,
+    'visa_491_points': visa_491_points,
+    'visa_189_eligible': visa_189_eligible,
+    'visa_190_eligible': visa_190_eligible,
+    'visa_491_eligible': visa_491_eligible
+  }

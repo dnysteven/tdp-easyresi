@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Visa Eligibility Results{% endblock %}
+
+{% block content %}
+  <h1>Visa Eligibility Results</h1>
+
+  {% if visa_189_message %}
+  <section>
+    <h2>Visa Subclass 189</h2>
+    <p>{{ visa_189_message }}</p>
+  </section>
+  {% endif %}
+
+  {% if visa_190_message %}
+  <section>
+    <h2>Visa Subclass 190</h2>
+    <p>{{ visa_190_message }}</p>
+  </section>
+  {% endif %}
+
+  {% if visa_491_message %}
+  <section>
+    <h2>Visa Subclass 491</h2>
+    <p>{{ visa_491_message }}</p>
+  </section>
+  {% endif %}
+
+  <a href="{{ url_for('main.questionnaire') }}">Go Back to Questionnaire</a>
+{% endblock %}

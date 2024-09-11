@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Visa Points Form - My Application{% endblock %}
+
+{% block content %}
+  <h1>Calculate Your Visa Points</h1>    
+  <form action="/questionnaire" method="POST">
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" required><br>
+
+    <label for="english_language">English Language Level:</label>
+    <select id="english_language" name="english_language" required>
+			<option value="competent">Competent</option>
+			<option value="proficient">Proficient</option>
+			<option value="superior">Superior</option>
+    </select><br>
+
+    <label for="overseas_employment">Overseas Skilled Employment (years):</label>
+    <input type="number" id="overseas_employment" name="overseas_employment" required><br>
+
+    <label for="australian_employment">Australian Skilled Employment (years):</label>
+    <input type="number" id="australian_employment" name="australian_employment" required><br>
+
+    <label for="education_level">Educational Qualifications:</label>
+    <select id="education_level" name="education_level" required>
+			<option value="doctorate">Doctorate</option>
+			<option value="bachelors">Bachelor's Degree</option>
+			<option value="diploma_trade">Diploma or Trade Qualification</option>
+			<option value="other_recognised">Other Recognised Qualification</option>
+    </select><br>
+
+    <label for="specialist_education">Specialist Education Qualification:</label>
+    <select id="specialist_education" name="specialist_education" required>
+			<option value="yes">Yes</option>
+			<option value="no">No</option>
+    </select><br>
+
+    <label for="australian_study">Australian Study Requirement:</label>
+    <select id="australian_study" name="australian_study" required>
+			<option value="yes">Yes</option>
+			<option value="no">No</option>
+    </select><br>
+
+    <label for="professional_year">Professional Year in Australia:</label>
+    <select id="professional_year" name="professional_year" required>
+			<option value="yes">Yes</option>
+			<option value="no">No</option>
+    </select><br>
+
+    <label for="community_language">Community Language:</label>
+    <select id="community_language" name="community_language" required>
+			<option value="yes">Yes</option>
+			<option value="no">No</option>
+    </select><br>
+
+    <label for="regional_study">Regional Study:</label>
+    <select id="regional_study" name="regional_study" required>
+			<option value="yes">Yes</option>
+			<option value="no">No</option>
+    </select><br>
+		
+    <label for="partner_skills">Partner Skills:</label>
+    <select id="partner_skills" name="partner_skills" required>
+			<option value="age_eng_skill">Has age, English and skill criteria required</option>
+			<option value="comp_eng">Has competent English</option>
+			<option value="single_citizen_pr">You are single, or your partner is Australian citizen or permanent resident</option>
+    </select><br>
+
+		<label for="state_nomination">State Nomination:</label>
+		<select id="state_nomination" name="state_nomination" required>
+			<option value="yes">Yes</option>
+			<option value="no">No</option>
+		</select><br>
+
+		<label for="regional_nomination">Regional Nomination:</label>
+		<select id="regional_nomination" name="regional_nomination" required>
+			<option value="yes">Yes</option>
+			<option value="no">No</option>
+		</select><br>
+		
+    <button type="submit">Submit</button>
+  </form>
+  {% if message %}
+  <p>{{ message }}</p>
+  {% endif %}
+{% endblock %}

@@ -94,3 +94,32 @@ class ModelResult(db.Model):
 	def __init__(self, model_type, accuracy):
 		self.model_type = model_type
 		self.accuracy = accuracy
+  
+class VisaPoints(db.Model):
+    __tablename__ = 'visa_points'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    age = db.Column(db.Integer, nullable=False)
+    english_language = db.Column(db.String(20), nullable=False)
+    overseas_employment = db.Column(db.Integer, nullable=False)
+    australian_employment = db.Column(db.Integer, nullable=False)
+    education_level = db.Column(db.String(50), nullable=False)
+    specialist_education = db.Column(db.String(3), nullable=False)  # Yes or No
+    australian_study = db.Column(db.String(3), nullable=False)  # Yes or No
+    professional_year = db.Column(db.String(3), nullable=False)  # Yes or No
+    community_language = db.Column(db.String(3), nullable=False)  # Yes or No
+    regional_study = db.Column(db.String(3), nullable=False)  # Yes or No
+    partner_skills = db.Column(db.String(50), nullable=False)  # Age, English and Skill Criteria
+
+    def __init__(self, age, english_language, overseas_employment, australian_employment, education_level, specialist_education, australian_study, professional_year, community_language, regional_study, partner_skills):
+        self.age = age
+        self.english_language = english_language
+        self.overseas_employment = overseas_employment
+        self.australian_employment = australian_employment
+        self.education_level = education_level
+        self.specialist_education = specialist_education
+        self.australian_study = australian_study
+        self.professional_year = professional_year
+        self.community_language = community_language
+        self.regional_study = regional_study
+        self.partner_skills = partner_skills
