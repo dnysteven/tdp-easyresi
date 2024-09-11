@@ -58,16 +58,16 @@ CREATE TABLE model_result (
 
 -- Create the Visa_points table within the schema
 CREATE TABLE visa_points (
-    id SERIAL PRIMARY KEY,
-    age INTEGER NOT NULL,
-    english_language VARCHAR(20) NOT NULL,
-    overseas_employment INTEGER NOT NULL,
-    australian_employment INTEGER NOT NULL,
-    education_level VARCHAR(50) NOT NULL,
-    specialist_education VARCHAR(3) NOT NULL,  -- Yes or No
-    australian_study VARCHAR(3) NOT NULL,      -- Yes or No
-    professional_year VARCHAR(3) NOT NULL,     -- Yes or No
-    community_language VARCHAR(3) NOT NULL,    -- Yes or No
-    regional_study VARCHAR(3) NOT NULL,        -- Yes or No
-    partner_skills VARCHAR(50) NOT NULL        -- Has age/English/skills, competent English, or single/citizen/pr
+	id SERIAL PRIMARY KEY,
+	age INTEGER NOT NULL,
+	english_language VARCHAR(20) NOT NULL,
+	overseas_employment INTEGER NOT NULL,
+	australian_employment INTEGER NOT NULL,
+	education_level VARCHAR(50) NOT NULL,
+	specialist_education VARCHAR(3) NOT NULL,  -- Yes or No
+	australian_study VARCHAR(3) NOT NULL,      -- Yes or No
+	professional_year VARCHAR(3) NOT NULL,     -- Yes or No
+	community_language VARCHAR(3) NOT NULL,    -- Yes or No
+	regional_study VARCHAR(3) NOT NULL,        -- Yes or No
+	partner_skills VARCHAR(50) NOT NULL        -- Has age/English/skills, competent English, or single/citizen/pr
 );
