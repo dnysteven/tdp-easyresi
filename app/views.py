@@ -104,6 +104,10 @@ def register():
 def index():
 	return render_template('index.html')
 
+@main.route('/189', methods=['GET'])
+def visa_189():
+	return render_template('189.html')
+
 @main.route('/train', methods=['GET', 'POST'])
 # @login_required
 def train():
