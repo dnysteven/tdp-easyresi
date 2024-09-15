@@ -166,8 +166,8 @@ def visa_points_calculator(data):
   # State nomination points (for visa 190)
   state_nomination_points = 0
   if data['state_nomination'] == 'yes':
-      state_nomination_points = 5
-      points += 5
+    state_nomination_points = 5
+    points += 5
   visa_190_points = visa_189_points + state_nomination_points  # Adding state nomination points
 
   # Check if eligible for visa 190 (visa 189 points >= 65 AND state nomination > 0)
@@ -176,8 +176,8 @@ def visa_points_calculator(data):
   # Regional nomination points (for visa 491)
   regional_nomination_points = 0
   if data['regional_nomination'] == 'yes':
-      regional_nomination_points = 15
-      points += 15
+    regional_nomination_points = 15
+    points += 15
   visa_491_points = visa_189_points + regional_nomination_points  # Adding regional nomination points
 
   # Check if eligible for visa 491 (visa 189 points >= 65 AND regional nomination > 0)

@@ -101,12 +101,12 @@ def register():
 	return render_template('registration.html', roles=roles)
 
 @main.route('/')
-@login_required
+# @login_required
 def index():
 	return render_template('index.html')
 
 @main.route('/train', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def train():
 	if request.method == 'POST':
 		# Get user-provided settings from the form
@@ -128,7 +128,7 @@ def train():
 	return render_template('training.html', data_entries=data_entries)
 
 @main.route('/test', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def test():
 	if request.method == 'POST':
 		# Fetch form data
@@ -225,10 +225,10 @@ def visa_points():
 	visa_491_message = ""
 
 	if visa_189_eligible:
-		visa_189_message = f"You are eligible for Visa Subclass 189."
+		visa_189_message = f"You are eligible for Visa Subclass 189 with {visa_189_points} points."
 	if visa_190_eligible:
-		visa_190_message = f"You are eligible for Visa Subclass 190."
+		visa_190_message = f"You are eligible for Visa Subclass 190 with {visa_190_points} points."
 	if visa_491_eligible:
-		visa_491_message = f"You are eligible for Visa Subclass 491."
+		visa_491_message = f"You are eligible for Visa Subclass 491 with {visa_491_points} points."
 
 	return render_template('visa_points.html', visa_189_message=visa_189_message, visa_190_message=visa_190_message, visa_491_message=visa_491_message)
