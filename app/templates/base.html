@@ -11,12 +11,13 @@
   <header>
     <nav>
       <ul>
+        <li><a href="{{ url_for('main.index') }}">Home</a></li>
         {% if session.get('username') %}
-          <li><a href="/">Home</a></li>
-          <li><a href="/train">Train Model</a></li>
-          <li><a href="/test">Test Model</a></li>
-          <li><a href="/register">Register</a></li>
-          <li><a href="/logout">Logout</a></li>
+          <li><a href="{{ url_for('main.profile') }}">Profile</a></li>
+          <li><a href="{{ url_for('main.questionnaire') }}">Questionnaire</a></li>
+          <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
+        {% else %}
+          <li><a href="{{ url_for('main.login') }}">Login</a></li>
         {% endif %}
       </ul>
     </nav>

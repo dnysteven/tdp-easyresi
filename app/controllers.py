@@ -5,7 +5,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from app import db
-from app.models import Data, ModelResult
+from app.models import Data, ModelResult, VisaPoints
 
 # Define a path to store the model .pkl files in the ml folder
 MODEL_PATH = os.path.join(os.getcwd(), 'ml')
@@ -182,6 +182,33 @@ def visa_points_calculator(data):
 
   # Check if eligible for visa 491 (visa 189 points >= 65 AND regional nomination > 0)
   visa_491_eligible = visa_189_points >= 65 and regional_nomination_points > 0
+  
+  # Save to database with username
+  visa_points_entry = VisaPoints(
+    username=data['username'],
+    age=data['age'],
+    english_language=data['english_language'],
+    overseas_employment=data['overseas_employment'],
+    australian_employment=data['australian_employment'],
+    education_level=data['education_level'],
+    specialist_education=data['specialist_education'],
+    australian_study=data['australian_study'],
+    professional_year=data['professional_year'],
+    community_language=data['community_language'],
+    regional_study=data['regional_study'],
+    partner_skills=data['partner_skills'],
+    state_nomination=data['state_nomination'],
+    regional_nomination=data['regional_nomination'],
+    visa_189_points=visa_189_points,
+    visa_190_points=visa_190_points,
+    visa_491_points=visa_491_points,
+    visa_189_eligible=visa_189_eligible,
+    visa_190_eligible=visa_190_eligible,
+    visa_491_eligible=visa_491_eligible,
+  )
+
+  db.session.add(visa_points_entry)
+  db.session.commit()
 
   return {
     'visa_189_points': visa_189_points,

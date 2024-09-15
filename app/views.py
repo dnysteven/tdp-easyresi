@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
-from app.models import Data, User, UserRole, Login , db
+from app.models import Data, db, User, UserRole, Login, VisaPoints
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.controllers import train_model, predict_model, visa_points_calculator
 
@@ -101,7 +101,6 @@ def register():
 	return render_template('registration.html', roles=roles)
 
 @main.route('/')
-# @login_required
 def index():
 	return render_template('index.html')
 
@@ -176,9 +175,14 @@ def test():
 	return render_template('test.html')
 
 @main.route('/questionnaire', methods=['GET', 'POST'])
+@login_required
 def questionnaire():
-	if request.method == 'POST':
-		form = {
+  if 'username' not in session: 
+    return redirect(url_for('main.login'))
+  
+  if request.method == 'POST':
+    form = {
+      'username': session['username'],
 			'age': int(request.form.get('age')),
 			'english_language': request.form.get('english_language'),
 			'overseas_employment': int(request.form.get('overseas_employment')),
@@ -193,42 +197,59 @@ def questionnaire():
 			'state_nomination': request.form.get('state_nomination'),
 			'regional_nomination': request.form.get('regional_nomination')
 		}
-
-		result = visa_points_calculator(form)
+    
+    result = visa_points_calculator(form)
+    
+    session['visa_189_points'] = result['visa_189_points']
+    session['visa_190_points'] = result['visa_190_points']
+    session['visa_491_points'] = result['visa_491_points']
+    session['visa_189_eligible'] = result['visa_189_eligible']
+    session['visa_190_eligible'] = result['visa_190_eligible']
+    session['visa_491_eligible'] = result['visa_491_eligible']
+    session['completed_questionnaire'] = True  # Mark the form as completed
+    return redirect(url_for('main.visa_points'))
   
-		session['visa_189_points'] = result['visa_189_points']
-		session['visa_190_points'] = result['visa_190_points']
-		session['visa_491_points'] = result['visa_491_points']
-		session['visa_189_eligible'] = result['visa_189_eligible']
-		session['visa_190_eligible'] = result['visa_190_eligible']
-		session['visa_491_eligible'] = result['visa_491_eligible']
-		session['completed_questionnaire'] = True  # Mark the form as completed
-  
-		return redirect(url_for('main.visa_points'))
-
-	return render_template('questionnaire.html')
+  return render_template('questionnaire.html')
 
 @main.route('/visa_points', methods=['GET'])
+@login_required
 def visa_points():
-	if not session.get('completed_questionnaire'):
-		return redirect(url_for('main.questionnaire'))  # Redirect if questionnaire not completed
+  if 'username' not in session: 
+    return redirect(url_for('main.login'))
+  
+  if not session.get('completed_questionnaire'):
+    return redirect(url_for('main.questionnaire'))  # Redirect if questionnaire not completed
+  
+  visa_189_points = session.get('visa_189_points')
+  visa_190_points = session.get('visa_190_points')
+  visa_491_points = session.get('visa_491_points')
+  visa_189_eligible = session.get('visa_189_eligible')
+  visa_190_eligible = session.get('visa_190_eligible')
+  visa_491_eligible = session.get('visa_491_eligible')
+  
+  visa_189_message = ""
+  visa_190_message = ""
+  visa_491_message = ""
+  
+  if visa_189_eligible:
+    visa_189_message = f"You are eligible for Visa Subclass 189 with {visa_189_points} points."
+  if visa_190_eligible:
+    visa_190_message = f"You are eligible for Visa Subclass 189 with {visa_190_points} points."
+  if visa_491_eligible:
+    visa_491_message = f"You are eligible for Visa Subclass 189 with {visa_491_points} points."
+    
+  return render_template('visa_points.html', visa_189_message=visa_189_message, visa_190_message=visa_190_message, visa_491_message=visa_491_message)
 
-	visa_189_points = session.get('visa_189_points')
-	visa_190_points = session.get('visa_190_points')
-	visa_491_points = session.get('visa_491_points')
-	visa_189_eligible = session.get('visa_189_eligible')
-	visa_190_eligible = session.get('visa_190_eligible')
-	visa_491_eligible = session.get('visa_491_eligible')
+@main.route('/profile')
+def profile():
+	if 'username' not in session:
+		return redirect(url_for('main.login'))
 
-	visa_189_message = ""
-	visa_190_message = ""
-	visa_491_message = ""
+	# Get the username from the session
+	username = session['username']
+	user = User.query.filter_by(username=username).first()
 
-	if visa_189_eligible:
-		visa_189_message = f"You are eligible for Visa Subclass 189 with {visa_189_points} points."
-	if visa_190_eligible:
-		visa_190_message = f"You are eligible for Visa Subclass 190 with {visa_190_points} points."
-	if visa_491_eligible:
-		visa_491_message = f"You are eligible for Visa Subclass 491 with {visa_491_points} points."
+	# Retrieve visa points data based on the logged-in user
+	visa_points = VisaPoints.query.filter_by(username=username).all()
 
-	return render_template('visa_points.html', visa_189_message=visa_189_message, visa_190_message=visa_190_message, visa_491_message=visa_491_message)
+	return render_template('profile.html', user=user, visa_points=visa_points)

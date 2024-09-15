@@ -56,18 +56,30 @@ CREATE TABLE model_result (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Timestamp when the model was trained
 );
 
--- Create the Visa_points table within the schema
+-- Create visa_points table within the schema
 CREATE TABLE visa_points (
 	id SERIAL PRIMARY KEY,
+	username VARCHAR(50) NOT NULL,
 	age INTEGER NOT NULL,
-	english_language VARCHAR(20) NOT NULL,
+	english_language VARCHAR(50) NOT NULL,
 	overseas_employment INTEGER NOT NULL,
 	australian_employment INTEGER NOT NULL,
 	education_level VARCHAR(50) NOT NULL,
-	specialist_education VARCHAR(3) NOT NULL,  -- Yes or No
-	australian_study VARCHAR(3) NOT NULL,      -- Yes or No
-	professional_year VARCHAR(3) NOT NULL,     -- Yes or No
-	community_language VARCHAR(3) NOT NULL,    -- Yes or No
-	regional_study VARCHAR(3) NOT NULL,        -- Yes or No
-	partner_skills VARCHAR(50) NOT NULL        -- Has age/English/skills, competent English, or single/citizen/pr
+	specialist_education VARCHAR(10) NOT NULL,
+	australian_study VARCHAR(10) NOT NULL,
+	professional_year VARCHAR(10) NOT NULL,
+	community_language VARCHAR(10) NOT NULL,
+	regional_study VARCHAR(10) NOT NULL,
+	partner_skills VARCHAR(50) NOT NULL,
+	state_nomination VARCHAR(10) NOT NULL,
+	regional_nomination VARCHAR(10) NOT NULL,
+	visa_189_points INTEGER NOT NULL,
+	visa_190_points INTEGER NOT NULL,
+	visa_491_points INTEGER NOT NULL,
+	visa_189_eligible BOOLEAN NOT NULL,
+	visa_190_eligible BOOLEAN NOT NULL,
+	visa_491_eligible BOOLEAN NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT fk_username FOREIGN KEY (username)
+		REFERENCES users (username)
 );
