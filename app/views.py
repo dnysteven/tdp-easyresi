@@ -105,7 +105,7 @@ def index():
 	return render_template('index.html')
 
 @main.route('/train', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def train():
 	if request.method == 'POST':
 		# Get user-provided settings from the form
@@ -127,7 +127,7 @@ def train():
 	return render_template('training.html', data_entries=data_entries)
 
 @main.route('/test', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def test():
 	if request.method == 'POST':
 		# Fetch form data
@@ -177,9 +177,6 @@ def test():
 @main.route('/questionnaire', methods=['GET', 'POST'])
 @login_required
 def questionnaire():
-  if 'username' not in session: 
-    return redirect(url_for('main.login'))
-  
   if request.method == 'POST':
     form = {
       'username': session['username'],
@@ -214,9 +211,6 @@ def questionnaire():
 @main.route('/visa_points', methods=['GET'])
 @login_required
 def visa_points():
-  if 'username' not in session: 
-    return redirect(url_for('main.login'))
-  
   if not session.get('completed_questionnaire'):
     return redirect(url_for('main.questionnaire'))  # Redirect if questionnaire not completed
   
@@ -241,11 +235,9 @@ def visa_points():
   return render_template('visa_points.html', visa_189_message=visa_189_message, visa_190_message=visa_190_message, visa_491_message=visa_491_message)
 
 @main.route('/profile')
+@login_required
 def profile():
-	if 'username' not in session:
-		return redirect(url_for('main.login'))
-
-	# Get the username from the session
+	# Retrieve user data from database
 	username = session['username']
 	user = User.query.filter_by(username=username).first()
 
