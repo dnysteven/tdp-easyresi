@@ -4,11 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}My Application{% endblock %}</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='styles.css') }}"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"/>
+    {% block head %}{% endblock %}
   </head>
   <body>
     <!-- Common Header -->
@@ -17,25 +14,16 @@
         <ul>
           <li><a href="{{ url_for('main.index') }}">Home</a></li>
           {% if session.get('username') %}
-          <li><a href="{{ url_for('main.profile') }}">Profile</a></li>
-          <li>
-            <a href="{{ url_for('main.questionnaire') }}">Questionnaire</a>
-          </li>
-          <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
+            <li><a href="{{ url_for('main.profile') }}">Profile</a></li>
+            <li><a href="{{ url_for('main.questionnaire') }}">Questionnaire</a></li>
+            <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
           {% else %}
-          <li><a href="{{ url_for('main.login') }}">Login</a></li>
-<<<<<<< HEAD
+            <li><a href="{{ url_for('main.login') }}">Login</a></li>
+            <li><a href="{{ url_for('main.register') }}">Register</a></li>
           {% endif %}
         </ul>
       </nav>
     </header>
-=======
-          <li><a href="{{ url_for('main.register') }}">Register</a></li>
-        {% endif %}
-      </ul>
-    </nav>
-  </header>
->>>>>>> a8bbbbf97412cc5deef8b2dec441d22659b5e995
 
     <!-- Main Content Block -->
     <main>
