@@ -245,3 +245,24 @@ def profile():
 	visa_points = VisaPoints.query.filter_by(username=username).all()
 
 	return render_template('profile.html', user=user, visa_points=visa_points)
+
+@main.route('/dashboard')
+def chart():
+    # Process the data for both Pie and Bar charts
+    # You can replace this data with actual database data or processed information
+
+    # Pie Chart Data
+    pie_labels = ['Eligible', 'Not Eligible']
+    pie_values = [70, 30]
+
+    # Bar Chart Data
+    bar_labels = ['January', 'February', 'March', 'April', 'May']
+    bar_values_category_A = [12, 19, 3, 5, 2]
+    bar_values_category_B = [14, 16, 4, 7, 3]
+    bar_values_category_C = [10, 14, 8, 6, 4]
+
+    # Pass the data to the HTML template
+    return render_template('dashboard.html', pie_labels=pie_labels, pie_values=pie_values, bar_labels=bar_labels,
+                           bar_values_A=bar_values_category_A,
+                           bar_values_B=bar_values_category_B,
+                           bar_values_C=bar_values_category_C)

@@ -1,40 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}My Application{% endblock %}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-  <!-- Common Header -->
-  <header>
-    <nav>
-      <ul>
-        <li><a href="{{ url_for('main.index') }}">Home</a></li>
-        {% if session.get('username') %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}My Application{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <!-- Common Header -->
+    <header>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('main.index') }}">Home</a></li>
+          {% if session.get('username') %}
           <li><a href="{{ url_for('main.profile') }}">Profile</a></li>
-          <li><a href="{{ url_for('main.questionnaire') }}">Questionnaire</a></li>
+          <li>
+            <a href="{{ url_for('main.questionnaire') }}">Questionnaire</a>
+          </li>
           <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
-        {% else %}
+          {% else %}
           <li><a href="{{ url_for('main.login') }}">Login</a></li>
-        {% endif %}
-      </ul>
-    </nav>
-  </header>
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
 
-  <!-- Main Content Block -->
-  <main>
-    {% block content %}
-    <!-- Content will be injected here -->
-    {% endblock %}
-  </main>
+    <!-- Main Content Block -->
+    <main>
+      {% block content %}
+      <!-- Content will be injected here -->
+      {% endblock %}
+    </main>
 
-  <!-- Common Footer -->
-  <!--
+    <!-- Common Footer -->
+    <!--
   <footer>
     <p>&copy; Easy Resi Project</p>
   </footer>
-  -->
-</body>
+  --></body>
 </html>
