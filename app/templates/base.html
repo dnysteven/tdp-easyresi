@@ -16,6 +16,7 @@
           {% if session.get('username') %}
             <li><a href="{{ url_for('main.profile') }}">Profile</a></li>
             <li><a href="{{ url_for('main.questionnaire') }}">Questionnaire</a></li>
+            <li><a href="{{ url_for('main.dashboard') }}">Dashboard</a></li>
             <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
           {% else %}
             <li><a href="{{ url_for('main.login') }}">Login</a></li>

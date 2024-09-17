@@ -4,6 +4,7 @@ import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from datetime import datetime
 from app import db
 from app.models import Data, ModelResult, VisaPoints
 
@@ -218,3 +219,12 @@ def visa_points_calculator(data):
     'visa_190_eligible': visa_190_eligible,
     'visa_491_eligible': visa_491_eligible
   }
+
+def calculate_age(request):
+  date_of_birth_str = request.form.get('date_of_birth')
+  date_of_birth = datetime.strptime(date_of_birth_str, '%Y-%m-%d')
+  
+  today = datetime.today()
+  age = today.year - date_of_birth.year - ((today.month, today.day) < (date_of_birth.month, date_of_birth.day))
+  
+  return date_of_birth, age
