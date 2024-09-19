@@ -1,7 +1,7 @@
 Flask                 # Flask for the web framework
-Flask-SQLAlchemy       # Flask-SQLAlchemy for ORM
-psycopg2-binary        # Use psycopg2-binary for PostgreSQL on Windows
-scikit-learn           # scikit-learn for machine learning
-pandas                 # pandas for data manipulation
-joblib                 # joblib for saving/loading ML models
+Flask-SQLAlchemy      # Flask-SQLAlchemy for ORM
+psycopg2-binary       # Use psycopg2-binary for PostgreSQL on Windows
+scikit-learn          # scikit-learn for machine learning
+pandas                # pandas for data manipulation
+joblib                # joblib for saving/loading ML models
 SQLAlchemy            # SQLAlchemy for database operations
