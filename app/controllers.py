@@ -228,3 +228,25 @@ def calculate_age(request):
   age = today.year - date_of_birth.year - ((today.month, today.day) < (date_of_birth.month, date_of_birth.day))
   
   return date_of_birth, age
+
+def process_visa_path(data):
+  # Extract data from form submission
+  educational_qualification = data.get('educational_qualification')
+  specialist_education = data.get('specialist_education')
+  professional_year = data.get('professional_year')
+  study_work_regional = data.get('study_work_regional')
+  course_duration = data.get('course_duration')
+  course_fees = data.get('course_fees')
+  location = data.get('location')
+
+  # Process the data here (e.g., save to database or perform calculations)
+  # You can perform any necessary processing or validation here.
+  
+  # Example: Log the form data (replace this with your actual logic)
+  print(f"Educational Qualification: {educational_qualification}")
+  print(f"Specialist Education: {specialist_education}")
+  print(f"Professional Year: {professional_year}")
+  print(f"Study and Work in Regional Australia: {study_work_regional}")
+  print(f"Course Duration: {course_duration} years")
+  print(f"Maximum Course Fees: {course_fees}")
+  print(f"Location: {location}")

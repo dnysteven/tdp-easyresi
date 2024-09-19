@@ -217,25 +217,29 @@ def visa_points():
   if not session.get('completed_questionnaire'):
     return redirect(url_for('main.questionnaire'))  # Redirect if questionnaire not completed
   
-  visa_189_points = session.get('visa_189_points')
-  visa_190_points = session.get('visa_190_points')
-  visa_491_points = session.get('visa_491_points')
-  visa_189_eligible = session.get('visa_189_eligible')
-  visa_190_eligible = session.get('visa_190_eligible')
-  visa_491_eligible = session.get('visa_491_eligible')
+  # visa_189_points = session.get('visa_189_points')
+  # visa_190_points = session.get('visa_190_points')
+  # visa_491_points = session.get('visa_491_points')
+  visa_189_eligible = session.get('visa_189_eligible', False)
+  visa_190_eligible = session.get('visa_190_eligible', False)
+  visa_491_eligible = session.get('visa_491_eligible', False)
   
-  visa_189_message = ""
-  visa_190_message = ""
-  visa_491_message = ""
-  
-  if visa_189_eligible:
-    visa_189_message = f"You are eligible for Visa Subclass 189 with {visa_189_points} points."
-  if visa_190_eligible:
-    visa_190_message = f"You are eligible for Visa Subclass 189 with {visa_190_points} points."
-  if visa_491_eligible:
-    visa_491_message = f"You are eligible for Visa Subclass 189 with {visa_491_points} points."
+  if not visa_189_eligible and not visa_190_eligible and not visa_491_eligible:
+    session['eligible_for_path_to_visa'] = True
     
-  return render_template('visa_points.html', visa_189_message=visa_189_message, visa_190_message=visa_190_message, visa_491_message=visa_491_message)
+  return render_template('visa_points.html', visa_189_eligible=visa_189_eligible, visa_190_eligible=visa_190_eligible, visa_491_eligible=visa_491_eligible)
+
+@main.route('/path_to_visa')
+@login_required
+def path_to_visa():
+	# Check if the user has accessed visa_points and is eligible for the Path to Visa page
+	if not session.get('eligible_for_path_to_visa'):
+		return redirect(url_for('main.index'))
+
+	# Remove session flag after accessing the page to prevent further direct access
+	session.pop('eligible_for_path_to_visa', None)
+
+	return render_template('path_to_visa.html')
 
 @main.route('/profile', methods=['GET'])
 @login_required
@@ -252,8 +256,6 @@ def profile():
 @main.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
 	# Process the data for both Pie and Bar charts
-	# You can replace this data with actual database data or processed information
-
 	# Pie Chart Data
 	pie_labels = ['Eligible', 'Not Eligible']
 	pie_values = [70, 30]
