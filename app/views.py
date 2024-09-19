@@ -237,11 +237,11 @@ def visa_points():
 @login_required
 def path_to_visa():
 	# Check if the user has accessed visa_points and is eligible for the Path to Visa page
-	if not session.get('eligible_for_path_to_visa'):
-		return redirect(url_for('main.index'))
+	#if not session.get('eligible_for_path_to_visa'):
+		#return redirect(url_for('main.index'))
 
 	# Remove session flag after accessing the page to prevent further direct access
-	session.pop('eligible_for_path_to_visa', None)
+	#session.pop('eligible_for_path_to_visa', None)
 
 	return render_template('path_to_visa.html')
 
@@ -271,4 +271,6 @@ def dashboard():
 	bar_values_category_C = [10, 14, 8, 6, 4]
 
 	# Pass the data to the HTML template
-	return render_template('dashboard.html', pie_labels=pie_labels, pie_values=pie_values, bar_labels=bar_labels, bar_values_A=bar_values_category_A, bar_values_B=bar_values_category_B, bar_values_C=bar_values_category_C)
+	return render_template('dashboard.html', pie_labels=pie_labels, pie_values=pie_values,
+                        bar_labels=bar_labels, bar_values_A=bar_values_category_A,
+                        bar_values_B=bar_values_category_B, bar_values_C=bar_values_category_C)
