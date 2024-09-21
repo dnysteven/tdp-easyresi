@@ -83,3 +83,49 @@ CREATE TABLE visa_points (
 	CONSTRAINT fk_username FOREIGN KEY (username)
 		REFERENCES users (username)
 );
+
+-- Create university table with id as primary key
+CREATE TABLE university (
+	id SERIAL PRIMARY KEY,
+	university VARCHAR(100) NOT NULL,
+	street VARCHAR(100),
+	suburb VARCHAR(100) NOT NULL,
+	state CHAR(3) NOT NULL,
+	postcode CHAR(4) NOT NULL,
+	phone VARCHAR(15) NOT NULL,
+	email VARCHAR(100) NOT NULL
+);
+
+-- Create uni_course table
+CREATE TABLE uni_course (
+	id SERIAL PRIMARY KEY,
+	course_num VARCHAR(50) NOT NULL,
+	course_name VARCHAR(100) NOT NULL,
+	provider_id VARCHAR(50) NOT NULL,
+	univ_id INTEGER NOT NULL,
+	level VARCHAR(50) NOT NULL,
+	specialist BOOLEAN NOT NULL,
+	prof_year BOOLEAN NOT NULL,
+	duration INTEGER NOT NULL,
+	tuition_fee DECIMAL(10, 2) NOT NULL,
+	regional BOOLEAN NOT NULL,
+	CONSTRAINT fk_provider FOREIGN KEY (provider_id) REFERENCES users (username),
+	CONSTRAINT fk_univ FOREIGN KEY (univ_id) REFERENCES university (id)
+);
+
+-- Update user_course_pref table (add created_at field)
+CREATE TABLE user_course_pref (
+	id SERIAL PRIMARY KEY,
+	username VARCHAR(50) NOT NULL,
+	course_num VARCHAR(50) NOT NULL,
+	course_name VARCHAR(100) NOT NULL,
+	provider_name VARCHAR(100) NOT NULL,
+	university_name VARCHAR(100) NOT NULL,
+	university_address VARCHAR(255) NOT NULL,
+	state VARCHAR(3) NOT NULL,
+	postcode CHAR(4) NOT NULL,
+	duration INTEGER NOT NULL,
+	tuition_fee DECIMAL(10, 2) NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT fk_user_course FOREIGN KEY (username) REFERENCES users (username)
+);

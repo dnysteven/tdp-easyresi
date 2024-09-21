@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Course Recommendation{% endblock %}
+
+{% block content %}
+  <h1>Recommended Courses</h1>
+
+  {% if recommended_courses %}
+    <form method="POST" action="{{ url_for('main.save_courses') }}">
+      <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Course Num</th>
+            <th>Course Name</th>
+            <th>Provider</th>
+            <th>University</th>
+            <th>Address</th>
+            <th>State</th>
+            <th>Postcode</th>
+            <th>Duration (Years)</th>
+            <th>Tuition Fee (AUD)</th>
+            <th>Points</th>
+            <th>Save Option</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for course in recommended_courses %}
+            <tr>
+              <td>{{ course.course_num }}</td>
+              <td>{{ course.course_name }}</td>
+              <td>{{ course.provider.first_name }} {{ course.provider.last_name }}</td>
+              <td>{{ course.university.university }}</td>
+              <td>{{ course.university.street }}, {{ course.university.suburb }}</td>
+              <td>{{ course.university.state }}</td>
+              <td>{{ course.university.postcode }}</td>
+              <td>{{ course.duration }}</td>
+              <td>{{ course.tuition_fee }}</td>
+              <td>{{ course.points }}</td>
+              <td>
+                <input type="checkbox" name="save_courses" value="{{ course.id }}">
+                <input type="hidden" name="course_num_{{ course.id }}" value="{{ course.course_num }}">
+                <input type="hidden" name="course_name_{{ course.id }}" value="{{ course.course_name }}">
+                <input type="hidden" name="provider_name_{{ course.id }}" value="{{ course.provider.first_name }} {{ course.provider.last_name }}">
+                <input type="hidden" name="university_name_{{ course.id }}" value="{{ course.university.university }}">
+                <input type="hidden" name="university_address_{{ course.id }}" value="{{ course.university.street }}, {{ course.university.suburb }}">
+                <input type="hidden" name="state_{{ course.id }}" value="{{ course.university.state }}">
+                <input type="hidden" name="postcode_{{ course.id }}" value="{{ course.university.postcode }}">
+                <input type="hidden" name="duration_{{ course.id }}" value="{{ course.duration }}">
+                <input type="hidden" name="tuition_fee_{{ course.id }}" value="{{ course.tuition_fee }}">
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <input type="submit" value="Save Selected Courses">
+    </form>
+  {% else %}
+    <p>No courses matched your criteria.</p>
+  {% endif %}
+{% endblock %}

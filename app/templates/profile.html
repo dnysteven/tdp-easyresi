@@ -7,54 +7,40 @@
   <p><strong>Welcome, {{ user.first_name }} {{ user.last_name }}!</strong></p>
 
   <h2>Visa Points Details</h2>
-  {% if visa_points %}
-    <table>
+  {% if user_courses %}
+    <table border="1" cellpadding="5" cellspacing="0">
       <thead>
         <tr>
-          <th>Created At</th>
-          <th>Age</th>
-          <th>English Language</th>
-          <th>Overseas Employment</th>
-          <th>Australian Employment</th>
-          <th>Education Level</th>
-          <th>Specialist Education</th>
-          <th>Australian Study</th>
-          <th>Professional Year</th>
-          <th>Community Language</th>
-          <th>Regional Study</th>
-          <th>Partner Skills</th>
-          <th>State Nomination</th>
-          <th>Regional Nomination</th>
-          <th>Visa 189 Eligibility</th>
-          <th>Visa 190 Eligibility</th>
-          <th>Visa 491 Eligibility</th>
+          <th>Course Num</th>
+          <th>Course Name</th>
+          <th>Provider Name</th>
+          <th>University Name</th>
+          <th>University Address</th>
+          <th>State</th>
+          <th>Postcode</th>
+          <th>Duration (Years)</th>
+          <th>Tuition Fee (AUD)</th>
+          <th>Date Saved</th>
         </tr>
       </thead>
       <tbody>
-        {% for vp in visa_points %}
+        {% for course in user_courses %}
           <tr>
-            <td>{{ vp.created_at.strftime('%m/%d/%Y %H:%M:%S') }}</td>
-            <td>{{ vp.age }}</td>
-            <td>{{ vp.english_language|capitalize }}</td>
-            <td>{{ vp.overseas_employment }} Years</td>
-            <td>{{ vp.australian_employment }} Years</td>
-            <td>{{ vp.education_level|capitalize }}</td>
-            <td>{{ vp.specialist_education|capitalize }}</td>
-            <td>{{ vp.australian_study|capitalize }}</td>
-            <td>{{ vp.professional_year|capitalize }}</td>
-            <td>{{ vp.community_language|capitalize }}</td>
-            <td>{{ vp.regional_study|capitalize }}</td>
-            <td>{{ vp.partner_skills|capitalize }}</td>
-            <td>{{ vp.state_nomination|capitalize }}</td>
-            <td>{{ vp.regional_nomination|capitalize }}</td>
-            <td>{{ 'Eligible' if vp.visa_189_eligible else 'Not Eligible' }}</td>
-            <td>{{ 'Eligible' if vp.visa_190_eligible else 'Not Eligible' }}</td>
-            <td>{{ 'Eligible' if vp.visa_491_eligible else 'Not Eligible' }}</td>
+            <td>{{ course.course_num }}</td>
+            <td>{{ course.course_name }}</td>
+            <td>{{ course.provider_name }}</td>
+            <td>{{ course.university_name }}</td>
+            <td>{{ course.university_address }}</td>
+            <td>{{ course.state }}</td>
+            <td>{{ course.postcode }}</td>
+            <td>{{ course.duration }}</td>
+            <td>{{ course.tuition_fee }}</td>
+            <td>{{ course.created_at.strftime('%m/%d/%Y %H:%M:%S') }}</td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
   {% else %}
-    <p>No visa points data found for this user.</p>
+    <p>No course preferences saved yet.</p>
   {% endif %}
 {% endblock %}

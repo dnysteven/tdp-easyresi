@@ -29,6 +29,9 @@ class User(db.Model):
 	
 	# Define relationship with Login
 	login = db.relationship('Login', back_populates='user')
+	
+	# Relationship with UniCourse
+	courses = db.relationship('UniCourse', backref='provider', lazy=True)
 
 	def __init__(self, username, first_name, last_name, email, phone, user_role):
 		self.username = username
@@ -145,3 +148,82 @@ class VisaPoints(db.Model):
 		self.visa_189_eligible = visa_189_eligible
 		self.visa_190_eligible = visa_190_eligible
 		self.visa_491_eligible = visa_491_eligible
+  
+class University(db.Model):
+	__tablename__ = 'university'
+
+	id = db.Column(db.Integer, primary_key=True)
+	university = db.Column(db.String(100), nullable=False)
+	street = db.Column(db.String(100), nullable=True)
+	suburb = db.Column(db.String(100), nullable=False)
+	state = db.Column(db.String(3), nullable=False)
+	postcode = db.Column(db.String(4), nullable=False)
+	phone = db.Column(db.String(15), nullable=False)
+	email = db.Column(db.String(100), nullable=False)
+
+	# Relationship with UniCourse
+	courses = db.relationship('UniCourse', backref='university', lazy=True)
+
+	def __init__(self, university, street, suburb, state, postcode, phone, email):
+		self.university = university
+		self.street = street
+		self.suburb = suburb
+		self.state = state
+		self.postcode = postcode
+		self.phone = phone
+		self.email = email
+  
+class UniCourse(db.Model):
+	__tablename__ = 'uni_course'
+	
+	id = db.Column(db.Integer, primary_key=True)
+	course_num = db.Column(db.String(50), nullable=False)
+	course_name = db.Column(db.String(100), nullable=False)
+	provider_id = db.Column(db.String(50), db.ForeignKey('users.username'), nullable=False)
+	univ_id = db.Column(db.Integer, db.ForeignKey('university.id'), nullable=False)
+	level = db.Column(db.String(50), nullable=False)
+	specialist = db.Column(db.Boolean, nullable=False)
+	prof_year = db.Column(db.Boolean, nullable=False)
+	duration = db.Column(db.Integer, nullable=False)
+	tuition_fee = db.Column(db.Numeric(10, 2), nullable=False)
+	regional = db.Column(db.Boolean, nullable=False)
+
+	def __init__(self, course_num, course_name, provider_id, univ_id, level, specialist, prof_year, duration, tuition_fee, regional):
+		self.course_num = course_num
+		self.course_name = course_name
+		self.provider_id = provider_id
+		self.univ_id = univ_id
+		self.level = level
+		self.specialist = specialist
+		self.prof_year = prof_year
+		self.duration = duration
+		self.tuition_fee = tuition_fee
+		self.regional = regional
+  
+class UserCoursePref(db.Model):
+	__tablename__ = 'user_course_pref'
+
+	id = db.Column(db.Integer, primary_key=True)
+	username = db.Column(db.String(50), db.ForeignKey('users.username'), nullable=False)
+	course_num = db.Column(db.String(50), nullable=False)
+	course_name = db.Column(db.String(100), nullable=False)
+	provider_name = db.Column(db.String(100), nullable=False)
+	university_name = db.Column(db.String(100), nullable=False)
+	university_address = db.Column(db.String(255), nullable=False)
+	state = db.Column(db.String(3), nullable=False)
+	postcode = db.Column(db.String(4), nullable=False)
+	duration = db.Column(db.Integer, nullable=False)
+	tuition_fee = db.Column(db.Numeric(10, 2), nullable=False)
+	created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+	def __init__(self, username, course_num, course_name, provider_name, university_name, university_address, state, postcode, duration, tuition_fee):
+		self.username = username
+		self.course_num = course_num
+		self.course_name = course_name
+		self.provider_name = provider_name
+		self.university_name = university_name
+		self.university_address = university_address
+		self.state = state
+		self.postcode = postcode
+		self.duration = duration
+		self.tuition_fee = tuition_fee

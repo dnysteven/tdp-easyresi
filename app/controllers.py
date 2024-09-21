@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from datetime import datetime
 from app import db
-from app.models import Data, ModelResult, VisaPoints
+from app.models import Data, ModelResult, VisaPoints, UniCourse, User, University, UserCoursePref
 
 # Define a path to store the model .pkl files in the ml folder
 MODEL_PATH = os.path.join(os.getcwd(), 'ml')
@@ -232,21 +232,93 @@ def calculate_age(request):
 def process_visa_path(data):
   # Extract data from form submission
   educational_qualification = data.get('educational_qualification')
-  specialist_education = data.get('specialist_education')
+  specialist = data.get('specialist_education')
   professional_year = data.get('professional_year')
-  study_work_regional = data.get('study_work_regional')
   course_duration = data.get('course_duration')
+  regional = data.get('regional')
   course_fees = data.get('course_fees')
-  location = data.get('location')
-
-  # Process the data here (e.g., save to database or perform calculations)
-  # You can perform any necessary processing or validation here.
   
-  # Example: Log the form data (replace this with your actual logic)
-  print(f"Educational Qualification: {educational_qualification}")
-  print(f"Specialist Education: {specialist_education}")
-  print(f"Professional Year: {professional_year}")
-  print(f"Study and Work in Regional Australia: {study_work_regional}")
-  print(f"Course Duration: {course_duration} years")
-  print(f"Maximum Course Fees: {course_fees}")
-  print(f"Location: {location}")
+  # Convert course_fees into a list if it's comma-separated
+  if course_fees:
+    course_fees = course_fees.split(',')
+  
+  # Build the query with mandatory filters
+  query = UniCourse.query \
+    .join(User, UniCourse.provider_id == User.username) \
+    .join(University, UniCourse.univ_id == University.id) \
+    .filter(
+      UniCourse.level == educational_qualification,
+      UniCourse.specialist == bool(int(specialist)),
+      UniCourse.prof_year == bool(int(professional_year)),
+      UniCourse.duration == int(course_duration)
+    )
+
+  # Add the regional filter if it's checked
+  if regional:
+    query = query.filter_by(regional=True)
+
+  # Add the course fees filter if any checkboxes were selected
+  if course_fees:
+    query = query.filter(UniCourse.fee_points.in_(course_fees))
+
+  recommended_courses = query.all()
+  
+  # Add points to each course based on the new function
+  for course in recommended_courses:
+    course.points = calculate_ref_points(course)
+
+  return recommended_courses
+
+def calculate_ref_points(course):
+  # Define points for levels
+  level_points = {
+    'bachelor': 1,
+    'master': 2,
+    'doctorate': 3
+  }
+
+  # Calculate points based on course attributes
+  points = level_points.get(course.level.lower(), 0)  # Get points for level
+  points += 1 if course.specialist else 0  # Add 1 if specialist is True
+  points += 1 if course.prof_year else 0  # Add 1 if prof_year is True
+  points += 1 if course.regional else 0  # Add 1 if regional is True
+
+  return points
+
+
+def user_course_preferences(username, selected_courses, form_data):
+  # Loop through selected courses and save the course preferences
+  for course_id in selected_courses:
+    course_num = form_data.get(f'course_num_{course_id}')
+    course_name = form_data.get(f'course_name_{course_id}')
+    provider_name = form_data.get(f'provider_name_{course_id}')
+    university_name = form_data.get(f'university_name_{course_id}')
+    university_address = form_data.get(f'university_address_{course_id}')
+    state = form_data.get(f'state_{course_id}')
+    postcode = form_data.get(f'postcode_{course_id}')
+    duration = form_data.get(f'duration_{course_id}')
+    tuition_fee = form_data.get(f'tuition_fee_{course_id}')
+
+    # Create a new UserCoursePref object
+    user_pref = UserCoursePref(
+      username=username,
+      course_num=course_num,  # Save course_num instead of course_id
+      course_name=course_name,
+      provider_name=provider_name,
+      university_name=university_name,
+      university_address=university_address,
+      state=state,
+      postcode=postcode,
+      duration=int(duration),
+      tuition_fee=float(tuition_fee)
+    )
+    
+    # Add the course to the session
+    db.session.add(user_pref)
+
+  # Commit the changes to the database in one transaction
+  db.session.commit()
+  
+def get_user_course_preferences(username):
+  # Query the user_course_pref table based on the username
+  return UserCoursePref.query.filter_by(username=username).all()

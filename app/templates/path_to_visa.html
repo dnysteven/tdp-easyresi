@@ -8,9 +8,9 @@
     <!-- Educational Qualification -->
     <label for="educational_qualification">Educational Qualification:</label>
     <select id="educational_qualification" name="educational_qualification" required>
-      <option value="1">Bachelor</option>
-      <option value="2">Master</option>
-      <option value="3">Doctorate</option>
+      <option value="Bachelor">Bachelor</option>
+      <option value="Master">Master</option>
+      <option value="Doctorate">Doctorate</option>
     </select>
 
     <!-- Specialist Education Qualification -->
@@ -27,37 +27,23 @@
     <input type="radio" id="professional_no" name="professional_year" value="0" required>
     <label for="professional_no">No</label>
 
-    <!-- Study and Work in Regional Australia -->
-    <p>Study and Work in Regional Australia:</p>
-    <input type="radio" id="regional_yes" name="study_work_regional" value="1" required>
-    <label for="regional_yes">Yes</label>
-    <input type="radio" id="regional_no" name="study_work_regional" value="0" required>
-    <label for="regional_no">No</label><br>
-
     <!-- Study Course Duration -->
     <label for="course_duration">Study Course Duration (years):</label>
     <input type="number" id="course_duration" name="course_duration" min="1" required><br>
 
-    <!-- Maximum Course Fees -->
-    <label for="course_fees">Maximum Course Fees:</label>
-    <select id="course_fees" name="course_fees" required>
-      <option value="1">&lt;60K AUD</option>
-      <option value="2">60-100K AUD</option>
-      <option value="3">&gt;100K AUD</option>
-    </select><br>
+    <!-- Study and Work in Regional Australia -->
+    <p>Study and Work in Regional Australia:</p>
+    <input type="checkbox" id="regional" name="regional" value="1">
+    <label for="regional">Yes</label>
 
-    <!-- Location -->
-    <label for="location">Location:</label>
-    <select id="location" name="location" required>
-      <option value="VIC">Victoria</option>
-      <option value="NSW">New South Wales</option>
-      <option value="ACT">Australia Capital Territory</option>
-      <option value="WA">West Australia</option>
-      <option value="SA">South Australia</option>
-      <option value="NT">Northern Territory</option>
-      <option value="TAS">Tasmania</option>
-      <option value="QLD">Queensland</option>
-    </select><br>
+    <!-- Maximum Course Fees (Checkbox) -->
+    <p>Maximum Course Fees (Select one or more):</p>
+    <input type="checkbox" id="fees1" name="course_fees" value="1">
+    <label for="fees1">&lt;60K AUD</label><br>
+    <input type="checkbox" id="fees2" name="course_fees" value="2">
+    <label for="fees2">60-100K AUD</label><br>
+    <input type="checkbox" id="fees3" name="course_fees" value="3">
+    <label for="fees3">&gt;100K AUD</label>
 
     <!-- Submit Button -->
     <input type="submit" value="Submit">

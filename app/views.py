@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from app.models import Data, db, User, UserRole, Login, VisaPoints
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.controllers import train_model, predict_model, visa_points_calculator, calculate_age
+from app.controllers import train_model, predict_model, visa_points_calculator, calculate_age, process_visa_path, user_course_preferences, get_user_course_preferences
 
 main = Blueprint('main', __name__)
 
@@ -233,7 +233,7 @@ def visa_points():
     
   return render_template('visa_points.html', visa_189_eligible=visa_189_eligible, visa_190_eligible=visa_190_eligible, visa_491_eligible=visa_491_eligible)
 
-@main.route('/path_to_visa')
+@main.route('/path_to_visa', methods=['GET', 'POST'])
 @login_required
 def path_to_visa():
 	# Check if the user has accessed visa_points and is eligible for the Path to Visa page
@@ -241,9 +241,49 @@ def path_to_visa():
 		#return redirect(url_for('main.index'))
 
 	# Remove session flag after accessing the page to prevent further direct access
-	#session.pop('eligible_for_path_to_visa', None)
+	session.pop('eligible_for_path_to_visa', None)
+
+	if request.method == 'POST':
+		data = request.form.to_dict()
+		data['course_fees'] = ','.join(request.form.getlist('course_fees'))  # Store course fees as comma-separated string
+
+		# Set session flag to allow access to recommendation.html
+		session['submitted_path_to_visa'] = True
+		session['path_to_visa_data'] = data
+
+		return redirect(url_for('main.recommendation'))
 
 	return render_template('path_to_visa.html')
+
+@main.route('/recommendation', methods=['GET'])
+@login_required
+def recommendation():
+	# Check if user has submitted the form in path_to_visa.html
+	if not session.get('submitted_path_to_visa'):
+		return redirect(url_for('main.path_to_visa'))
+
+	data = session.get('path_to_visa_data')
+	recommended_courses = process_visa_path(data)
+  
+	# Clear session flag after accessing the page
+	session.pop('submitted_path_to_visa', None)
+
+	return render_template('recommendation.html', recommended_courses=recommended_courses)
+
+@main.route('/save_courses', methods=['POST'])
+@login_required
+def save_courses():
+	username = session['username']
+	selected_courses = request.form.getlist('save_courses')
+
+	if selected_courses:
+		# Call the function to save multiple courses at once
+		user_course_preferences(username, selected_courses, request.form)
+		flash(f"Successfully saved {len(selected_courses)} course(s).")
+	else:
+		flash("No courses were selected.")
+
+	return redirect(url_for('main.recommendation'))
 
 @main.route('/profile', methods=['GET'])
 @login_required
@@ -252,10 +292,10 @@ def profile():
 	username = session['username']
 	user = User.query.filter_by(username=username).first()
 
-	# Retrieve visa points data based on the logged-in user
-	visa_points = VisaPoints.query.filter_by(username=username).all()
+	# Fetch the user's saved course preferences
+	user_courses = get_user_course_preferences(username)
 
-	return render_template('profile.html', user=user, visa_points=visa_points)
+	return render_template('profile.html', user=user, user_courses=user_courses)
 
 @main.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
