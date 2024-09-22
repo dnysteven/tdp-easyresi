@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charts Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script> <!-- Datalabels plugin -->
+  <style>
+    /* Use flexbox to align the charts horizontally */
+    .chart-wrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Chart containers with equal size */
+    .chart-container {
+      width: 40vw; /* 40% of the viewport width */
+      height: 40vh; /* 40% of the viewport height */
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Wrapper to align both charts horizontally -->
+  <div class="chart-wrapper">
+    <!-- Line Chart Container -->
+    <div class="chart-container">
+      <canvas id="visaChart"></canvas>
+    </div>
+
+    <!-- Bar Chart Container -->
+    <div class="chart-container">
+      <canvas id="agentVisaStatusChart"></canvas>
+    </div>
+  </div>
+
+  <script>
+    // Line chart configuration
+    const ctxLine = document.getElementById('visaChart').getContext('2d');
+
+    const visaChart = new Chart(ctxLine, {
+      type: 'line',
+      data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], // X-axis (Months)
+        datasets: [
+          {
+            label: 'Visa 189',
+            data: [5, 50, 40, 60, 70, 90, 80, 110, 100, 80, 90, 120],
+            borderColor: 'green',
+            fill: false,
+            datalabels: {
+              align: 'end',
+              anchor: 'end',
+              color: 'green'
+            }
+          },
+          {
+            label: 'Visa 190',
+            data: [70, 60, 50, 70, 90, 110, 100, 130, 120, 140, 160, 100],
+            borderColor: 'red',
+            fill: false,
+            datalabels: {
+              align: 'end',
+              anchor: 'end',
+              color: 'red'
+            }
+          },
+          {
+            label: 'Visa 191',
+            data: [20, 40, 30, 50, 60, 80, 70, 90, 100, 110, 120, 140],
+            borderColor: 'purple',
+            fill: false,
+            datalabels: {
+              align: 'end',
+              anchor: 'end',
+              color: 'purple'
+            }
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Applicant Number'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Months'
+            }
+          }
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: 'Applicants by Visa Type',
+            font: {
+              size: 18
+            }
+          },
+          datalabels: {
+            display: true,
+            formatter: (value) => value,
+            align: 'end',
+            anchor: 'end'
+          }
+        }
+      },
+      plugins: [ChartDataLabels]
+    });
+
+    // Bar chart configuration
+    const ctxBar = document.getElementById('agentVisaStatusChart').getContext('2d');
+    
+    const agentVisaStatusChart = new Chart(ctxBar, {
+      type: 'bar',
+      data: {
+        labels: ['Agent Bob', 'Agent Sara', 'Agent Tom'], // X-axis (Agents)
+        datasets: [
+          {
+            label: 'Successful Visa',
+            data: [30, 20, 40],
+            backgroundColor: 'teal' // Changed bar color for Successful Visa
+          },
+          {
+            label: 'In the Process of Visa Application',
+            data: [20, 30, 25],
+            backgroundColor: 'orange' // Changed bar color for In Process
+          },
+          {
+            label: 'Under Payment Process',
+            data: [10, 20, 15],
+            backgroundColor: 'purple' // Changed bar color for Under Payment Process
+          },
+          {
+            label: 'Refused/Failed Visa',
+            data: [5, 10, 8],
+            backgroundColor: 'maroon' // Changed bar color for Failed Visa
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Agents'
+            }
+          },
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Applicant Number'
+            }
+          }
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: 'Visa Application Status by Agent',
+            font: {
+              size: 18
+            }
+          },
+          legend: {
+            display: true,
+            position: 'top'
+          },
+          datalabels: {
+            display: true,
+            color: 'black',
+            anchor: 'end',
+            align: 'top',
+            font: {
+              weight: 'bold'
+            },
+            formatter: function(value) {
+              return value;
+            }
+          }
+        }
+      },
+      plugins: [ChartDataLabels]
+    });
+  </script>
+
+</body>
+</html>

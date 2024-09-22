@@ -314,3 +314,7 @@ def dashboard():
 	return render_template('dashboard.html', pie_labels=pie_labels, pie_values=pie_values,
                         bar_labels=bar_labels, bar_values_A=bar_values_category_A,
                         bar_values_B=bar_values_category_B, bar_values_C=bar_values_category_C)
+ 
+@main.route('/edu_statistics')
+def edu_statistics():
+	return render_template('edu_statistics.html')
