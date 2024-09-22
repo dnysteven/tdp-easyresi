@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
-from app.models import Data, User, UserRole, Login, db
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from app.models import Data, db, User, UserRole, Login, VisaPoints
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.controllers import train_model, predict_model
+from app.controllers import train_model, predict_model, visa_points_calculator, calculate_age, process_visa_path, user_course_preferences, get_user_course_preferences
 
 main = Blueprint('main', __name__)
 
@@ -177,3 +177,140 @@ def test():
 		return render_template('test.html', prediction=prediction)
 
 	return render_template('test.html')
+
+@main.route('/questionnaire', methods=['GET', 'POST'])
+@login_required
+def questionnaire():
+  if request.method == 'POST':
+    date_of_birth, age = calculate_age(request)
+    
+    form = {
+      'username': session['username'],
+			'date_of_birth': date_of_birth,
+			'age': age,
+			'english_language': request.form.get('english_language'),
+			'overseas_employment': int(request.form.get('overseas_employment')),
+			'australian_employment': int(request.form.get('australian_employment')),
+			'education_level': request.form.get('education_level'),
+			'specialist_education': request.form.get('specialist_education'),
+			'australian_study': request.form.get('australian_study'),
+			'professional_year': request.form.get('professional_year'),
+			'community_language': request.form.get('community_language'),
+			'regional_study': request.form.get('regional_study'),
+			'partner_skills': request.form.get('partner_skills'),
+			'state_nomination': request.form.get('state_nomination'),
+			'regional_nomination': request.form.get('regional_nomination')
+		}
+    
+    result = visa_points_calculator(form)
+    
+    session['visa_189_points'] = result['visa_189_points']
+    session['visa_190_points'] = result['visa_190_points']
+    session['visa_491_points'] = result['visa_491_points']
+    session['visa_189_eligible'] = result['visa_189_eligible']
+    session['visa_190_eligible'] = result['visa_190_eligible']
+    session['visa_491_eligible'] = result['visa_491_eligible']
+    session['completed_questionnaire'] = True  # Mark the form as completed
+    return redirect(url_for('main.visa_points'))
+  
+  return render_template('questionnaire.html')
+
+@main.route('/visa_points', methods=['GET'])
+@login_required
+def visa_points():
+  if not session.get('completed_questionnaire'):
+    return redirect(url_for('main.questionnaire'))  # Redirect if questionnaire not completed
+  
+  # visa_189_points = session.get('visa_189_points')
+  # visa_190_points = session.get('visa_190_points')
+  # visa_491_points = session.get('visa_491_points')
+  visa_189_eligible = session.get('visa_189_eligible', False)
+  visa_190_eligible = session.get('visa_190_eligible', False)
+  visa_491_eligible = session.get('visa_491_eligible', False)
+  
+  if not visa_189_eligible and not visa_190_eligible and not visa_491_eligible:
+    session['eligible_for_path_to_visa'] = True
+    
+  return render_template('visa_points.html', visa_189_eligible=visa_189_eligible, visa_190_eligible=visa_190_eligible, visa_491_eligible=visa_491_eligible)
+
+@main.route('/path_to_visa', methods=['GET', 'POST'])
+@login_required
+def path_to_visa():
+	# Check if the user has accessed visa_points and is eligible for the Path to Visa page
+	#if not session.get('eligible_for_path_to_visa'):
+		#return redirect(url_for('main.index'))
+
+	# Remove session flag after accessing the page to prevent further direct access
+	session.pop('eligible_for_path_to_visa', None)
+
+	if request.method == 'POST':
+		data = request.form.to_dict()
+		data['course_fees'] = ','.join(request.form.getlist('course_fees'))  # Store course fees as comma-separated string
+
+		# Set session flag to allow access to recommendation.html
+		session['submitted_path_to_visa'] = True
+		session['path_to_visa_data'] = data
+
+		return redirect(url_for('main.recommendation'))
+
+	return render_template('path_to_visa.html')
+
+@main.route('/recommendation', methods=['GET'])
+@login_required
+def recommendation():
+	# Check if user has submitted the form in path_to_visa.html
+	if not session.get('submitted_path_to_visa'):
+		return redirect(url_for('main.path_to_visa'))
+
+	data = session.get('path_to_visa_data')
+	recommended_courses = process_visa_path(data)
+  
+	# Clear session flag after accessing the page
+	session.pop('submitted_path_to_visa', None)
+
+	return render_template('recommendation.html', recommended_courses=recommended_courses)
+
+@main.route('/save_courses', methods=['POST'])
+@login_required
+def save_courses():
+	username = session['username']
+	selected_courses = request.form.getlist('save_courses')
+
+	if selected_courses:
+		# Call the function to save multiple courses at once
+		user_course_preferences(username, selected_courses, request.form)
+		flash(f"Successfully saved {len(selected_courses)} course(s).")
+	else:
+		flash("No courses were selected.")
+
+	return redirect(url_for('main.recommendation'))
+
+@main.route('/profile', methods=['GET'])
+@login_required
+def profile():
+	# Retrieve user data from database
+	username = session['username']
+	user = User.query.filter_by(username=username).first()
+
+	# Fetch the user's saved course preferences
+	user_courses = get_user_course_preferences(username)
+
+	return render_template('profile.html', user=user, user_courses=user_courses)
+
+@main.route('/dashboard', methods=['GET', 'POST'])
+def dashboard():
+	# Process the data for both Pie and Bar charts
+	# Pie Chart Data
+	pie_labels = ['Eligible', 'Not Eligible']
+	pie_values = [70, 30]
+
+	# Bar Chart Data
+	bar_labels = ['January', 'February', 'March', 'April', 'May']
+	bar_values_category_A = [12, 19, 3, 5, 2]
+	bar_values_category_B = [14, 16, 4, 7, 3]
+	bar_values_category_C = [10, 14, 8, 6, 4]
+
+	# Pass the data to the HTML template
+	return render_template('dashboard.html', pie_labels=pie_labels, pie_values=pie_values,
+                        bar_labels=bar_labels, bar_values_A=bar_values_category_A,
+                        bar_values_B=bar_values_category_B, bar_values_C=bar_values_category_C)

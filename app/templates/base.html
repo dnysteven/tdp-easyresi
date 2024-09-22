@@ -7,7 +7,8 @@
   <meta name="description" content="Easi Resy solution" />
   <meta name="author" content="Ha Ngo" />
   <title>{% block title %}My Application{% endblock %}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles2.css') }}">
+  {% block css %}{% endblock %}
 </head>
 <body>
   <!-- Common Header -->
@@ -18,35 +19,35 @@
     </div>
     <nav class="navbar">
       <ul class="nav-list">
-          <li><a href="index.html">Home</a></li>
+          <li><a href="homepage.html">Home</a></li>
           <li class="dropdown">
-              <a href="#" class="dropbtn">Skilled Migration Visa</a>
-              <div class="dropdown-content">
-                  <a href="189.html">Skilled Independent Visa - Subclass 189</a>
-                  <a href="#">Skilled Nominated Visa - Subclass 190</a>
-                  <a href="#">Skilled Work Regional Provisional Visa - Subclass 491</a>
-              </div>
+            <a href="#" class="dropbtn">Skilled Migration Visa</a>
+            <div class="dropdown-content">
+              <a href="{{ url_for('main.visa_189') }}">Skilled Independent Visa - Subclass 189</a>
+              <a href="#">Skilled Nominated Visa - Subclass 190</a>
+              <a href="#">Skilled Work Regional Provisional Visa - Subclass 491</a>
+            </div>
           </li>
           <li class="dropdown">
-              <a href="#" class="dropbtn">Courses</a>
-              <div class="dropdown-content">
-                  <a href="pathway_course.html">PR Parthway courses</a>
-                  <a href="#">Bachelor</a>
-                  <a href="#">Master</a>
-              </div>
+            <a href="#" class="dropbtn">Courses</a>
+            <div class="dropdown-content">
+              <a href="pathway_course.html">PR Parthway courses</a>
+              <a href="#">Bachelor</a>
+              <a href="#">Master</a>
+            </div>
           </li>
           <li class="dropdown">
-              <a href="#" class="dropbtn">Latest Updates</a>
-              <div class="dropdown-content">
-                  <a href="#">Blogs</a>
-                  <a href="#">News</a>
-                  <a href="#">Events</a>
-              </div>
+            <a href="#" class="dropbtn">Latest Updates</a>
+            <div class="dropdown-content">
+              <a href="#">Blogs</a>
+              <a href="#">News</a>
+              <a href="#">Events</a>
+            </div>
           </li>
           <li><a href="#">Contact Us</a></li>
-      </ul>
-  </nav>
-  </div>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <!-- Main Content Block -->
@@ -59,7 +60,7 @@
   <!-- Common Footer -->
   <footer>
     <div class="container">
-        <p>&copy; 2024 Easy Resi. All rights reserved.</p>
+      <p>&copy; 2024 Easy Resi. All rights reserved.</p>
     </div>
   </footer>
 </body>

@@ -1,95 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="description" content="Easi Resy solution" />
-    <meta name="keywords" content="Easi Resy, immi tools, Easi Resy company" />
-    <meta name="author" content="Ha Ngo" />
-    <title>Skilled Visa Subclass 189 - Easy Resi</title>
-    <link rel="stylesheet" href="styles/styles2.css">
-</head>
-<body>
-    <!-- Header Section -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <a href="homepage.html" class="logo-link">Easy Resi</a>
-            </div>
-            <nav class="navbar">
-                <ul class="nav-list">
-                    <li><a href="homepage.html">Home</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropbtn">Skilled Migration Visa</a>
-                        <div class="dropdown-content">
-                            <a href="189.html">Skilled Independent Visa - Subclass 189</a>
-                            <a href="#">Skilled Nominated Visa - Subclass 190</a>
-                            <a href="#">Skilled Work Regional Provisional Visa - Subclass 491</a>
-                        </div>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropbtn">Courses</a>
-                        <div class="dropdown-content">
-                            <a href="pathway_course.html">PR Parthway courses</a>
-                            <a href="#">Bachelor</a>
-                            <a href="#">Master</a>
-                        </div>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropbtn">Latest Updates</a>
-                        <div class="dropdown-content">
-                            <a href="#">Blogs</a>
-                            <a href="#">News</a>
-                            <a href="#">Events</a>
-                        </div>
-                    </li>
-                    <li><a href="#">Contact Us</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+{% extends "base.html" %}
 
-    <!-- Main Content -->
-    <main>
-        <!-- What is the Skilled Independent Visa (Subclass 189)? -->
-        <section id="what-is-189">
-            <div class="container">
-                <h2>What is the Skilled Independent Visa (Subclass 189)?</h2>
-                <p>Australia is an excellent destination for anyone who wishes to start their life over again. Foreign nationals migrate to Australia for the great work opportunities it provides as well as the quality of goods and services available here. The Skilled Independent Visa (Subclass 189) is an excellent option for skilled foreign nationals who wish to reside and get employment permanently in Australia.</p>
+{% block title %}Skilled Visa Subclass 189 - Easy Resi{% endblock %}
 
-                <p>It does not take a nomination from a state, employer or territory in Australia for you to apply for the subclass 189 visa in Australia. It takes an invitation from the Department of Home Affairs to submit the application. By the time the invitation comes from the DHA, you must have an appropriate skills assessment for a valid application. Read on for more about the visa..</p>
-            </div>
-        </section>
+{% block css %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles2.css') }}">
+{% endblock %}
 
-        <!-- Basic 189 Visa Requirements -->
-        <section id="basic-requirements">
-            <div class="container">
-                <h2>Basic 189 Visa Requirements</h2>
-                <p>Details about the basic requirements for the 189 visa will be added here.</p>
-            </div>
-        </section>
+{% block content %}
+<!-- Main Content -->
+<main>
+	<!-- What is the Skilled Independent Visa (Subclass 189)? -->
+	<section id="what-is-189">
+		<div class="container">
+			<h2>What is the Skilled Independent Visa (Subclass 189)?</h2>
+			<p>Australia is an excellent destination for anyone who wishes to start their life over again. Foreign nationals migrate to Australia for the great work opportunities it provides as well as the quality of goods and services available here. The Skilled Independent Visa (Subclass 189) is an excellent option for skilled foreign nationals who wish to reside and get employment permanently in Australia.</p>
 
-        <!-- Points-Tested Stream -->
-        <section id="points-tested-stream">
-            <div class="container">
-                <h2>Points-Tested Stream</h2>
-                <p>Details about the points-tested stream for the 189 visa will be added here.</p>
-            </div>
-        </section>
+			<p>It does not take a nomination from a state, employer or territory in Australia for you to apply for the subclass 189 visa in Australia. It takes an invitation from the Department of Home Affairs to submit the application. By the time the invitation comes from the DHA, you must have an appropriate skills assessment for a valid application. Read on for more about the visa..</p>
+		</div>
+	</section>
 
-        <!-- Australian Visa 189 Cost -->
-        <section id="visa-cost">
-            <div class="container">
-                <h2>Australian Visa 189 Cost</h2>
-                <p>Details about the cost of the 189 visa will be added here.</p>
-            </div>
-        </section>
-    </main>
+	<!-- Basic 189 Visa Requirements -->
+	<section id="basic-requirements">
+		<div class="container">
+			<h2>Basic 189 Visa Requirements</h2>
+			<p>Details about the basic requirements for the 189 visa will be added here.</p>
+		</div>
+	</section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Easy Resi. All rights reserved.</p>
-        </div>
-    </footer>
-</body>
-</html>
+	<!-- Points-Tested Stream -->
+	<section id="points-tested-stream">
+		<div class="container">
+			<h2>Points-Tested Stream</h2>
+			<p>Details about the points-tested stream for the 189 visa will be added here.</p>
+		</div>
+	</section>
+
+	<!-- Australian Visa 189 Cost -->
+	<section id="visa-cost">
+		<div class="container">
+			<h2>Australian Visa 189 Cost</h2>
+			<p>Details about the cost of the 189 visa will be added here.</p>
+		</div>
+	</section>
+</main>
+{% endblock %}

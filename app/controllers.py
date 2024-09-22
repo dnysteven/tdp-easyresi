@@ -4,8 +4,9 @@ import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from datetime import datetime
 from app import db
-from app.models import Data, ModelResult
+from app.models import Data, ModelResult, VisaPoints, UniCourse, User, University, UserCoursePref
 
 # Define a path to store the model .pkl files in the ml folder
 MODEL_PATH = os.path.join(os.getcwd(), 'ml')
@@ -81,3 +82,243 @@ def predict_model(features):
   # Make a prediction
   prediction = model.predict([features])
   return prediction[0]
+
+def visa_points_calculator(data):
+  points = 0
+  
+  # Age points (this example uses hypothetical ranges)
+  if 18 <= data['age'] <= 25:
+    points += 25
+  elif 26 <= data['age'] <= 32:
+    points += 30
+  elif 33 <= data['age'] <= 39:
+    points += 25
+  elif 40 <= data['age'] <= 44:
+    points += 15
+
+  # English language level points
+  if data['english_language'] == 'competent':
+    points += 10
+  elif data['english_language'] == 'proficient':
+    points += 20
+  elif data['english_language'] == 'superior':
+    points += 30
+
+  # Overseas skilled employment points
+  if data['overseas_employment'] >= 9:
+    points += 15
+  elif data['overseas_employment'] >= 6:
+    points += 10
+  elif data['overseas_employment'] >= 3:
+    points += 5
+
+  # Australian skilled employment points
+  if data['australian_employment'] >= 9:
+    points += 20
+  elif data['australian_employment'] >= 6:
+    points += 15
+  elif data['australian_employment'] >= 3:
+    points += 10
+
+  # Education level points
+  if data['education_level'] == 'doctorate':
+    points += 20
+  elif data['education_level'] == 'bachelors':
+    points += 15
+  elif data['education_level'] == 'diploma_trade':
+    points += 10
+  elif data['education_level'] == 'other_recognised':
+    points += 5
+
+  # Specialist education qualification points
+  if data['specialist_education'] == 'yes':
+    points += 10
+
+  # Australian study requirement points
+  if data['australian_study'] == 'yes':
+    points += 10
+
+  # Professional year in Australia points
+  if data['professional_year'] == 'yes':
+      points += 10
+
+  # Community language points
+  if data['community_language'] == 'yes':
+    points += 10
+
+  # Regional study points
+  if data['regional_study'] == 'yes':
+    points += 10
+
+  # Partner skills points
+  if data['partner_skills'] == 'age_eng_skill':
+    points += 10
+  elif data['partner_skills'] == 'comp_eng':
+    points += 5
+  elif data['partner_skills'] == 'single_citizen_pr':
+    points += 15
+  
+  # Calculate points for visa 189
+  visa_189_points = points
+  
+  # Check if eligible for visa 189
+  visa_189_eligible = visa_189_points >= 65
+
+  # State nomination points (for visa 190)
+  state_nomination_points = 0
+  if data['state_nomination'] == 'yes':
+    state_nomination_points = 5
+    points += 5
+  visa_190_points = visa_189_points + state_nomination_points  # Adding state nomination points
+
+  # Check if eligible for visa 190 (visa 189 points >= 65 AND state nomination > 0)
+  visa_190_eligible = visa_189_points >= 65 and state_nomination_points > 0
+
+  # Regional nomination points (for visa 491)
+  regional_nomination_points = 0
+  if data['regional_nomination'] == 'yes':
+    regional_nomination_points = 15
+    points += 15
+  visa_491_points = visa_189_points + regional_nomination_points  # Adding regional nomination points
+
+  # Check if eligible for visa 491 (visa 189 points >= 65 AND regional nomination > 0)
+  visa_491_eligible = visa_189_points >= 65 and regional_nomination_points > 0
+  
+  # Save to database with username
+  visa_points_entry = VisaPoints(
+    username=data['username'],
+    age=data['age'],
+    english_language=data['english_language'],
+    overseas_employment=data['overseas_employment'],
+    australian_employment=data['australian_employment'],
+    education_level=data['education_level'],
+    specialist_education=data['specialist_education'],
+    australian_study=data['australian_study'],
+    professional_year=data['professional_year'],
+    community_language=data['community_language'],
+    regional_study=data['regional_study'],
+    partner_skills=data['partner_skills'],
+    state_nomination=data['state_nomination'],
+    regional_nomination=data['regional_nomination'],
+    visa_189_points=visa_189_points,
+    visa_190_points=visa_190_points,
+    visa_491_points=visa_491_points,
+    visa_189_eligible=visa_189_eligible,
+    visa_190_eligible=visa_190_eligible,
+    visa_491_eligible=visa_491_eligible,
+  )
+
+  db.session.add(visa_points_entry)
+  db.session.commit()
+
+  return {
+    'visa_189_points': visa_189_points,
+    'visa_190_points': visa_190_points,
+    'visa_491_points': visa_491_points,
+    'visa_189_eligible': visa_189_eligible,
+    'visa_190_eligible': visa_190_eligible,
+    'visa_491_eligible': visa_491_eligible
+  }
+
+def calculate_age(request):
+  date_of_birth_str = request.form.get('date_of_birth')
+  date_of_birth = datetime.strptime(date_of_birth_str, '%Y-%m-%d')
+  
+  today = datetime.today()
+  age = today.year - date_of_birth.year - ((today.month, today.day) < (date_of_birth.month, date_of_birth.day))
+  
+  return date_of_birth, age
+
+def process_visa_path(data):
+  # Extract data from form submission
+  educational_qualification = data.get('educational_qualification')
+  specialist = data.get('specialist_education')
+  professional_year = data.get('professional_year')
+  course_duration = data.get('course_duration')
+  regional = data.get('regional')
+  course_fees = data.get('course_fees')
+  
+  # Convert course_fees into a list if it's comma-separated
+  if course_fees:
+    course_fees = course_fees.split(',')
+  
+  # Build the query with mandatory filters
+  query = UniCourse.query \
+    .join(User, UniCourse.provider_id == User.username) \
+    .join(University, UniCourse.univ_id == University.id) \
+    .filter(
+      UniCourse.level == educational_qualification,
+      UniCourse.specialist == bool(int(specialist)),
+      UniCourse.prof_year == bool(int(professional_year)),
+      UniCourse.duration == int(course_duration)
+    )
+
+  # Add the regional filter if it's checked
+  if regional:
+    query = query.filter_by(regional=True)
+
+  # Add the course fees filter if any checkboxes were selected
+  if course_fees:
+    query = query.filter(UniCourse.fee_points.in_(course_fees))
+
+  recommended_courses = query.all()
+  
+  # Add points to each course based on the new function
+  for course in recommended_courses:
+    course.points = calculate_ref_points(course)
+
+  return recommended_courses
+
+def calculate_ref_points(course):
+  # Define points for levels
+  level_points = {
+    'bachelor': 1,
+    'master': 2,
+    'doctorate': 3
+  }
+
+  # Calculate points based on course attributes
+  points = level_points.get(course.level.lower(), 0)  # Get points for level
+  points += 1 if course.specialist else 0  # Add 1 if specialist is True
+  points += 1 if course.prof_year else 0  # Add 1 if prof_year is True
+  points += 1 if course.regional else 0  # Add 1 if regional is True
+
+  return points
+
+
+def user_course_preferences(username, selected_courses, form_data):
+  # Loop through selected courses and save the course preferences
+  for course_id in selected_courses:
+    course_num = form_data.get(f'course_num_{course_id}')
+    course_name = form_data.get(f'course_name_{course_id}')
+    provider_name = form_data.get(f'provider_name_{course_id}')
+    university_name = form_data.get(f'university_name_{course_id}')
+    university_address = form_data.get(f'university_address_{course_id}')
+    state = form_data.get(f'state_{course_id}')
+    postcode = form_data.get(f'postcode_{course_id}')
+    duration = form_data.get(f'duration_{course_id}')
+    tuition_fee = form_data.get(f'tuition_fee_{course_id}')
+
+    # Create a new UserCoursePref object
+    user_pref = UserCoursePref(
+      username=username,
+      course_num=course_num,  # Save course_num instead of course_id
+      course_name=course_name,
+      provider_name=provider_name,
+      university_name=university_name,
+      university_address=university_address,
+      state=state,
+      postcode=postcode,
+      duration=int(duration),
+      tuition_fee=float(tuition_fee)
+    )
+    
+    # Add the course to the session
+    db.session.add(user_pref)
+
+  # Commit the changes to the database in one transaction
+  db.session.commit()
+  
+def get_user_course_preferences(username):
+  # Query the user_course_pref table based on the username
+  return UserCoursePref.query.filter_by(username=username).all()

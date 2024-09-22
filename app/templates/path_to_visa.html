@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Path to Visa{% endblock %}
+
+{% block content %}
+  <h1>Path to Visa</h1>
+  <form method="POST">
+    <!-- Educational Qualification -->
+    <label for="educational_qualification">Educational Qualification:</label>
+    <select id="educational_qualification" name="educational_qualification" required>
+      <option value="Bachelor">Bachelor</option>
+      <option value="Master">Master</option>
+      <option value="Doctorate">Doctorate</option>
+    </select>
+
+    <!-- Specialist Education Qualification -->
+    <p>Specialist Education Qualification:</p>
+    <input type="radio" id="specialist_yes" name="specialist_education" value="1" required>
+    <label for="specialist_yes">Yes</label>
+    <input type="radio" id="specialist_no" name="specialist_education" value="0" required>
+    <label for="specialist_no">No</label>
+
+    <!-- Offers Professional Year -->
+    <p>Offers Professional Year:</p>
+    <input type="radio" id="professional_yes" name="professional_year" value="1" required>
+    <label for="professional_yes">Yes</label>
+    <input type="radio" id="professional_no" name="professional_year" value="0" required>
+    <label for="professional_no">No</label>
+
+    <!-- Study Course Duration -->
+    <label for="course_duration">Study Course Duration (years):</label>
+    <input type="number" id="course_duration" name="course_duration" min="1" required><br>
+
+    <!-- Study and Work in Regional Australia -->
+    <p>Study and Work in Regional Australia:</p>
+    <input type="checkbox" id="regional" name="regional" value="1">
+    <label for="regional">Yes</label>
+
+    <!-- Maximum Course Fees (Checkbox) -->
+    <p>Maximum Course Fees (Select one or more):</p>
+    <input type="checkbox" id="fees1" name="course_fees" value="1">
+    <label for="fees1">&lt;60K AUD</label><br>
+    <input type="checkbox" id="fees2" name="course_fees" value="2">
+    <label for="fees2">60-100K AUD</label><br>
+    <input type="checkbox" id="fees3" name="course_fees" value="3">
+    <label for="fees3">&gt;100K AUD</label>
+
+    <!-- Submit Button -->
+    <input type="submit" value="Submit">
+  </form>
+{% endblock %}

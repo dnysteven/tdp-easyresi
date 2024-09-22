@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+  <h1>User Profile</h1>
+  <p><strong>Welcome, {{ user.first_name }} {{ user.last_name }}!</strong></p>
+
+  <h2>Visa Points Details</h2>
+  {% if user_courses %}
+    <table border="1" cellpadding="5" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Course Num</th>
+          <th>Course Name</th>
+          <th>Provider Name</th>
+          <th>University Name</th>
+          <th>University Address</th>
+          <th>State</th>
+          <th>Postcode</th>
+          <th>Duration (Years)</th>
+          <th>Tuition Fee (AUD)</th>
+          <th>Date Saved</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for course in user_courses %}
+          <tr>
+            <td>{{ course.course_num }}</td>
+            <td>{{ course.course_name }}</td>
+            <td>{{ course.provider_name }}</td>
+            <td>{{ course.university_name }}</td>
+            <td>{{ course.university_address }}</td>
+            <td>{{ course.state }}</td>
+            <td>{{ course.postcode }}</td>
+            <td>{{ course.duration }}</td>
+            <td>{{ course.tuition_fee }}</td>
+            <td>{{ course.created_at.strftime('%m/%d/%Y %H:%M:%S') }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No course preferences saved yet.</p>
+  {% endif %}
+{% endblock %}

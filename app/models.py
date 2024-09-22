@@ -1,4 +1,5 @@
 from app import db
+from datetime import datetime, timezone
 
 class UserRole(db.Model):
 	__tablename__ = 'user_role'
@@ -28,6 +29,9 @@ class User(db.Model):
 	
 	# Define relationship with Login
 	login = db.relationship('Login', back_populates='user')
+	
+	# Relationship with UniCourse
+	courses = db.relationship('UniCourse', backref='provider', lazy=True)
 
 	def __init__(self, username, first_name, last_name, email, phone, user_role):
 		self.username = username
@@ -94,3 +98,132 @@ class ModelResult(db.Model):
 	def __init__(self, model_type, accuracy):
 		self.model_type = model_type
 		self.accuracy = accuracy
+  
+class VisaPoints(db.Model):
+	__tablename__ = 'visa_points'
+	
+	id = db.Column(db.Integer, primary_key=True)
+	username = db.Column(db.String(50), db.ForeignKey('users.username'), nullable=False)
+	age = db.Column(db.Integer, nullable=False)
+	english_language = db.Column(db.String(50), nullable=False)
+	overseas_employment = db.Column(db.Integer, nullable=False)
+	australian_employment = db.Column(db.Integer, nullable=False)
+	education_level = db.Column(db.String(50), nullable=False)
+	specialist_education = db.Column(db.String(10), nullable=False)
+	australian_study = db.Column(db.String(10), nullable=False)
+	professional_year = db.Column(db.String(10), nullable=False)
+	community_language = db.Column(db.String(10), nullable=False)
+	regional_study = db.Column(db.String(10), nullable=False)
+	partner_skills = db.Column(db.String(50), nullable=False)
+	state_nomination = db.Column(db.String(10), nullable=False)
+	regional_nomination = db.Column(db.String(10), nullable=False)
+	visa_189_points = db.Column(db.Integer, nullable=False)
+	visa_190_points = db.Column(db.Integer, nullable=False)
+	visa_491_points = db.Column(db.Integer, nullable=False)
+	visa_189_eligible = db.Column(db.Boolean, nullable=False)
+	visa_190_eligible = db.Column(db.Boolean, nullable=False)
+	visa_491_eligible = db.Column(db.Boolean, nullable=False)
+	created_at = db.Column(db.DateTime, default=lambda: datetime.now(tz=timezone.utc))
+
+	user = db.relationship('User', backref='visa_points')
+
+	def __init__(self, username, age, english_language, overseas_employment, australian_employment, education_level, specialist_education, australian_study, professional_year, community_language, regional_study, partner_skills, state_nomination, regional_nomination, visa_189_points, visa_190_points, visa_491_points, visa_189_eligible, visa_190_eligible, visa_491_eligible):
+		self.username = username
+		self.age = age
+		self.english_language = english_language
+		self.overseas_employment = overseas_employment
+		self.australian_employment = australian_employment
+		self.education_level = education_level
+		self.specialist_education = specialist_education
+		self.australian_study = australian_study
+		self.professional_year = professional_year
+		self.community_language = community_language
+		self.regional_study = regional_study
+		self.partner_skills = partner_skills
+		self.state_nomination = state_nomination
+		self.regional_nomination = regional_nomination
+		self.visa_189_points = visa_189_points
+		self.visa_190_points = visa_190_points
+		self.visa_491_points = visa_491_points
+		self.visa_189_eligible = visa_189_eligible
+		self.visa_190_eligible = visa_190_eligible
+		self.visa_491_eligible = visa_491_eligible
+  
+class University(db.Model):
+	__tablename__ = 'university'
+
+	id = db.Column(db.Integer, primary_key=True)
+	university = db.Column(db.String(100), nullable=False)
+	street = db.Column(db.String(100), nullable=True)
+	suburb = db.Column(db.String(100), nullable=False)
+	state = db.Column(db.String(3), nullable=False)
+	postcode = db.Column(db.String(4), nullable=False)
+	phone = db.Column(db.String(15), nullable=False)
+	email = db.Column(db.String(100), nullable=False)
+
+	# Relationship with UniCourse
+	courses = db.relationship('UniCourse', backref='university', lazy=True)
+
+	def __init__(self, university, street, suburb, state, postcode, phone, email):
+		self.university = university
+		self.street = street
+		self.suburb = suburb
+		self.state = state
+		self.postcode = postcode
+		self.phone = phone
+		self.email = email
+  
+class UniCourse(db.Model):
+	__tablename__ = 'uni_course'
+	
+	id = db.Column(db.Integer, primary_key=True)
+	course_num = db.Column(db.String(50), nullable=False)
+	course_name = db.Column(db.String(100), nullable=False)
+	provider_id = db.Column(db.String(50), db.ForeignKey('users.username'), nullable=False)
+	univ_id = db.Column(db.Integer, db.ForeignKey('university.id'), nullable=False)
+	level = db.Column(db.String(50), nullable=False)
+	specialist = db.Column(db.Boolean, nullable=False)
+	prof_year = db.Column(db.Boolean, nullable=False)
+	duration = db.Column(db.Integer, nullable=False)
+	tuition_fee = db.Column(db.Numeric(10, 2), nullable=False)
+	regional = db.Column(db.Boolean, nullable=False)
+
+	def __init__(self, course_num, course_name, provider_id, univ_id, level, specialist, prof_year, duration, tuition_fee, regional):
+		self.course_num = course_num
+		self.course_name = course_name
+		self.provider_id = provider_id
+		self.univ_id = univ_id
+		self.level = level
+		self.specialist = specialist
+		self.prof_year = prof_year
+		self.duration = duration
+		self.tuition_fee = tuition_fee
+		self.regional = regional
+  
+class UserCoursePref(db.Model):
+	__tablename__ = 'user_course_pref'
+
+	id = db.Column(db.Integer, primary_key=True)
+	username = db.Column(db.String(50), db.ForeignKey('users.username'), nullable=False)
+	course_num = db.Column(db.String(50), nullable=False)
+	course_name = db.Column(db.String(100), nullable=False)
+	provider_name = db.Column(db.String(100), nullable=False)
+	university_name = db.Column(db.String(100), nullable=False)
+	university_address = db.Column(db.String(255), nullable=False)
+	state = db.Column(db.String(3), nullable=False)
+	postcode = db.Column(db.String(4), nullable=False)
+	duration = db.Column(db.Integer, nullable=False)
+	tuition_fee = db.Column(db.Numeric(10, 2), nullable=False)
+	created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+	def __init__(self, username, course_num, course_name, provider_name, university_name, university_address, state, postcode, duration, tuition_fee):
+		self.username = username
+		self.course_num = course_num
+		self.course_name = course_name
+		self.provider_name = provider_name
+		self.university_name = university_name
+		self.university_address = university_address
+		self.state = state
+		self.postcode = postcode
+		self.duration = duration
+		self.tuition_fee = tuition_fee
