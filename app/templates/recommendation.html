@@ -12,7 +12,6 @@
           <tr>
             <th>Course Num</th>
             <th>Course Name</th>
-            <th>Provider</th>
             <th>University</th>
             <th>Address</th>
             <th>State</th>
@@ -28,7 +27,6 @@
             <tr>
               <td>{{ course.course_num }}</td>
               <td>{{ course.course_name }}</td>
-              <td>{{ course.provider.first_name }} {{ course.provider.last_name }}</td>
               <td>{{ course.university.university }}</td>
               <td>{{ course.university.street }}, {{ course.university.suburb }}</td>
               <td>{{ course.university.state }}</td>
@@ -40,7 +38,6 @@
                 <input type="checkbox" name="save_courses" value="{{ course.id }}">
                 <input type="hidden" name="course_num_{{ course.id }}" value="{{ course.course_num }}">
                 <input type="hidden" name="course_name_{{ course.id }}" value="{{ course.course_name }}">
-                <input type="hidden" name="provider_name_{{ course.id }}" value="{{ course.provider.first_name }} {{ course.provider.last_name }}">
                 <input type="hidden" name="university_name_{{ course.id }}" value="{{ course.university.university }}">
                 <input type="hidden" name="university_address_{{ course.id }}" value="{{ course.university.street }}, {{ course.university.suburb }}">
                 <input type="hidden" name="state_{{ course.id }}" value="{{ course.university.state }}">

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
 from app.models import Data, db, User, UserRole, Login, VisaPoints
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.controllers import train_model, predict_model, visa_points_calculator, calculate_age, process_visa_path, user_course_preferences, get_user_course_preferences
@@ -179,8 +179,15 @@ def test():
 	return render_template('test.html')
 
 @main.route('/questionnaire', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def questionnaire():
+  if current_app.config['ENV'] == 'development':
+    session['username'] = 'dnysteven'
+    
+  username = session.get('username')
+  if not username:
+    return redirect(url_for('main.login'))
+  
   if request.method == 'POST':
     date_of_birth, age = calculate_age(request)
     
@@ -216,7 +223,7 @@ def questionnaire():
   return render_template('questionnaire.html')
 
 @main.route('/visa_points', methods=['GET'])
-@login_required
+#@login_required
 def visa_points():
   if not session.get('completed_questionnaire'):
     return redirect(url_for('main.questionnaire'))  # Redirect if questionnaire not completed
@@ -234,13 +241,21 @@ def visa_points():
   return render_template('visa_points.html', visa_189_eligible=visa_189_eligible, visa_190_eligible=visa_190_eligible, visa_491_eligible=visa_491_eligible)
 
 @main.route('/path_to_visa', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def path_to_visa():
 	# Check if the user has accessed visa_points and is eligible for the Path to Visa page
 	#if not session.get('eligible_for_path_to_visa'):
 		#return redirect(url_for('main.index'))
 
 	# Remove session flag after accessing the page to prevent further direct access
+
+	if current_app.config['ENV'] == 'development':
+		session['username'] = 'dnysteven'
+
+	username = session.get('username')
+	if not username:
+		return redirect(url_for('main.login'))
+  
 	session.pop('eligible_for_path_to_visa', None)
 
 	if request.method == 'POST':
@@ -256,9 +271,16 @@ def path_to_visa():
 	return render_template('path_to_visa.html')
 
 @main.route('/recommendation', methods=['GET'])
-@login_required
+#@login_required
 def recommendation():
 	# Check if user has submitted the form in path_to_visa.html
+	if current_app.config['ENV'] == 'development':
+		session['username'] = 'dnysteven'
+
+	username = session.get('username')
+	if not username:
+		return redirect(url_for('main.login'))
+
 	if not session.get('submitted_path_to_visa'):
 		return redirect(url_for('main.path_to_visa'))
 
@@ -271,8 +293,15 @@ def recommendation():
 	return render_template('recommendation.html', recommended_courses=recommended_courses)
 
 @main.route('/save_courses', methods=['POST'])
-@login_required
+#@login_required
 def save_courses():
+	if current_app.config['ENV'] == 'development':
+		session['username'] = 'dnysteven'
+
+	username = session.get('username')
+	if not username:
+		return redirect(url_for('main.login'))  
+
 	username = session['username']
 	selected_courses = request.form.getlist('save_courses')
 
@@ -286,8 +315,15 @@ def save_courses():
 	return redirect(url_for('main.recommendation'))
 
 @main.route('/profile', methods=['GET'])
-@login_required
+#@login_required
 def profile():
+	if current_app.config['ENV'] == 'development':
+		session['username'] = 'dnysteven'
+
+	username = session.get('username')
+	if not username:
+		return redirect(url_for('main.login'))
+  
 	# Retrieve user data from database
 	username = session['username']
 	user = User.query.filter_by(username=username).first()
@@ -314,7 +350,7 @@ def dashboard():
 	return render_template('dashboard.html', pie_labels=pie_labels, pie_values=pie_values,
                         bar_labels=bar_labels, bar_values_A=bar_values_category_A,
                         bar_values_B=bar_values_category_B, bar_values_C=bar_values_category_C)
- 
+
 @main.route('/edu_statistics')
 def edu_statistics():
 	return render_template('edu_statistics.html')

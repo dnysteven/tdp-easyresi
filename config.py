@@ -7,3 +7,6 @@ class Config:
 	# Database configuration with schema set to `tdp-easyresi`
 	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'postgresql://postgres:postgres@localhost/postgres?options=-csearch_path=tdp-easyresi'
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+	# Set environment for development mode
+	ENV = 'development'
