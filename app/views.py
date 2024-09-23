@@ -50,8 +50,8 @@ def login_required(f):
 @main.route('/register', methods=['GET', 'POST'])
 def register():
   # Check if user is already logged in
-	if 'username' in session:
-		return redirect(url_for('main.index'))
+	# if 'username' in session:
+	# 	return redirect(url_for('main.index'))
   
 	if request.method == 'POST':
 		# Get form data
@@ -98,7 +98,7 @@ def register():
 
 	# Fetch user roles for the dropdown
 	roles = UserRole.query.all()
-	return render_template('registration.html', roles=roles)
+	return render_template('register.html', roles=roles)
 
 @main.route('/')
 def index():
@@ -293,6 +293,8 @@ def save_courses():
 		# Call the function to save multiple courses at once
 		user_course_preferences(username, selected_courses, request.form)
 		flash(f"Successfully saved {len(selected_courses)} course(s).")
+  
+		return redirect(url_for('main.profile'))
 	else:
 		flash("No courses were selected.")
 
