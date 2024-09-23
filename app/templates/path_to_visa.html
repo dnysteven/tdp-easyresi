@@ -6,44 +6,63 @@
   <h1>Path to Visa</h1>
   <form method="POST">
     <!-- Educational Qualification -->
-    <label for="educational_qualification">Educational Qualification:</label>
-    <select id="educational_qualification" name="educational_qualification" required>
-      <option value="Bachelor">Bachelor</option>
-      <option value="Master">Master</option>
-      <option value="Doctorate">Doctorate</option>
-    </select>
+    <label for="education_level">What is the highest level of education you are willing to achieve?:</label><br>
+    <select id="ducation_level" name="education_level" required>
+        <option value="">Select</option>
+        <option value="Doctorate">Doctorate</option>
+        <option value="Bachelor's degree">Bachelor's degree</option>
+        <option value="Diploma or trade qualification">Diploma or trade qualification</option>
+        <option value="Other recognised">Other recognised qualification</option>
+    </select><br><br>
 
     <!-- Specialist Education Qualification -->
-    <p>Specialist Education Qualification:</p>
-    <input type="radio" id="specialist_yes" name="specialist_education" value="1" required>
-    <label for="specialist_yes">Yes</label>
-    <input type="radio" id="specialist_no" name="specialist_education" value="0" required>
-    <label for="specialist_no">No</label>
+    <label for="specialist_education">What categories are you willing to or interested to study?:</label><br>
+    <select id="specialist_education" name="specialist_education" required>
+        <option value="">Select</option>
+        <option value="Science">Science</option>
+        <option value="Technology">Technology</option>
+        <option value="Engineering">Engineering</option>
+        <option value="Matematics">Matematics</option>
+        <option value="Specified Information and Communication Technology (ICT)">Specified Information and Communication Technology (ICT)</option>
+    </select><br><br>
 
-    <!-- Offers Professional Year -->
-    <p>Offers Professional Year:</p>
-    <input type="radio" id="professional_yes" name="professional_year" value="1" required>
-    <label for="professional_yes">Yes</label>
-    <input type="radio" id="professional_no" name="professional_year" value="0" required>
-    <label for="professional_no">No</label>
+     <!-- Professional Year -->
+     <label for="professional_year">Would you be willing to complete a professional year program in Australia in your nominated skilled occupation for at least 12 months,  if you are interested in studying Accounting, ICT/Computing or Engineering. If yes, please tick:</label><br>
+     <input type="checkbox" id="professional_year" name="professional_year"><br><br>
+
+      <!-- Regional Study -->
+      <label for="regional_study">Would you be willing to study in regional area in Australia? If yes, please tick:</label><br>
+      <input type="checkbox" id="regional_study" name="regional_study"><br><br>
 
     <!-- Study Course Duration -->
-    <label for="course_duration">Study Course Duration (years):</label>
-    <input type="number" id="course_duration" name="course_duration" min="1" required><br>
+    <label for="course_duration">What course duration would you be interested in?</label><br>
+    <select id="course_duration" name="course_duration" required>
+      <option value="">Select</option>
+      <option value="2 years">2 years</option>
+      <option value="4 years">4 years</option>
+      <option value="6 years">6 years</option>
+  </select><br><br>
 
-    <!-- Study and Work in Regional Australia -->
-    <p>Study and Work in Regional Australia:</p>
-    <input type="checkbox" id="regional" name="regional" value="1">
-    <label for="regional">Yes</label>
+    <!-- Maximum Course Fees -->
+    <label for="user_tuition_fee">What is your expected maximum course fee?:</label><br>
+    <select id="user_tuition_fee" name="user_tuition_fee" required>
+      <option value="">Select</option>
+      <option value="60K">Unto 60K AUD</option>
+      <option value="60K-100K">60K-100K AUD</option>
+      <option value="Above 100k">Above 100k AUD</option>
+  </select><br><br>
 
-    <!-- Maximum Course Fees (Checkbox) -->
-    <p>Maximum Course Fees (Select one or more):</p>
-    <input type="checkbox" id="fees1" name="course_fees" value="1">
-    <label for="fees1">&lt;60K AUD</label><br>
-    <input type="checkbox" id="fees2" name="course_fees" value="2">
-    <label for="fees2">60-100K AUD</label><br>
-    <input type="checkbox" id="fees3" name="course_fees" value="3">
-    <label for="fees3">&gt;100K AUD</label>
+  <!-- Location State -->
+  <label for="location_state">Which state would you prefer to study?:</label><br>
+  <select id="location_state" name="location_state" required>
+    <option value="">Select</option>
+    <option value="VIC">VIC</option>
+    <option value="NSW">NSW</option>
+    <option value="WA">WA</option>
+    <option value="QLD">QLD</option>
+    <option value="TAS">TAS</option>
+    <option value="SA">SA</option>
+</select><br><br>
 
     <!-- Submit Button -->
     <input type="submit" value="Submit">
