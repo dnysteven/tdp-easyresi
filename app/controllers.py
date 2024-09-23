@@ -86,69 +86,80 @@ def predict_model(features):
 def visa_points_calculator(data):
   points = 0
   
-  # Age points (this example uses hypothetical ranges)
-  if 18 <= data['age'] <= 25:
+  # Age points calculation
+  if data['age'] == '18-24' or data['age'] == '33-39':
     points += 25
-  elif 26 <= data['age'] <= 32:
+  elif data['age'] == '25-32':
     points += 30
-  elif 33 <= data['age'] <= 39:
-    points += 25
-  elif 40 <= data['age'] <= 44:
+  elif data['age'] == '40-44':
     points += 15
+  else:
+    points += 0
 
   # English language level points
-  if data['english_language'] == 'competent':
+  if data['english_level'] == 'competent':
     points += 10
-  elif data['english_language'] == 'proficient':
+  elif data['english_level'] == 'proficient':
     points += 20
-  elif data['english_language'] == 'superior':
+  elif data['english_level'] == 'superior':
     points += 30
 
-  # Overseas skilled employment points
-  if data['overseas_employment'] >= 9:
-    points += 15
-  elif data['overseas_employment'] >= 6:
-    points += 10
-  elif data['overseas_employment'] >= 3:
+  # Overseas employment points
+  if data['overseas_employment'] == '0-2':
+    points += 0
+  elif data['overseas_employment'] == '3-4':
     points += 5
-
-  # Australian skilled employment points
-  if data['australian_employment'] >= 9:
-    points += 20
-  elif data['australian_employment'] >= 6:
-    points += 15
-  elif data['australian_employment'] >= 3:
+  elif data['overseas_employment'] == '5-7':
     points += 10
+  elif data['overseas_employment'] == '>=8':
+    points += 15
+
+  # Australian employment points
+  if data['australian_employment'] == '<1':
+    points += 0
+  elif data['australian_employment'] == '1-2':
+    points += 5
+  elif data['australian_employment'] == '3-4':
+    points += 10
+  elif data['australian_employment'] == '5-7':
+    points += 15
+  elif data['australian_employment'] == '>=8':
+    points += 20
 
   # Education level points
   if data['education_level'] == 'doctorate':
     points += 20
   elif data['education_level'] == 'bachelors':
     points += 15
-  elif data['education_level'] == 'diploma_trade':
+  elif data['education_level'] == 'diploma_or_trade':
     points += 10
   elif data['education_level'] == 'other_recognised':
     points += 5
 
   # Specialist education qualification points
-  if data['specialist_education'] == 'yes':
+  if 'specialist_education' in data and data['specialist_education'] == 'yes':
+    specialist_education = True
     points += 10
 
   # Australian study requirement points
-  if data['australian_study'] == 'yes':
-    points += 10
+  if 'australian_study' in data and data['australian_study'] == 'yes':
+    australian_study = True
+    points += 5
 
   # Professional year in Australia points
-  if data['professional_year'] == 'yes':
-      points += 10
+  if 'professional_year' in data and data['professional_year'] == 'yes':
+    professional_year = True
+    points += 5
 
   # Community language points
-  if data['community_language'] == 'yes':
-    points += 10
+  if 'community_language' in data and data['community_language'] == 'yes':
+    community_language = True
+    points += 5
 
   # Regional study points
-  if data['regional_study'] == 'yes':
-    points += 10
+  if 'regional_study' in data and data['regional_study'] == 'yes':
+    regional_study = True
+    points += 5
 
   # Partner skills points
   if data['partner_skills'] == 'age_eng_skill':
@@ -157,68 +168,70 @@ def visa_points_calculator(data):
     points += 5
   elif data['partner_skills'] == 'single_citizen_pr':
     points += 15
+  else:
+    points += 0
   
-  # Calculate points for visa 189
-  visa_189_points = points
-  
-  # Check if eligible for visa 189
-  visa_189_eligible = visa_189_points >= 65
-
-  # State nomination points (for visa 190)
-  state_nomination_points = 0
-  if data['state_nomination'] == 'yes':
-    state_nomination_points = 5
+  # State nomination points
+  if data['nomination'] == 'state':
     points += 5
-  visa_190_points = visa_189_points + state_nomination_points  # Adding state nomination points
-
-  # Check if eligible for visa 190 (visa 189 points >= 65 AND state nomination > 0)
-  visa_190_eligible = visa_189_points >= 65 and state_nomination_points > 0
-
-  # Regional nomination points (for visa 491)
-  regional_nomination_points = 0
-  if data['regional_nomination'] == 'yes':
-    regional_nomination_points = 15
+  elif data['nomination'] == 'regional':
     points += 15
-  visa_491_points = visa_189_points + regional_nomination_points  # Adding regional nomination points
-
-  # Check if eligible for visa 491 (visa 189 points >= 65 AND regional nomination > 0)
-  visa_491_eligible = visa_189_points >= 65 and regional_nomination_points > 0
+  elif data['nomination'] == 'both':
+    points += 20
+  else:
+    points += 0
+  
+  # Visa eligibility logic
+  visa_189_eligible = False
+  visa_190_eligible = False
+  visa_491_eligible = False
+  
+  if points >= 65:
+    visa_189_eligible = True
+    if data['nomination'] == 'state':
+      visa_190_eligible = True
+    elif data['nomination'] == 'regional':
+      visa_491_eligible = True
+    elif data['nomination'] == 'both':
+      visa_190_eligible = True
+      visa_491_eligible = True
+  
+  # Convert 'yes'/'no' to boolean
+  def to_bool(value):
+    return value.lower() == 'yes'
+  
+  # Convert 'yes'/'no' to boolean for checkbox values
+  specialist_education = to_bool(data.get('specialist_education', 'no'))
+  australian_study = to_bool(data.get('australian_study', 'no'))
+  professional_year = to_bool(data.get('professional_year', 'no'))
+  community_language = to_bool(data.get('community_language', 'no'))
+  regional_study = to_bool(data.get('regional_study', 'no'))
   
   # Save to database with username
   visa_points_entry = VisaPoints(
     username=data['username'],
     age=data['age'],
-    english_language=data['english_language'],
+    english_level=data['english_level'],
     overseas_employment=data['overseas_employment'],
     australian_employment=data['australian_employment'],
     education_level=data['education_level'],
-    specialist_education=data['specialist_education'],
-    australian_study=data['australian_study'],
-    professional_year=data['professional_year'],
-    community_language=data['community_language'],
-    regional_study=data['regional_study'],
+    specialist_education=specialist_education,
+    australian_study=australian_study,
+    professional_year=professional_year,
+    community_language=community_language,
+    regional_study=regional_study,
     partner_skills=data['partner_skills'],
-    state_nomination=data['state_nomination'],
-    regional_nomination=data['regional_nomination'],
-    visa_189_points=visa_189_points,
-    visa_190_points=visa_190_points,
-    visa_491_points=visa_491_points,
+    nomination=data['nomination'],
+    points=points,
     visa_189_eligible=visa_189_eligible,
     visa_190_eligible=visa_190_eligible,
-    visa_491_eligible=visa_491_eligible,
+    visa_491_eligible=visa_491_eligible
   )
 
   db.session.add(visa_points_entry)
   db.session.commit()
 
-  return {
-    'visa_189_points': visa_189_points,
-    'visa_190_points': visa_190_points,
-    'visa_491_points': visa_491_points,
-    'visa_189_eligible': visa_189_eligible,
-    'visa_190_eligible': visa_190_eligible,
-    'visa_491_eligible': visa_491_eligible
-  }
+  return points, visa_189_eligible, visa_190_eligible, visa_491_eligible
 
 def calculate_age(request):
   date_of_birth_str = request.form.get('date_of_birth')

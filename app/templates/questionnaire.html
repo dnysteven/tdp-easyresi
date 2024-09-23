@@ -7,94 +7,94 @@
   <form action="/questionnaire" method="POST">
     <!-- Age Section -->
     <label for="age">Age:</label><br>
-    <select id="age" name="age">
-        <option value="">Select</option>
-        <option value="18-24">18-24</option>
-        <option value="25-32">25-32</option>
-        <option value="33-39">33-39</option>
-        <option value="40-44">40-44</option>
+    <select id="age" name="age" required>
+			<option value="" selected readonly>Select</option>
+			<option value="18-24">18-24</option>
+			<option value="25-32">25-32</option>
+			<option value="33-39">33-39</option>
+			<option value="40-44">40-44</option>
+			<option value=">=45">45 or More</option>
     </select><br><br>
-
 
     <!-- English Language Level -->
     <label for="english_level">English Language Level:</label><br>
     <select id="english_level" name="english_level" required>
-        <option value="">Select</option>
-        <option value="Competent">Competent</option>
-        <option value="Proficient">Proficient</option>
-        <option value="Superior">Superior</option>
+			<option value="" selected readonly>Select</option>
+			<option value="competent">Competent</option>
+			<option value="proficient">Proficient</option>
+			<option value="superior">Superior</option>
     </select><br><br>
 
     <!-- Overseas Skilled Employment -->
     <label for="overseas_employment">How many years of skilled work experience do you have overseas?:</label><br>
     <select id="overseas_employment" name="overseas_employment" required>
-        <option value="">Select</option>
-        <option value="0-2">0-2 years</option>
-        <option value="3-4">3-4 years</option>
-        <option value="5-7">5-7 years</option>
-        <option value="8+">8 or more years</option>
+			<option value="" selected readonly>Select</option>
+			<option value="0-2">0-2 years</option>
+			<option value="3-4">3-4 years</option>
+			<option value="5-7">5-7 years</option>
+			<option value=">=8">8 or more years</option>
     </select><br><br>
 
     <!-- Australian Skilled Employment -->
     <label for="australian_employment">How many years of skilled work experience do you have in Australia?:</label><br>
     <select id="australian_employment" name="australian_employment" required>
-        <option value="">Select</option>
-        <option value="0-1">0-1 years</option>
-        <option value="1-2">1-2 years</option>
-        <option value="3-4">3-4 years</option>
-        <option value="5-7">5-7 years</option>
-        <option value="8+">8 or more years</option>
+			<option value="" selected readonly>Select</option>
+			<option value="0-1">Less than 1 year</option>
+			<option value="1-2">1-2 years</option>
+			<option value="3-4">3-4 years</option>
+			<option value="5-7">5-7 years</option>
+			<option value=">=8">8 or more years</option>
     </select><br><br>
-
 
     <!-- Educational Qualifications -->
     <label for="education_level">What is the highest level of education you have completed?:</label><br>
     <select id="education_level" name="education_level" required>
-        <option value="">Select</option>
-        <option value="Doctorate">Doctorate</option>
-        <option value="Bachelor's degree">Bachelor's degree</option>
-        <option value="Diploma or trade qualification">Diploma or trade qualification</option>
-        <option value="Other recognised">Other recognised qualification</option>
+			<option value="" selected readonly>Select</option>
+			<option value="doctorate">Doctorate</option>
+			<option value="bachelor">Bachelor's degree</option>
+			<option value="diploma_or_trade">Diploma or trade qualification</option>
+			<option value="other_recognised">Other recognised qualification</option>
     </select><br><br>
 
     <!-- Specialist Education Qualification -->
     <label for="specialist_education">Have you completed any specialist education qualifications, such as Accounting, ICT/Computing, or Engineering? If yes, please tick:</label><br>
-    <input type="checkbox" id="specialist_education" name="specialist_education"><br><br>
+    <input type="checkbox" id="specialist_education" name="specialist_education" value="yes"><br><br>
 
     <!-- Australian Study Requirement -->
     <label for="australian_study">Have you met the Australian Study Requirement? If yes, please tick:</label><br>
-    <input type="checkbox" id="australian_study" name="australian_study"><br><br>
+    <input type="checkbox" id="australian_study" name="australian_study" value="yes"><br><br>
 
     <!-- Professional Year in Australia -->
     <label for="professional_year">Have you completed a professional year in Australia? If yes, please tick:</label><br>
-    <input type="checkbox" id="professional_year" name="professional_year"><br><br>
+    <input type="checkbox" id="professional_year" name="professional_year" value="yes"><br><br>
 
-      <!-- Community Language -->
-      <label for="community_language">Do you speak a community language? If yes, please tick:</label><br>
-      <input type="checkbox" id="community_language" name="community_language"><br><br>
+		<!-- Community Language -->
+		<label for="community_language">Do you speak a community language? If yes, please tick:</label><br>
+		<input type="checkbox" id="community_language" name="community_language" value="yes"><br><br>
 
-      <!-- Regional Study -->
-      <label for="regional_study">Have you completed regional study in Australia? If yes, please tick:</label><br>
-      <input type="checkbox" id="regional_study" name="regional_study"><br><br>
+		<!-- Regional Study -->
+		<label for="regional_study">Have you completed regional study in Australia? If yes, please tick:</label><br>
+		<input type="checkbox" id="regional_study" name="regional_study" value="yes"><br><br>
 
-      <!-- Partner Skills -->
-      <label for="partner_skills">Does your partner have skills that contribute to the points calculation?</label><br>
-      <select id="partner_skills" name="partner_skills">
-          <option value="">Select</option>
-          <option value="age Eng skills">Age and English skills</option>
-          <option value="comp Eng">Competency in English</option>
-          <option value="single or citizen or PR">Single or holds citizenship/PR</option>
-          <option value="none">None of above</option>
-      </select><br><br>
+		<!-- Partner Skills -->
+		<label for="partner_skills">Does your partner have skills that contribute to the points calculation?</label><br>
+		<select id="partner_skills" name="partner_skills" required>
+			<option value="" selected readonly>Select</option>
+			<option value="age_eng_skills">Age and English skills</option>
+			<option value="comp_eng">Competency in English</option>
+			<option value="single_citizen_pr">Single or holds citizenship/PR</option>
+			<option value="none">None of the above</option>
+		</select><br><br>
 
-      <!-- State Nomination -->
-      <label for="partner_skills">Does your partner have skills that contribute to the points calculation?</label><br>
-      <select id="state_nomination" name="state_nomination">
-          <option value="">Select</option>
-          <option value="option1">option1</option>
-          <option value="option2">option2</option>
-          <option value="option3">option3</option>
-      </select><br><br>
+		<!-- Nomination -->
+		<label for="nomination">Nomination</label><br>
+		<select id="nomination" name="nomination" required>
+			<option value="" selected readonly>Select</option>
+			<option value="state">State Nomination</option>
+			<option value="regional">Regional Nomination</option>
+			<option value="both">Both State and Regional Nomination</option>
+			<option value="none">None of the above</option>
+		</select><br><br>
 
     <input type="submit" value="Submit">
   </form>

@@ -189,35 +189,18 @@ def questionnaire():
     return redirect(url_for('main.login'))
   
   if request.method == 'POST':
-    date_of_birth, age = calculate_age(request)
+    data = request.form.to_dict()
+    data['username'] = session['username']
     
-    form = {
-      'username': session['username'],
-			'date_of_birth': date_of_birth,
-			'age': age,
-			'english_language': request.form.get('english_language'),
-			'overseas_employment': int(request.form.get('overseas_employment')),
-			'australian_employment': int(request.form.get('australian_employment')),
-			'education_level': request.form.get('education_level'),
-			'specialist_education': request.form.get('specialist_education'),
-			'australian_study': request.form.get('australian_study'),
-			'professional_year': request.form.get('professional_year'),
-			'community_language': request.form.get('community_language'),
-			'regional_study': request.form.get('regional_study'),
-			'partner_skills': request.form.get('partner_skills'),
-			'state_nomination': request.form.get('state_nomination'),
-			'regional_nomination': request.form.get('regional_nomination')
-		}
+    # Calculate points and eligibility
+    points, visa_189_eligible, visa_190_eligible, visa_491_eligible = visa_points_calculator(data)
     
-    result = visa_points_calculator(form)
+    session['points'] = points
+    session['visa_189_eligible'] = visa_189_eligible
+    session['visa_190_eligible'] = visa_190_eligible
+    session['visa_491_eligible'] = visa_491_eligible
+    session['completed_questionnaire'] = True
     
-    session['visa_189_points'] = result['visa_189_points']
-    session['visa_190_points'] = result['visa_190_points']
-    session['visa_491_points'] = result['visa_491_points']
-    session['visa_189_eligible'] = result['visa_189_eligible']
-    session['visa_190_eligible'] = result['visa_190_eligible']
-    session['visa_491_eligible'] = result['visa_491_eligible']
-    session['completed_questionnaire'] = True  # Mark the form as completed
     return redirect(url_for('main.visa_points'))
   
   return render_template('questionnaire.html')
@@ -228,17 +211,18 @@ def visa_points():
   if not session.get('completed_questionnaire'):
     return redirect(url_for('main.questionnaire'))  # Redirect if questionnaire not completed
   
-  # visa_189_points = session.get('visa_189_points')
-  # visa_190_points = session.get('visa_190_points')
-  # visa_491_points = session.get('visa_491_points')
+  points = session.get('points')
   visa_189_eligible = session.get('visa_189_eligible', False)
   visa_190_eligible = session.get('visa_190_eligible', False)
   visa_491_eligible = session.get('visa_491_eligible', False)
   
+  session.pop('completed_questionnaire', None)
+  
   if not visa_189_eligible and not visa_190_eligible and not visa_491_eligible:
     session['eligible_for_path_to_visa'] = True
     
-  return render_template('visa_points.html', visa_189_eligible=visa_189_eligible, visa_190_eligible=visa_190_eligible, visa_491_eligible=visa_491_eligible)
+  return render_template('visa_points.html', points=points, visa_189_eligible=visa_189_eligible,
+                        visa_190_eligible=visa_190_eligible, visa_491_eligible=visa_491_eligible)
 
 @main.route('/path_to_visa', methods=['GET', 'POST'])
 #@login_required

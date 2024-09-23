@@ -103,23 +103,20 @@ class VisaPoints(db.Model):
 	__tablename__ = 'visa_points'
 	
 	id = db.Column(db.Integer, primary_key=True)
-	username = db.Column(db.String(50), db.ForeignKey('users.username'), nullable=False)
-	age = db.Column(db.Integer, nullable=False)
-	english_language = db.Column(db.String(50), nullable=False)
-	overseas_employment = db.Column(db.Integer, nullable=False)
-	australian_employment = db.Column(db.Integer, nullable=False)
+	username = db.Column(db.String(255), db.ForeignKey('users.username'), nullable=False)
+	age = db.Column(db.String(10), nullable=False)
+	english_level = db.Column(db.String(50), nullable=False)
+	overseas_employment = db.Column(db.String(10), nullable=False)
+	australian_employment = db.Column(db.String(10), nullable=False)
 	education_level = db.Column(db.String(50), nullable=False)
-	specialist_education = db.Column(db.String(10), nullable=False)
-	australian_study = db.Column(db.String(10), nullable=False)
-	professional_year = db.Column(db.String(10), nullable=False)
-	community_language = db.Column(db.String(10), nullable=False)
-	regional_study = db.Column(db.String(10), nullable=False)
+	specialist_education = db.Column(db.Boolean)
+	australian_study = db.Column(db.Boolean)
+	professional_year = db.Column(db.Boolean)
+	community_language = db.Column(db.Boolean)
+	regional_study = db.Column(db.Boolean)
 	partner_skills = db.Column(db.String(50), nullable=False)
-	state_nomination = db.Column(db.String(10), nullable=False)
-	regional_nomination = db.Column(db.String(10), nullable=False)
-	visa_189_points = db.Column(db.Integer, nullable=False)
-	visa_190_points = db.Column(db.Integer, nullable=False)
-	visa_491_points = db.Column(db.Integer, nullable=False)
+	nomination = db.Column(db.String(10), nullable=False)
+	points = db.Column(db.Integer, nullable=False)
 	visa_189_eligible = db.Column(db.Boolean, nullable=False)
 	visa_190_eligible = db.Column(db.Boolean, nullable=False)
 	visa_491_eligible = db.Column(db.Boolean, nullable=False)
@@ -127,10 +124,10 @@ class VisaPoints(db.Model):
 
 	user = db.relationship('User', backref='visa_points')
 
-	def __init__(self, username, age, english_language, overseas_employment, australian_employment, education_level, specialist_education, australian_study, professional_year, community_language, regional_study, partner_skills, state_nomination, regional_nomination, visa_189_points, visa_190_points, visa_491_points, visa_189_eligible, visa_190_eligible, visa_491_eligible):
+	def __init__(self, username, age, english_level, overseas_employment, australian_employment, education_level, specialist_education, australian_study, professional_year, community_language, regional_study, partner_skills, nomination, points, visa_189_eligible, visa_190_eligible, visa_491_eligible):
 		self.username = username
 		self.age = age
-		self.english_language = english_language
+		self.english_level = english_level
 		self.overseas_employment = overseas_employment
 		self.australian_employment = australian_employment
 		self.education_level = education_level
@@ -140,11 +137,8 @@ class VisaPoints(db.Model):
 		self.community_language = community_language
 		self.regional_study = regional_study
 		self.partner_skills = partner_skills
-		self.state_nomination = state_nomination
-		self.regional_nomination = regional_nomination
-		self.visa_189_points = visa_189_points
-		self.visa_190_points = visa_190_points
-		self.visa_491_points = visa_491_points
+		self.nomination = nomination
+		self.points = points
 		self.visa_189_eligible = visa_189_eligible
 		self.visa_190_eligible = visa_190_eligible
 		self.visa_491_eligible = visa_491_eligible
