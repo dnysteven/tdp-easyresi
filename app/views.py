@@ -322,27 +322,27 @@ def profile():
 # Route for the charts (admin_statistics)
 @main.route('/admin_statistics')
 def chart():
-    # Pie Chart Data (Total registered users by group)
-    pie_labels = ['Applicants', 'Educational Institution', 'Migration Agencies']
-    pie_values = [500, 200, 150]
+	# Pie Chart Data (Total registered users by group)
+	pie_labels = ['Applicants', 'Educational Institution', 'Migration Agencies']
+	pie_values = [500, 200, 150]
 
-    # Line Chart Data (Users logged in by group over the last 6 months)
-    line_labels = ['April', 'May', 'June', 'July', 'August', 'September']
-    line_values_applicants = [120, 130, 100, 90, 110, 115]
-    line_values_institutions = [40, 45, 30, 35, 50, 48]
-    line_values_agencies = [30, 25, 20, 18, 22, 19]
+	# Line Chart Data (Users logged in by group over the last 6 months)
+	line_labels = ['April', 'May', 'June', 'July', 'August', 'September']
+	line_values_applicants = [120, 130, 100, 90, 110, 115]
+	line_values_institutions = [40, 45, 30, 35, 50, 48]
+	line_values_agencies = [30, 25, 20, 18, 22, 19]
 
-    # Bar Chart Data (Courses added in the last 6 months)
-    bar_labels = ['April', 'May', 'June', 'July', 'August', 'September']
-    bar_values = [15, 18, 12, 20, 25, 30]
+	# Bar Chart Data (Courses added in the last 6 months)
+	bar_labels = ['April', 'May', 'June', 'July', 'August', 'September']
+	bar_values = [15, 18, 12, 20, 25, 30]
 
-    return render_template('admin_statistics.html',
-                           pie_labels=pie_labels, pie_values=pie_values,
-                           line_labels=line_labels,
-                           line_values_applicants=line_values_applicants,
-                           line_values_institutions=line_values_institutions,
-                           line_values_agencies=line_values_agencies,
-                           bar_labels=bar_labels, bar_values=bar_values)
+	return render_template('admin_statistics.html',
+													pie_labels=pie_labels, pie_values=pie_values,
+													line_labels=line_labels,
+													line_values_applicants=line_values_applicants,
+													line_values_institutions=line_values_institutions,
+													line_values_agencies=line_values_agencies,
+													bar_labels=bar_labels, bar_values=bar_values)
 
 @main.route('/edu_statistics')
 def edu_statistics():

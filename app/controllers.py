@@ -190,10 +190,7 @@ def visa_points_calculator(data):
     visa_189_eligible = True
     if data['nomination'] == 'state':
       visa_190_eligible = True
-    elif data['nomination'] == 'regional':
-      visa_491_eligible = True
-    elif data['nomination'] == 'both':
-      visa_190_eligible = True
+    elif data['nomination'] == 'state_regional':
       visa_491_eligible = True
   
   # Convert 'yes'/'no' to boolean
