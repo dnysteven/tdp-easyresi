@@ -18,7 +18,6 @@
             <th>Postcode</th>
             <th>Duration (Years)</th>
             <th>Tuition Fee (AUD)</th>
-            <th>Points</th>
             <th>Save Option</th>
           </tr>
         </thead>
@@ -33,11 +32,11 @@
               <td>{{ course.university.postcode }}</td>
               <td>{{ course.duration }}</td>
               <td>{{ course.tuition_fee }}</td>
-              <td>{{ course.points }}</td>
               <td>
                 <input type="checkbox" name="save_courses" value="{{ course.id }}">
                 <input type="hidden" name="course_num_{{ course.id }}" value="{{ course.course_num }}">
                 <input type="hidden" name="course_name_{{ course.id }}" value="{{ course.course_name }}">
+                <input type="hidden" name="provider_name_{{ course.id }}" value="{{ course.provider.first_name }} {{ course.provider.last_name }}">
                 <input type="hidden" name="university_name_{{ course.id }}" value="{{ course.university.university }}">
                 <input type="hidden" name="university_address_{{ course.id }}" value="{{ course.university.street }}, {{ course.university.suburb }}">
                 <input type="hidden" name="state_{{ course.id }}" value="{{ course.university.state }}">
