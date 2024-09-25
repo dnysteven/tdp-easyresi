@@ -1,45 +1,45 @@
-{% extends "base.html" %} {% block title %}Visa Points Form - My
-Application{%endblock %} {% block css %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/charts.css') }}"
-/>
-{% endblock %} {% block content %}
+{% extends "base.html" %}
 
-<h1>Admin Statistics Dashboard</h1>
+{% block title %}Visa Points Form - My Application{%endblock %}
 
-<!-- Pie Chart for User Groups -->
-<div class="chart-container PieChart">
-  <h2>Total Registered Users by User Groups</h2>
-  <canvas id="myPieChart"></canvas>
-</div>
+{% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/charts.css') }}"> {% endblock %}
 
-<!-- Line Chart for User Logins -->
-<div class="chart-container LineChart">
-  <h2>Monthly User Logins by User Groups</h2>
-  <canvas id="myLineChart"></canvas>
-</div>
+{% block content %}
 
-<!-- Bar Chart for Courses Added -->
-<div class="chart-container BarChart">
-  <h2>Total Courses Added in the Last 6 Months</h2>
-  <canvas id="myBarChart"></canvas>
-</div>
+  <h1>Admin Statistics Dashboard</h1>
 
-<!-- Pass processed chart data from Flask to JS via the window object -->
-<script>
-  window.pieLabels = {{ pie_labels | tojson }};
-  window.pieValues = {{ pie_values | tojson }};
-  window.lineLabels = {{ line_labels | tojson }};
-  window.lineValuesApplicants = {{ line_values_applicants | tojson }};
-  window.lineValuesInstitutions = {{ line_values_institutions | tojson }};
-  window.lineValuesAgencies = {{ line_values_agencies | tojson }};
-  window.barLabels = {{ bar_labels | tojson }};
-  window.barValues = {{ bar_values | tojson }};
-</script>
+  <!-- Pie Chart for User Groups -->
+  <div class="chart-container PieChart">
+    <h2>Total Registered Users by User Groups</h2>
+    <canvas id="myPieChart"></canvas>
+  </div>
 
-<!-- Link to external JavaScript file -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+  <!-- Line Chart for User Logins -->
+  <div class="chart-container LineChart">
+    <h2>Monthly User Logins by User Groups</h2>
+    <canvas id="myLineChart"></canvas>
+  </div>
+
+  <!-- Bar Chart for Courses Added -->
+  <div class="chart-container BarChart">
+    <h2>Total Courses Added in the Last 6 Months</h2>
+    <canvas id="myBarChart"></canvas>
+  </div>
+
+  <!-- Pass processed chart data from Flask to JS via the window object -->
+  <script>
+    window.pieLabels = {{ pie_labels | tojson }};
+    window.pieValues = {{ pie_values | tojson }};
+    window.lineLabels = {{ line_labels | tojson }};
+    window.lineValuesApplicants = {{ line_values_applicants | tojson }};
+    window.lineValuesInstitutions = {{ line_values_institutions | tojson }};
+    window.lineValuesAgencies = {{ line_values_agencies | tojson }};
+    window.barLabels = {{ bar_labels | tojson }};
+    window.barValues = {{ bar_values | tojson }};
+  </script>
+
+  <!-- Link to external JavaScript file -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
 
 {% endblock %}

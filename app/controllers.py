@@ -190,10 +190,7 @@ def visa_points_calculator(data):
     visa_189_eligible = True
     if data['nomination'] == 'state':
       visa_190_eligible = True
-    elif data['nomination'] == 'regional':
-      visa_491_eligible = True
-    elif data['nomination'] == 'both':
-      visa_190_eligible = True
+    elif data['nomination'] == 'state_regional':
       visa_491_eligible = True
   
   # Convert 'yes'/'no' to boolean
@@ -335,3 +332,20 @@ def user_course_preferences(username, selected_courses, form_data):
 def get_user_course_preferences(username):
   # Query the user_course_pref table based on the username
   return UserCoursePref.query.filter_by(username=username).all()
+
+def get_chart_admin():
+  # Pie Chart Data (Total registered users by group)
+  pie_labels = ['Applicants', 'Educational Institution', 'Migration Agencies']
+  pie_values = [500, 200, 150]
+
+  # Line Chart Data (Users logged in by group over the last 6 months)
+  line_labels = ['April', 'May', 'June', 'July', 'August', 'September']
+  line_values_applicants = [120, 130, 100, 90, 110, 115]
+  line_values_institutions = [40, 45, 30, 35, 50, 48]
+  line_values_agencies = [30, 25, 20, 18, 22, 19]
+
+  # Bar Chart Data (Courses added in the last 6 months)
+  bar_labels = ['April', 'May', 'June', 'July', 'August', 'September']
+  bar_values = [15, 18, 12, 20, 25, 30]
+
+  return pie_labels, pie_values, line_labels, line_values_applicants, line_values_institutions, line_values_agencies, bar_labels, bar_values

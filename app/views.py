@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
 from app.models import Data, db, User, UserRole, Login, VisaPoints
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.controllers import train_model, predict_model, visa_points_calculator, calculate_age, process_visa_path, user_course_preferences, get_user_course_preferences
+from app.controllers import train_model, predict_model, visa_points_calculator, process_visa_path, user_course_preferences, get_user_course_preferences, get_chart_admin
 
 main = Blueprint('main', __name__)
 
@@ -321,28 +321,17 @@ def profile():
 
 # Route for the charts (admin_statistics)
 @main.route('/admin_statistics')
-def chart():
-    # Pie Chart Data (Total registered users by group)
-    pie_labels = ['Applicants', 'Educational Institution', 'Migration Agencies']
-    pie_values = [500, 200, 150]
+def admin_statistics():
+	pie_labels, pie_values, line_labels, line_values_applicants, line_values_institutions, \
+  line_values_agencies, bar_labels, bar_values = get_chart_admin()
 
-    # Line Chart Data (Users logged in by group over the last 6 months)
-    line_labels = ['April', 'May', 'June', 'July', 'August', 'September']
-    line_values_applicants = [120, 130, 100, 90, 110, 115]
-    line_values_institutions = [40, 45, 30, 35, 50, 48]
-    line_values_agencies = [30, 25, 20, 18, 22, 19]
-
-    # Bar Chart Data (Courses added in the last 6 months)
-    bar_labels = ['April', 'May', 'June', 'July', 'August', 'September']
-    bar_values = [15, 18, 12, 20, 25, 30]
-
-    return render_template('admin_statistics.html',
-                           pie_labels=pie_labels, pie_values=pie_values,
-                           line_labels=line_labels,
-                           line_values_applicants=line_values_applicants,
-                           line_values_institutions=line_values_institutions,
-                           line_values_agencies=line_values_agencies,
-                           bar_labels=bar_labels, bar_values=bar_values)
+	return render_template('admin_statistics.html',
+													pie_labels=pie_labels, pie_values=pie_values,
+													line_labels=line_labels,
+													line_values_applicants=line_values_applicants,
+													line_values_institutions=line_values_institutions,
+													line_values_agencies=line_values_agencies,
+													bar_labels=bar_labels, bar_values=bar_values)
 
 @main.route('/edu_statistics')
 def edu_statistics():
