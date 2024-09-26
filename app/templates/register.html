@@ -7,35 +7,45 @@
   <form class="register-form" action="/register" method="POST">
     <label for="email">Email:</label>
       <input class="input-register" type="email" id="email" name="email" required><br>
+
     <label for="password">Password:</label>
       <input class="input-register" type="password" id="password" name="password" required><br>
+
     <label for="confirm-password">Confirm Password:</label>
       <input class="input-register" type="confirm-password" id="confirm-password" name="confirm-password" required><br>
+
     <label for="first_name">First Name:</label>
       <input class="input-register" type="text" id="first_name" name="first_name" required><br>
+
     <label for="last_name">Last Name:</label>
       <input class="input-register" type="text" id="last_name" name="last_name" required><br>
+
     <label for="phone">Phone:</label>
       <input class="input-register" type="text" id="phone" name="phone" required><br>
+
     <label for="user_role">User Role:</label>
     <select class="input-register" id="user_role" name="user_role" required>
       {% for role in roles %}
       <option value="{{ role.user_role }}">{{ role.name }}</option>
       {% endfor %}
     </select><br> 
+
     <label for="edu_id">Educator ID:</label>
-      <input class="input-register" type="text" id="edu_id" name="edu_id" required><br>
+      <input class="input-register" type="text" id="edu_id" name="edu_id" disabled><br>
+
     <label for="abn">ABN number:</label>
-      <input class="input-register" type="text" id="abn" name="abn" required><br>
+      <input class="input-register" type="text" id="abn" name="abn" disabled><br>
+
     <label for="address">Address:</label>
       <input class="input-register" type="text" id="address" name="address" required><br>
+      
     <button class="submit-button" type="submit">Register</button>
   </form>
   {% if message %}
   <p>{{ message }}</p>
   {% endif %}
   
-  {% comment %} <script>
+  <script>
     document.addEventListener('DOMContentLoaded', function() {
         const userRoleSelect = document.getElementById('user_role');
         const eduIdInput = document.getElementById('edu_id');
@@ -58,6 +68,6 @@
         userRoleSelect.addEventListener('change', updateInputFields);
         updateInputFields(); 
     });
-  </script> {% endcomment %}
+  </script>
 
 {% endblock %}
