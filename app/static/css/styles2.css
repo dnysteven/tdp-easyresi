@@ -126,7 +126,7 @@ h2 {
   margin-bottom: 2rem;
 }
 
-p {
+.index-para {
   text-align: center;
   margin-bottom: 1rem;
 }
@@ -151,6 +151,8 @@ p {
   font-size: 1.5rem;
 }
 
+
+
 .login {
   display: flex;
   color: #1a1a4b;
@@ -162,7 +164,7 @@ p {
 }
 
 /* Contact Section */
-form {
+.login-form {
   max-width: 600px;
   margin: 0 auto;
   display: flex;
@@ -171,12 +173,35 @@ form {
   margin-bottom: 20px;
 }
 
-input, textarea {
+.register-form {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.login-input {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+} 
+
+.input-register {
   width: 100%;
   padding: 1rem;
   border: 1px solid #ddd;
   border-radius: 5px;
 }
+
+/*.input-register1 {
+  width: 35%;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+} */
 
 button {
   padding: 1rem;
@@ -185,6 +210,10 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #02293e;
 }
 
 /* Footer */

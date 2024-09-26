@@ -4,14 +4,14 @@
 
 {% block content %}
   <h1 class="login">Log in to start calculating your point</h1>
-  <form action="/login" method="POST">
+  <form class="login-form" action="/login" method="POST">
     <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required><br>
+    <input class="login-input" type="text" id="username" name="username" required><br>
     <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br>
-    <button type="submit">Login</button>
+    <input class="login-input" type="password" id="password" name="password" required><br>
+    <button type="submit" class="submit-button">Login</button>
   </form>
-  <p class="menu">Don't have an account, register <a href="/register">here</a></p>
+  <p class="index-para">Don't have an account, register <a href="/register">here</a></p>
   {% if message %}
     <p>{{ message }}</p>
   {% endif %}
