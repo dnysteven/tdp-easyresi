@@ -95,6 +95,62 @@ function renderBarChart(barLabels, barValues) {
 	});
 }
 
+// Function to render the Line Chart for Visa Applications
+function renderVisaLineChart(lineLabels, lineValuesVisa189, lineValuesVisa190, lineValuesVisa191) {
+	const ctxLine = document.getElementById('visaLineChart').getContext('2d');
+	const visaLineChart = new Chart(ctxLine, {
+		type: 'line',
+		data: {
+			labels: lineLabels, // Months
+			datasets: [
+				{
+					label: 'Visa 189 Applications',
+					data: lineValuesVisa189,
+					borderColor: 'rgba(255, 99, 132, 1)',
+					backgroundColor: 'rgba(255, 99, 132, 0.2)',
+					fill: false,
+					tension: 0.1
+				},
+				{
+					label: 'Visa 190 Applications',
+					data: lineValuesVisa190,
+					borderColor: 'rgba(54, 162, 235, 1)',
+					backgroundColor: 'rgba(54, 162, 235, 0.2)',
+					fill: false,
+					tension: 0.1
+				},
+				{
+					label: 'Visa 191 Applications',
+					data: lineValuesVisa191,
+					borderColor: 'rgba(94, 235, 52, 1)',
+					backgroundColor: 'rgba(94, 235, 52, 0.2)',
+					fill: false,
+					tension: 0.1
+				}
+			]
+		},
+		options: {
+			scales: {
+				y: {
+					beginAtZero: true,
+					title: {
+						display: true,
+						text: 'Number of Applicants'
+					}
+				},
+				x: {
+					title: {
+						display: true,
+						text: 'Months'
+					}
+				}
+			},
+			responsive: true
+		}
+	});
+}
+
+
 // Wait for the DOM content to load before rendering the charts
 document.addEventListener('DOMContentLoaded', function() {
 	// Pie Chart
@@ -105,4 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// Bar Chart
 	renderBarChart(window.barLabels, window.barValues);
+
+	// Line Chart
+	renderVisaLineChart(window.lineLabels, window.lineValuesVisa189, window.lineValuesVisa190, window.lineValuesVisa191);
 });
