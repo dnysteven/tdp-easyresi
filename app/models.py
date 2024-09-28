@@ -8,6 +8,9 @@ class UserRole(db.Model):
 	name = db.Column(db.String(50), nullable=False)
 	description = db.Column(db.String(255), nullable=False)
 
+	# Relationship to User
+	users = db.relationship('User', backref='role', lazy=True)
+
 	def __init__(self, user_role, name, description):
 		self.user_role = user_role
 		self.name = name
@@ -17,45 +20,60 @@ class UserRole(db.Model):
 class User(db.Model):
 	__tablename__ = 'users'
 
-	username = db.Column(db.String(50), primary_key=True) # Username as primary key
-	first_name = db.Column(db.String(50), nullable=False) # User first name
-	last_name = db.Column(db.String(50), nullable=False) # User last name
-	email = db.Column(db.String(100), nullable=False) # User email
-	phone = db.Column(db.String(20), nullable=False) # User phone number
-	user_role = db.Column(db.String(20), db.ForeignKey('user_role.user_role'), nullable=False) # e.g., IT, Engineering, etc.
+	email = db.Column(db.String(255), primary_key=True)
+	first_name = db.Column(db.String(255), nullable=False)
+	last_name = db.Column(db.String(255), nullable=False)
+	phone = db.Column(db.String(20), nullable=False)
+	user_role = db.Column(db.String(50), db.ForeignKey('user_role.user_role'), nullable=False)
+	edu_id = db.Column(db.String(50), nullable=True)
+	abn = db.Column(db.String(50), nullable=True)
+	street_address = db.Column(db.String(255), nullable=True)
+	suburb = db.Column(db.String(255), nullable=True)
+	state = db.Column(db.String(3), nullable=True)
+	postcode = db.Column(db.String(4), nullable=True)
+	created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
-	# Define relationship with UserRole
-	role = db.relationship('UserRole', backref='users')
-	
-	# Define relationship with Login
-	login = db.relationship('Login', back_populates='user')
-	
-	# Relationship with UniCourse
-	courses = db.relationship('UniCourse', backref='provider', lazy=True)
+	# Define relationship with the Login model
+	login = db.relationship('Login', backref='user', uselist=False, lazy=True)
 
-	def __init__(self, username, first_name, last_name, email, phone, user_role):
-		self.username = username
+	def __init__(self, email, first_name, last_name, phone, user_role, edu_id=None, abn=None, street_address=None, suburb=None, state=None, postcode=None):
+		self.email = email
 		self.first_name = first_name
 		self.last_name = last_name
-		self.email = email
 		self.phone = phone
 		self.user_role = user_role
+		self.edu_id = edu_id
+		self.abn = abn
+		self.street_address = street_address
+		self.suburb = suburb
+		self.state = state
+		self.postcode = postcode
 
 
 class Login(db.Model):
 	__tablename__ = 'login'
 
-	username = db.Column(db.String(50), db.ForeignKey('users.username'), primary_key=True)
+	email = db.Column(db.String(255), db.ForeignKey('users.email'), primary_key=True)
 	password = db.Column(db.String(255), nullable=False)
 	hashed_password = db.Column(db.String(255), nullable=False)
 
-	# Define relationship with User
-	user = db.relationship('User', back_populates='login')
-
-	def __init__(self, username, password, hashed_password):
-		self.username = username
+	def __init__(self, email, password, hashed_password):
+		self.email = email
 		self.password = password
 		self.hashed_password = hashed_password
+
+class UserSession(db.Model):
+	__tablename__ = 'user_sessions'
+
+	id = db.Column(db.Integer, primary_key=True)
+	email = db.Column(db.String(255), db.ForeignKey('users.email'), nullable=False)
+	login_time = db.Column(db.DateTime, nullable=False)
+	logout_time = db.Column(db.DateTime, nullable=True)
+	time_elapsed = db.Column(db.Interval, nullable=True)
+
+	def __init__(self, email, login_time):
+		self.email = email
+		self.login_time = login_time
 
 class Data(db.Model):
 	__tablename__ = 'data'
@@ -103,7 +121,7 @@ class VisaPoints(db.Model):
 	__tablename__ = 'visa_points'
 	
 	id = db.Column(db.Integer, primary_key=True)
-	username = db.Column(db.String(255), db.ForeignKey('users.username'), nullable=False)
+	email = db.Column(db.String(255), db.ForeignKey('users.email'), nullable=False)
 	age = db.Column(db.String(10), nullable=False)
 	english_level = db.Column(db.String(50), nullable=False)
 	overseas_employment = db.Column(db.String(10), nullable=False)
@@ -124,8 +142,8 @@ class VisaPoints(db.Model):
 
 	user = db.relationship('User', backref='visa_points')
 
-	def __init__(self, username, age, english_level, overseas_employment, australian_employment, education_level, specialist_education, australian_study, professional_year, community_language, regional_study, partner_skills, nomination, points, visa_189_eligible, visa_190_eligible, visa_491_eligible):
-		self.username = username
+	def __init__(self, email, age, english_level, overseas_employment, australian_employment, education_level, specialist_education, australian_study, professional_year, community_language, regional_study, partner_skills, nomination, points, visa_189_eligible, visa_190_eligible, visa_491_eligible):
+		self.email = email
 		self.age = age
 		self.english_level = english_level
 		self.overseas_employment = overseas_employment
