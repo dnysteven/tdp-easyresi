@@ -417,3 +417,12 @@ def get_chart_admin():
   bar_values = [15, 18, 12, 20, 25, 30]
 
   return pie_labels, pie_values, line_labels, line_values_applicants, line_values_institutions, line_values_agencies, bar_labels, bar_values
+
+def get_chart_migrant():
+  # Line Chart Data (Users logged in by group over the last 6 months)
+  line_labels = ['April', 'May', 'June', 'July', 'August', 'September']
+  line_values_visa189 = [120, 130, 100, 90, 110, 115]
+  line_values_visa190 = [40, 45, 30, 35, 50, 48]
+  line_values_visa491 = [30, 25, 20, 18, 22, 19]
+  
+  return line_labels, line_values_visa189, line_values_visa190, line_values_visa491

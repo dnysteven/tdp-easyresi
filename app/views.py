@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
 from app.models import Data, db, User, UserRole, Login, VisaPoints
-from app.controllers import register_user, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, user_course_preferences, get_user_course_preferences, get_chart_admin
+from app.controllers import register_user, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, user_course_preferences, get_user_course_preferences, get_chart_admin, get_chart_migrant
 
 main = Blueprint('main', __name__)
 
@@ -305,11 +305,24 @@ def profile():
 def admin_statistics():
 	pie_labels, pie_values, line_labels, line_values_applicants, line_values_institutions, \
   line_values_agencies, bar_labels, bar_values = get_chart_admin()
+  
+  # Ensure that none of the variables are undefined or None
+	pie_labels = pie_labels or []
+	pie_values = pie_values or []
+  
+	line_labels = line_labels or []
+	line_values_applicants = line_values_applicants or []
+	line_values_institutions = line_values_institutions or []
+	line_values_agencies = line_values_agencies or []
 
-	return render_template('admin_statistics.html',
-													pie_labels=pie_labels, pie_values=pie_values, line_labels=line_labels,
-													line_values_applicants=line_values_applicants, line_values_institutions=line_values_institutions,
-													line_values_agencies=line_values_agencies, bar_labels=bar_labels, bar_values=bar_values)
+	bar_labels = bar_labels or []
+	bar_values = bar_values or []
+
+	return render_template('admin_statistics.html', 
+                        pie_labels=pie_labels, pie_values=pie_values, 
+                        line_labels=line_labels, line_values_applicants=line_values_applicants,
+                        line_values_institutions=line_values_institutions, line_values_agencies=line_values_agencies,
+                        bar_labels=bar_labels, bar_values=bar_values)
 
 @main.route('/edu_statistics')
 def edu_statistics():
@@ -317,4 +330,17 @@ def edu_statistics():
 
 @main.route('/migra_statistics')
 def migra_statistics():
-	return render_template('migra_statistics.html')
+	# Get chart data from the controller
+	line_labels, line_values_visa189, line_values_visa190, line_values_visa191 = get_chart_migrant()
+
+	# Ensure that none of the variables are undefined or None
+	line_labels = line_labels or []  # Default to an empty list if None
+	line_values_visa189 = line_values_visa189 or []
+	line_values_visa190 = line_values_visa190 or []
+	line_values_visa191 = line_values_visa191 or []
+
+	return render_template('migra_statistics.html',
+													line_labels=line_labels,
+													line_values_visa189=line_values_visa189,
+													line_values_visa190=line_values_visa190,
+													line_values_visa191=line_values_visa191)
