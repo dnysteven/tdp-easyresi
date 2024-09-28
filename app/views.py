@@ -336,3 +336,7 @@ def admin_statistics():
 @main.route('/edu_statistics')
 def edu_statistics():
 	return render_template('edu_statistics.html')
+
+@main.route('/migra_statistics')
+def migra_statistics():
+	return render_template('migra_statistics.html')
