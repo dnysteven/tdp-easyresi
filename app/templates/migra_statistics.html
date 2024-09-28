@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Visa Applicants Dashboard{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/charts.css') }}">
+{% endblock %}
+
+{% block content %}
+
+  <h1>Visa Applicants Statistics Dashboard</h1>
+
+  <!-- Line Chart for Visa Applicants -->
+  <div class="chart-container LineChart">
+    <h2>Monthly Visa Applications by Visa Type</h2>
+    <canvas id="visaLineChart"></canvas>
+  </div>
+
+  <!-- Pass processed chart data from Flask to JS via the window object -->
+  <script>
+    window.lineLabels = {{ line_labels | tojson }};  // Months for X-axis
+    window.lineValuesVisa189 = {{ line_values_visa_189 | tojson }};  // Visa 189 applicants
+    window.lineValuesVisa190 = {{ line_values_visa_190 | tojson }};  // Visa 190 applicants
+    window.lineValuesVisa191 = {{ line_values_visa_191 | tojson }};  // Visa 191 applicants
+  </script>
+
+  <!-- Link to external JavaScript file -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+
+{% endblock %}
