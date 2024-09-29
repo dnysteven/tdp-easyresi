@@ -163,7 +163,7 @@ def test():
 #@login_required
 def questionnaire():
   if current_app.config['ENV'] == 'development':
-    session['username'] = 'dnysteven'
+    session['username'] = '104685155@student.swin.edu.au'
     
   username = session.get('username')
   if not username:

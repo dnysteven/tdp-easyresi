@@ -37,13 +37,14 @@ CREATE TABLE IF NOT EXISTS login (
 );
 
 -- Create the user_sessions table
-CREATE TABLE IF NOT EXISTS user_sessions (
+CREATE TABLE user_sessions (
 	id SERIAL PRIMARY KEY,
 	email VARCHAR(255) REFERENCES users(email),
-	login_time TIMESTAMP NOT NULL,
-	logout_time TIMESTAMP,
+	login_time TIMESTAMPTZ NOT NULL,  -- Ensure this stores time with timezone
+	logout_time TIMESTAMPTZ,  -- Ensure this stores time with timezone
 	time_elapsed INTERVAL
 );
+
 
 -- Create the Data table within the schema
 CREATE TABLE data (
@@ -70,28 +71,27 @@ CREATE TABLE model_result (
 );
 
 -- Create visa_points table within the schema
-CREATE TABLE visa_points (
+CREATE TABLE IF NOT EXISTS visa_points (
 	id SERIAL PRIMARY KEY,
 	username VARCHAR(255) NOT NULL,
-	age VARCHAR(10) NOT NULL,
-	english_language VARCHAR(50) NOT NULL,
-	overseas_employment VARCHAR(10) NOT NULL,
-	australian_employment VARCHAR(10) NOT NULL,
+	age VARCHAR(50) NOT NULL,
+	english_level VARCHAR(50) NOT NULL,
+	overseas_employment VARCHAR(50) NOT NULL,
+	australian_employment VARCHAR(50) NOT NULL,
 	education_level VARCHAR(50) NOT NULL,
-	specialist_education BOOLEAN,
-	australian_study BOOLEAN,
-	professional_year BOOLEAN,
-	community_language BOOLEAN,
-	regional_study BOOLEAN,
+	specialist_education BOOLEAN NOT NULL DEFAULT FALSE,
+	australian_study BOOLEAN NOT NULL DEFAULT FALSE,
+	professional_year BOOLEAN NOT NULL DEFAULT FALSE,
+	community_language BOOLEAN NOT NULL DEFAULT FALSE,
+	regional_study BOOLEAN NOT NULL DEFAULT FALSE,
 	partner_skills VARCHAR(50) NOT NULL,
-	nomination VARCHAR(10) NOT NULL,
+	nomination VARCHAR(50) NOT NULL,
 	points INT NOT NULL,
-	visa_189_eligible BOOLEAN NOT NULL,
-	visa_190_eligible BOOLEAN NOT NULL,
-	visa_491_eligible BOOLEAN NOT NULL,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-	CONSTRAINT fk_username FOREIGN KEY (username)
-		REFERENCES users (username)
+	visa_189_eligible BOOLEAN NOT NULL DEFAULT FALSE,
+	visa_190_eligible BOOLEAN NOT NULL DEFAULT FALSE,
+	visa_491_eligible BOOLEAN NOT NULL DEFAULT FALSE,
+	created_at TIMESTAMP NOT NULL,
+	CONSTRAINT fk_username FOREIGN KEY (username) REFERENCES users(email)
 );
 
 -- Create university table with id as primary key
