@@ -80,43 +80,43 @@ function renderStackedBarChart(barLabels, barValuesScience, barValuesTechnology,
                 {
                     label: 'Science',
                     data: barValuesScience,
-                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132)',
+                    borderColor: 'rgba(255, 99, 132)',
                     borderWidth: 1
                 },
                 {
                     label: 'Technology',
                     data: barValuesTechnology,
-                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235)',
+                    borderColor: 'rgba(54, 162, 235)',
                     borderWidth: 1
                 },
                 {
                     label: 'Engineering',
                     data: barValuesEngineering,
-                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(235, 64, 52)',
+                    borderColor: 'rgba(235, 64, 52)',
                     borderWidth: 1
                 },
                 {
                     label: 'Mathematics',
                     data: barValuesMath,
-                    backgroundColor: 'rgba(153, 102, 255, 0.6)',
-                    borderColor: 'rgba(153, 102, 255, 1)',
+                    backgroundColor: 'rgba(153, 102, 255)',
+                    borderColor: 'rgba(153, 102, 255)',
                     borderWidth: 1
                 },
                 {
                     label: 'ICT',
                     data: barValuesICT,
-                    backgroundColor: 'rgba(255, 159, 64, 0.6)',
-                    borderColor: 'rgba(255, 159, 64, 1)',
+                    backgroundColor: 'rgba(255, 159, 64)',
+                    borderColor: 'rgba(255, 159, 64)',
                     borderWidth: 1
                 },
                 {
                     label: 'Others',
                     data: barValuesOthers,
-                    backgroundColor: 'rgba(255, 205, 86, 0.6)',
-                    borderColor: 'rgba(255, 205, 86, 1)',
+                    backgroundColor: 'rgba(18, 196, 44)',
+                    borderColor: 'rgba(18, 196, 44)',
                     borderWidth: 1
                 }
             ]
