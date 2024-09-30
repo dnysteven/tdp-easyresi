@@ -16,7 +16,7 @@ Application{%endblock %} {% block css %}
     <li><a href="#">Course Management</a></li>
     <li><a href="#">Algorithm</a></li>
     <li><a href="#">Visa Requirements Management</a></li>
-    <li><a href="http://127.0.0.1:5000/">Exit</a></li>
+    <li><a href="{{ url_for('main.index') }}">Exit</a></li>
   </ul>
 </aside>
 

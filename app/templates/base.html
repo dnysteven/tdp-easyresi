@@ -7,12 +7,11 @@
   <meta name="description" content="Easi Resy solution" />
   <meta name="author" content="Ha Ngo" />
   <title>{% block title %}My Application{% endblock %}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles2.css') }}">
-  {% block css %}{% endblock %}
+  {% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/styles2.css') }}"> {% endblock %}
 </head>
 <body>
-  <!-- Common Header -->
   {% if header %}
+  <!-- Common Header -->
   <header>
     <div class="header-container">
       <div class="logo">
