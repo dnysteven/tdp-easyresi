@@ -15,19 +15,13 @@
     <canvas id="visaLineChart"></canvas>
   </div>
 
-   <!-- Australian Map Chart for Visa Applicants -->
-  <div class="chart-container GeoChart">
-    <h3>Visa Applications by State</h2>
-    <canvas id="visaGeoChart"></canvas>
-  </div>
-
   <!-- Pass processed chart data from Flask to JS via the window object -->
   <script>
 
     window.lineLabels = {{ line_labels | tojson }};  // Months for X-axis
-    window.lineValuesVisa189 = {{ line_values_visa_189 | tojson }};  // Visa 189 applicants
-    window.lineValuesVisa190 = {{ line_values_visa_190 | tojson }};  // Visa 190 applicants
-    window.lineValuesVisa191 = {{ line_values_visa_191 | tojson }};  // Visa 191 applicants
+    window.lineValuesVisa189 = {{ line_values_visa189 | tojson }};  // Visa 189 applicants
+    window.lineValuesVisa190 = {{ line_values_visa190 | tojson }};  // Visa 190 applicants
+    window.lineValuesVisa491 = {{ line_values_visa491 | tojson }};  // Visa 191 applicants
 
   </script>
 

@@ -342,16 +342,16 @@ def edu_statistics():
 @main.route('/migra_statistics')
 def migra_statistics():
 	# Get chart data from the controller
-	line_labels, line_values_visa189, line_values_visa190, line_values_visa191 = get_chart_migrant()
+	line_labels, line_values_visa189, line_values_visa190, line_values_visa491 = get_chart_migrant()
 
 	# Ensure that none of the variables are undefined or None
 	line_labels = line_labels or []  # Default to an empty list if None
 	line_values_visa189 = line_values_visa189 or []
 	line_values_visa190 = line_values_visa190 or []
-	line_values_visa191 = line_values_visa191 or []
+	line_values_visa491 = line_values_visa491 or []
 
 	return render_template('migra_statistics.html', header=False, footer=False,
 													line_labels=line_labels,
 													line_values_visa189=line_values_visa189,
 													line_values_visa190=line_values_visa190,
-													line_values_visa191=line_values_visa191)
+													line_values_visa491=line_values_visa491)
