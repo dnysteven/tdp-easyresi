@@ -170,6 +170,7 @@ function renderVisaLineChart(lineLabels, lineValuesVisa189, lineValuesVisa190, l
 				}
 			]
 		},
+<<<<<<< HEAD
 
 document.addEventListener('DOMContentLoaded', function () {
     const australiaGeoJsonUrl = 'https://unpkg.com/world-atlas/countries-50m.json'; // URL for GeoJSON data
@@ -249,6 +250,8 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 		
+=======
+>>>>>>> c9457df61fbaa9da48770203cb2bae00b29479fa
 		options: {
 			scales: {
 				y: {
@@ -269,7 +272,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	});
 }
-
 
 // Wait for the DOM content to load before rendering the charts
 document.addEventListener('DOMContentLoaded', function() {
