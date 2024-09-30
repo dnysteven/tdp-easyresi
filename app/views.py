@@ -350,7 +350,7 @@ def migra_statistics():
 	line_values_visa190 = line_values_visa190 or []
 	line_values_visa491 = line_values_visa491 or []
 
-	return render_template('migra_statistics.html', header=False, footer=False,
+	return render_template('migra_statistics.html', header=True, footer=True,
 													line_labels=line_labels,
 													line_values_visa189=line_values_visa189,
 													line_values_visa190=line_values_visa190,
