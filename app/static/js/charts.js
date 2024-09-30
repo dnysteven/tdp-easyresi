@@ -9,14 +9,14 @@ function renderPieChart(pieLabels, pieValues) {
 				label: 'Total Registered Users',
 				data: pieValues,
 				backgroundColor: [
-					'rgba(255, 99, 132, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(94, 235, 52, 0.2)'
+					'rgba(255, 99, 132)',
+					'rgba(54, 162, 235)',
+					'rgba(94, 235, 52)'
 				],
 				borderColor: [
-					'rgba(255, 99, 132, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(94, 235, 52, 1)'
+					'rgba(255, 99, 132)',
+					'rgba(54, 162, 235)',
+					'rgba(94, 235, 52)'
 				],
 				borderWidth: 1
 			}]
