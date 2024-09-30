@@ -32,7 +32,7 @@ def login():
 			flash('Login failed. Incorrect email or password.', 'danger')
 			return redirect(url_for('main.login'))
 
-	return render_template('login.html')
+	return render_template('login.html', header=True, footer=True)
 
 @main.route('/logout')
 def logout():
@@ -79,15 +79,15 @@ def register():
 
 	# Fetch user roles for the dropdown
 	roles = UserRole.query.all()
-	return render_template('register.html', roles=roles)
+	return render_template('register.html', header=True, footer=True, roles=roles)
 
 @main.route('/')
 def index():
-	return render_template('index.html')
+	return render_template('index.html', header=True, footer=True)
 
 @main.route('/189', methods=['GET'])
 def visa_189():
-	return render_template('189.html')
+	return render_template('189.html', header=True, footer=True)
 
 @main.route('/train', methods=['GET', 'POST'])
 # @login_required
@@ -109,7 +109,7 @@ def train():
 	
 	# Fetch the data table if no form submission yet
 	data_entries = Data.query.all()
-	return render_template('training.html', data_entries=data_entries)
+	return render_template('training.html', header=True, footer=True, data_entries=data_entries)
 
 @main.route('/test', methods=['GET', 'POST'])
 # @login_required
@@ -157,7 +157,7 @@ def test():
 		# Pass the prediction (recommended_visa) to the template
 		return render_template('test.html', prediction=prediction)
 
-	return render_template('test.html')
+	return render_template('test.html', header=True, footer=True,)
 
 @main.route('/questionnaire', methods=['GET', 'POST'])
 #@login_required
@@ -184,7 +184,7 @@ def questionnaire():
     
     return redirect(url_for('main.visa_points'))
   
-  return render_template('questionnaire.html')
+  return render_template('questionnaire.html', header=True, footer=True)
 
 @main.route('/visa_points', methods=['GET'])
 #@login_required
@@ -202,7 +202,8 @@ def visa_points():
   if not visa_189_eligible and not visa_190_eligible and not visa_491_eligible:
     session['eligible_for_path_to_visa'] = True
     
-  return render_template('visa_points.html', points=points, visa_189_eligible=visa_189_eligible,
+  return render_template('visa_points.html', header=True, footer=True,
+                        points=points, visa_189_eligible=visa_189_eligible,
                         visa_190_eligible=visa_190_eligible, visa_491_eligible=visa_491_eligible)
 
 @main.route('/path_to_visa', methods=['GET', 'POST'])
@@ -233,7 +234,7 @@ def path_to_visa():
 
 		return redirect(url_for('main.recommendation'))
 
-	return render_template('path_to_visa.html')
+	return render_template('path_to_visa.html', header=True, footer=True)
 
 @main.route('/recommendation', methods=['GET'])
 #@login_required
@@ -255,7 +256,7 @@ def recommendation():
 	# Clear session flag after accessing the page
 	session.pop('submitted_path_to_visa', None)
 
-	return render_template('recommendation.html', recommended_courses=recommended_courses)
+	return render_template('recommendation.html', header=True, footer=True, recommended_courses=recommended_courses)
 
 @main.route('/save_courses', methods=['POST'])
 #@login_required
@@ -298,7 +299,7 @@ def profile():
 	# Fetch the user's saved course preferences
 	user_courses = get_user_course_preferences(username)
 
-	return render_template('profile.html', user=user, user_courses=user_courses)
+	return render_template('profile.html', header=True, footer=True, user=user, user_courses=user_courses)
 
 # Route for the charts (admin_statistics)
 @main.route('/admin_statistics')
@@ -318,7 +319,7 @@ def admin_statistics():
 	bar_labels = bar_labels or []
 	bar_values = bar_values or []
 
-	return render_template('admin_statistics.html', 
+	return render_template('admin_statistics.html', header=False, footer=False,
                         pie_labels=pie_labels, pie_values=pie_values, 
                         line_labels=line_labels, line_values_applicants=line_values_applicants,
                         line_values_institutions=line_values_institutions, line_values_agencies=line_values_agencies,
@@ -339,7 +340,7 @@ def migra_statistics():
 	line_values_visa190 = line_values_visa190 or []
 	line_values_visa191 = line_values_visa191 or []
 
-	return render_template('migra_statistics.html',
+	return render_template('migra_statistics.html', header=False, footer=False,
 													line_labels=line_labels,
 													line_values_visa189=line_values_visa189,
 													line_values_visa190=line_values_visa190,
