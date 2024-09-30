@@ -7,18 +7,12 @@
 {% endblock %}
 
 {% block content %}
-  <h1>Migration Statistics Dashboard</h1>
+  <h1>Migration Statistics</h1>
 
   <!-- Line Chart for Visa Applicants -->
   <div class="chart-container LineChart">
     <h3>Monthly Visa Applications by Visa Type</h2>
     <canvas id="visaLineChart"></canvas>
-  </div>
-
-  <!-- Australian Map Chart for Visa Applicants -->
-  <div class="chart-container GeoChart">
-    <h3>Visa Applications by State</h2>
-    <canvas id="visaGeoChart"></canvas>
   </div>
 
   <!-- Pass processed chart data from Flask to JS via the window object -->
@@ -29,24 +23,10 @@
     window.lineValuesVisa190 = {{ line_values_visa_190 | tojson }};  // Visa 190 applicants
     window.lineValuesVisa191 = {{ line_values_visa_191 | tojson }};  // Visa 191 applicants
 
-    window.visaData = {
-      WA: {
-        visa_189: 30,
-        visa_190: 10,
-        visa_191: 25
-      },
-      VIC: {
-        visa_189: 10,
-        visa_190: 40,
-        visa_191: 20
-      },
-      // Add data for other states...
-    };
   </script>
 
   <!-- Link to external JavaScript file -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo"></script>
   <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
 
 {% endblock %}

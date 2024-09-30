@@ -41,7 +41,7 @@ Application{%endblock %} {% block css %}
       <canvas id="myLineChart"></canvas>
     </div>
 
-    <!-- Bar Chart -->
+    <!-- Stacked Bar Chart -->
     <div class="chart-card full-width">
       <h3>Total Courses Added in the Last 6 Months</h3>
       <canvas id="myBarChart"></canvas>
@@ -58,7 +58,12 @@ Application{%endblock %} {% block css %}
   window.lineValuesInstitutions = {{ line_values_institutions | tojson }};
   window.lineValuesAgencies = {{ line_values_agencies | tojson }};
   window.barLabels = {{ bar_labels | tojson }};
-  window.barValues = {{ bar_values | tojson }};
+  window.barValuesScience = {{ bar_values_science | tojson }};
+  window.barValuesTechnology = {{ bar_values_technology | tojson }};
+  window.barValuesEngineering = {{ bar_values_engineering | tojson }};
+  window.barValuesMath = {{ bar_values_math | tojson }};
+  window.barValuesICT = {{ bar_values_ict | tojson }};
+  window.barValuesOthers = {{ bar_values_others | tojson }};
 </script>
 
 <!-- Link to external JavaScript file -->

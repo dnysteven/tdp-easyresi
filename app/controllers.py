@@ -410,11 +410,16 @@ def get_chart_admin():
   line_values_institutions = [40, 45, 30, 35, 50, 48]
   line_values_agencies = [30, 25, 20, 18, 22, 19]
 
-  # Bar Chart Data (Courses added in the last 6 months)
+  # Stacked Bar Chart Data (Courses added in the last 6 months)
   bar_labels = ['April', 'May', 'June', 'July', 'August', 'September']
-  bar_values = [15, 18, 12, 20, 25, 30]
+  bar_values_science = [15, 18, 12, 20, 25, 30]
+  bar_values_technology = [10, 12, 8, 15, 22, 27]
+  bar_values_engineering = [12, 14, 10, 18, 20, 25]
+  bar_values_math = [8, 10, 6, 12, 15, 20]
+  bar_values_ict = [9, 11, 7, 13, 16, 21]
+  bar_values_others = [5, 6, 4, 8, 9, 10]
 
-  return pie_labels, pie_values, line_labels, line_values_applicants, line_values_institutions, line_values_agencies, bar_labels, bar_values
+  return pie_labels, pie_values, line_labels, line_values_applicants, line_values_institutions, line_values_agencies, bar_labels, bar_values_science, bar_values_technology, bar_values_engineering, bar_values_math, bar_values_ict, bar_values_others
 
 def get_chart_migrant():
   # Line Chart Data (Users logged in by group over the last 6 months)

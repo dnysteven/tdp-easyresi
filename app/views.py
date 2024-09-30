@@ -305,7 +305,7 @@ def profile():
 @main.route('/admin_statistics')
 def admin_statistics():
 	pie_labels, pie_values, line_labels, line_values_applicants, line_values_institutions, \
-  line_values_agencies, bar_labels, bar_values = get_chart_admin()
+  line_values_agencies, bar_labels, bar_values_science, bar_values_technology, bar_values_engineering, bar_values_math, bar_values_ict, bar_values_others = get_chart_admin()
   
   # Ensure that none of the variables are undefined or None
 	pie_labels = pie_labels or []
@@ -317,13 +317,23 @@ def admin_statistics():
 	line_values_agencies = line_values_agencies or []
 
 	bar_labels = bar_labels or []
-	bar_values = bar_values or []
+	bar_values_science = bar_values_science or []
+	bar_values_technology = bar_values_technology or []
+	bar_values_engineering = bar_values_engineering or []
+	bar_values_math = bar_values_math or []
+	bar_values_ict = bar_values_ict or []
+	bar_values_others = bar_values_others or []
 
-	return render_template('admin_statistics.html', header=False, footer=False,
-                        pie_labels=pie_labels, pie_values=pie_values, 
-                        line_labels=line_labels, line_values_applicants=line_values_applicants,
-                        line_values_institutions=line_values_institutions, line_values_agencies=line_values_agencies,
-                        bar_labels=bar_labels, bar_values=bar_values)
+
+	return render_template('admin_statistics.html', 
+    	                   header=False, footer=False,
+        	               pie_labels=pie_labels, pie_values=pie_values, 
+            	           line_labels=line_labels, line_values_applicants=line_values_applicants,
+                	       line_values_institutions=line_values_institutions, line_values_agencies=line_values_agencies,
+                    	   bar_labels=bar_labels, bar_values_science=bar_values_science,
+                	       bar_values_technology=bar_values_technology, bar_values_engineering=bar_values_engineering,
+                    	   bar_values_math=bar_values_math, bar_values_ict=bar_values_ict, bar_values_others=bar_values_others)
+
 
 @main.route('/edu_statistics')
 def edu_statistics():
