@@ -4,15 +4,83 @@ import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from datetime import datetime
+from datetime import datetime, timezone
+from werkzeug.security import generate_password_hash, check_password_hash
 from app import db
-from app.models import Data, ModelResult, VisaPoints, UniCourse, User, University, UserCoursePref
+from app.models import Data, ModelResult, VisaPoints, UniCourse, User, Login, University, UserCoursePref, UserSession
 
 # Define a path to store the model .pkl files in the ml folder
 MODEL_PATH = os.path.join(os.getcwd(), 'ml')
 
 if not os.path.exists(MODEL_PATH):
   os.makedirs(MODEL_PATH)  # Create the directory if it doesn't exist
+
+# Check if the email and password combination is valid.
+def check_login(email, password):
+  user = User.query.filter_by(email=email).first()
+  
+  if user and check_password_hash(user.login.hashed_password, password):
+    return True, user.user_role
+  
+  return False, None
+
+# Register a new user
+def register_user(data):
+  # Ensure that no existing user with the same email exists
+  existing_user = User.query.filter_by(email=data['email']).first()
+  if existing_user is not None:
+    return False
+
+  # Hash the password
+  hashed_password = generate_password_hash(data['password'], method='pbkdf2:sha256')
+
+  # Create the user and login entries
+  user = User(
+    email=data['email'],
+    first_name=data['first_name'],
+    last_name=data['last_name'],
+    user_role=data['user_role'],
+    phone=data['phone'],
+    edu_id=data.get('edu_id'),
+    abn=data.get('abn'),
+    street_address=data.get('street_address'),
+    suburb=data.get('suburb'),
+    state=data.get('state'),
+    postcode=data.get('postcode')
+  )
+
+  login = Login(
+    email=data['email'],
+    password=data['password'],  # Optionally store the plain password
+    hashed_password=hashed_password
+  )
+
+  # Commit both records to the database
+  db.session.add(user)
+  db.session.add(login)
+  db.session.commit()
+
+  return True
+
+# Record the login time when a user logs in.
+def record_login(email):
+  login_time = datetime.now(timezone.utc)
+  
+  user_session = UserSession(email=email, login_time=login_time)
+  db.session.add(user_session)
+  db.session.commit()
+  return login_time
+
+# Update the logout time and time elapsed for a user session.
+def record_logout(email):
+  user_session = UserSession.query.filter_by(email=email).order_by(UserSession.login_time.desc()).first()
+  
+  if user_session:
+    logout_time = datetime.now(timezone.utc)
+    
+    user_session.logout_time = logout_time
+    user_session.time_elapsed = logout_time - user_session.login_time
+    db.session.commit()
 
 # Fetch all data from the 'data' table in the database and return it as a pandas DataFrame.
 def get_data():
@@ -174,10 +242,8 @@ def visa_points_calculator(data):
   # State nomination points
   if data['nomination'] == 'state':
     points += 5
-  elif data['nomination'] == 'regional':
+  elif data['nomination'] == 'state_regional':
     points += 15
-  elif data['nomination'] == 'both':
-    points += 20
   else:
     points += 0
   
@@ -349,3 +415,12 @@ def get_chart_admin():
   bar_values = [15, 18, 12, 20, 25, 30]
 
   return pie_labels, pie_values, line_labels, line_values_applicants, line_values_institutions, line_values_agencies, bar_labels, bar_values
+
+def get_chart_migrant():
+  # Line Chart Data (Users logged in by group over the last 6 months)
+  line_labels = ['April', 'May', 'June', 'July', 'August', 'September']
+  line_values_visa189 = [120, 130, 100, 90, 110, 115]
+  line_values_visa190 = [40, 45, 30, 35, 50, 48]
+  line_values_visa491 = [30, 25, 20, 18, 22, 19]
+  
+  return line_labels, line_values_visa189, line_values_visa190, line_values_visa491

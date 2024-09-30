@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
-from app.models import Data, db, User, UserRole, Login, VisaPoints
-from werkzeug.security import generate_password_hash, check_password_hash
-from app.controllers import train_model, predict_model, visa_points_calculator, process_visa_path, user_course_preferences, get_user_course_preferences, get_chart_admin
+from app.models import Data, db, User, UserRole
+from app.controllers import register_user, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, user_course_preferences, get_user_course_preferences, get_chart_admin, get_chart_migrant
 
 main = Blueprint('main', __name__)
 
@@ -12,32 +11,35 @@ main.secret_key = SECRET_KEY
 @main.route('/login', methods=['GET', 'POST'])
 def login():
 	# Check if user is already logged in
-	if 'username' in session:
-		return redirect(url_for('main.index'))
+	#if 'username' in session:
+		#return redirect(url_for('main.index'))
 
 	if request.method == 'POST':
 		# Get username and password from the form
-		username = request.form.get('username')
-		password = request.form.get('password')
-
-		# Fetch user from the login table
-		user_login = Login.query.filter_by(username=username).first()
-
-		if user_login and check_password_hash(user_login.hashed_password, password):
-			# If the password matches, store user info in session and redirect to index
-			session['username'] = username
+		email = request.form['email']
+		password = request.form['password']
+		
+		# Get login success and user role from check_login
+		success, user_role = check_login(email, password)
+		
+		if success:
+			session['username'] = email
+			session['user_role'] = user_role
+			record_login(email)
+			flash('Login successful!', 'success')
 			return redirect(url_for('main.index'))
 		else:
-			# Invalid credentials
-			message = "Invalid username or password"
-			return render_template('login.html', message=message)
+			flash('Login failed. Incorrect email or password.', 'danger')
+			return redirect(url_for('main.login'))
 
 	return render_template('login.html')
 
 @main.route('/logout')
 def logout():
-	session.pop('username', None)
-	return redirect(url_for('main.login'))
+  record_logout(session['username'])
+  session.clear()
+  flash('You have been logged out.', 'success')
+  return redirect(url_for('main.login'))
 
 def login_required(f):
 	def wrap(*args, **kwargs):
@@ -50,51 +52,30 @@ def login_required(f):
 @main.route('/register', methods=['GET', 'POST'])
 def register():
   # Check if user is already logged in
-	# if 'username' in session:
-	# 	return redirect(url_for('main.index'))
+	if 'username' in session:
+		return redirect(url_for('main.index'))
   
 	if request.method == 'POST':
-		# Get form data
-		username = request.form.get('username')
-		first_name = request.form.get('first_name')
-		last_name = request.form.get('last_name')
-		email = request.form.get('email')
-		phone = request.form.get('phone')
-		user_role = request.form.get('user_role')
-		password = request.form.get('password')
+		data = {
+			'email': request.form['email'],
+			'first_name': request.form['first_name'],
+			'last_name': request.form['last_name'],
+			'password': request.form['password'],
+			'phone': request.form['phone'],
+			'user_role': request.form['user_role'],
+			'edu_id': request.form.get('edu_id'),
+			'abn': request.form.get('abn'),
+			'street_address': request.form.get('street_address'),
+			'suburb': request.form.get('suburb'),
+			'state': request.form.get('state'),
+			'postcode': request.form.get('postcode')
+		}
 
-		# Check if username already exists
-		existing_user = User.query.filter_by(username=username).first()
-		if existing_user:
-			message = "Username already exists. Please choose another one."
-			roles = UserRole.query.all()
-			return render_template('registration.html', message=message, roles=roles)
-
-		# Create a new user entry in the users table
-		new_user = User(
-			username=username,
-			first_name=first_name,
-			last_name=last_name,
-			email=email,
-			phone=phone,
-			user_role=user_role
-		)
-		db.session.add(new_user)
-
-		# Hash the password and save it to the login table
-		hashed_password = generate_password_hash(password)
-		new_login = Login(
-			username=username,
-			password=password,
-			hashed_password=hashed_password
-		)
-		db.session.add(new_login)
-
-		# Commit changes to the database
-		db.session.commit()
-
-		# Redirect to a success page or homepage after registration
-		return redirect(url_for('main.index'))
+		if register_user(data):
+			flash('Registration successful! Please log in.', 'success')
+			return redirect(url_for('main.login'))
+		else:
+			flash('Registration failed. Please try again.', 'danger')
 
 	# Fetch user roles for the dropdown
 	roles = UserRole.query.all()
@@ -182,7 +163,7 @@ def test():
 #@login_required
 def questionnaire():
   if current_app.config['ENV'] == 'development':
-    session['username'] = 'dnysteven'
+    session['username'] = '104685155@student.swin.edu.au'
     
   username = session.get('username')
   if not username:
@@ -234,7 +215,7 @@ def path_to_visa():
 	# Remove session flag after accessing the page to prevent further direct access
 
 	if current_app.config['ENV'] == 'development':
-		session['username'] = 'dnysteven'
+		session['username'] = '104685155@student.swin.edu.au'
 
 	username = session.get('username')
 	if not username:
@@ -259,7 +240,7 @@ def path_to_visa():
 def recommendation():
 	# Check if user has submitted the form in path_to_visa.html
 	if current_app.config['ENV'] == 'development':
-		session['username'] = 'dnysteven'
+		session['username'] = '104685155@student.swin.edu.au'
 
 	username = session.get('username')
 	if not username:
@@ -280,7 +261,7 @@ def recommendation():
 #@login_required
 def save_courses():
 	if current_app.config['ENV'] == 'development':
-		session['username'] = 'dnysteven'
+		session['username'] = '104685155@student.swin.edu.au'
 
 	username = session.get('username')
 	if not username:
@@ -304,7 +285,7 @@ def save_courses():
 #@login_required
 def profile():
 	if current_app.config['ENV'] == 'development':
-		session['username'] = 'dnysteven'
+		session['username'] = '104685155@student.swin.edu.au'
 
 	username = session.get('username')
 	if not username:
@@ -324,14 +305,24 @@ def profile():
 def admin_statistics():
 	pie_labels, pie_values, line_labels, line_values_applicants, line_values_institutions, \
   line_values_agencies, bar_labels, bar_values = get_chart_admin()
+  
+  # Ensure that none of the variables are undefined or None
+	pie_labels = pie_labels or []
+	pie_values = pie_values or []
+  
+	line_labels = line_labels or []
+	line_values_applicants = line_values_applicants or []
+	line_values_institutions = line_values_institutions or []
+	line_values_agencies = line_values_agencies or []
 
-	return render_template('admin_statistics.html',
-													pie_labels=pie_labels, pie_values=pie_values,
-													line_labels=line_labels,
-													line_values_applicants=line_values_applicants,
-													line_values_institutions=line_values_institutions,
-													line_values_agencies=line_values_agencies,
-													bar_labels=bar_labels, bar_values=bar_values)
+	bar_labels = bar_labels or []
+	bar_values = bar_values or []
+
+	return render_template('admin_statistics.html', 
+                        pie_labels=pie_labels, pie_values=pie_values, 
+                        line_labels=line_labels, line_values_applicants=line_values_applicants,
+                        line_values_institutions=line_values_institutions, line_values_agencies=line_values_agencies,
+                        bar_labels=bar_labels, bar_values=bar_values)
 
 @main.route('/edu_statistics')
 def edu_statistics():
@@ -339,4 +330,17 @@ def edu_statistics():
 
 @main.route('/migra_statistics')
 def migra_statistics():
-	return render_template('migra_statistics.html')
+	# Get chart data from the controller
+	line_labels, line_values_visa189, line_values_visa190, line_values_visa191 = get_chart_migrant()
+
+	# Ensure that none of the variables are undefined or None
+	line_labels = line_labels or []  # Default to an empty list if None
+	line_values_visa189 = line_values_visa189 or []
+	line_values_visa190 = line_values_visa190 or []
+	line_values_visa191 = line_values_visa191 or []
+
+	return render_template('migra_statistics.html',
+													line_labels=line_labels,
+													line_values_visa189=line_values_visa189,
+													line_values_visa190=line_values_visa190,
+													line_values_visa191=line_values_visa191)

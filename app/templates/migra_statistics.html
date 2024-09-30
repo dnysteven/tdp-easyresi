@@ -19,9 +19,9 @@
   <!-- Pass processed chart data from Flask to JS via the window object -->
   <script>
     window.lineLabels = {{ line_labels | tojson }};  // Months for X-axis
-    window.lineValuesVisa189 = {{ line_values_visa_189 | tojson }};  // Visa 189 applicants
-    window.lineValuesVisa190 = {{ line_values_visa_190 | tojson }};  // Visa 190 applicants
-    window.lineValuesVisa191 = {{ line_values_visa_191 | tojson }};  // Visa 191 applicants
+    window.lineValuesVisa189 = {{ line_values_visa189 | tojson }};  // Visa 189 applicants
+    window.lineValuesVisa190 = {{ line_values_visa190 | tojson }};  // Visa 190 applicants
+    window.lineValuesVisa191 = {{ line_values_visa191 | tojson }};  // Visa 191 applicants
   </script>
 
   <!-- Link to external JavaScript file -->

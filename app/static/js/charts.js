@@ -9,14 +9,14 @@ function renderPieChart(pieLabels, pieValues) {
 				label: 'Total Registered Users',
 				data: pieValues,
 				backgroundColor: [
-					'rgba(255, 99, 132, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(94, 235, 52, 0.2)'
+					'rgba(255, 99, 132)',
+					'rgba(54, 162, 235)',
+					'rgba(94, 235, 52)'
 				],
 				borderColor: [
-					'rgba(255, 99, 132, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(94, 235, 52, 1)'
+					'rgba(255, 99, 132)',
+					'rgba(54, 162, 235)',
+					'rgba(94, 235, 52)'
 				],
 				borderWidth: 1
 			}]
@@ -154,14 +154,22 @@ function renderVisaLineChart(lineLabels, lineValuesVisa189, lineValuesVisa190, l
 // Wait for the DOM content to load before rendering the charts
 document.addEventListener('DOMContentLoaded', function() {
 	// Pie Chart
-	renderPieChart(window.pieLabels, window.pieValues);
+	if (window.pieLabels && window.pieValues) {
+		renderPieChart(window.pieLabels, window.pieValues);
+	}
 
-	// Line Chart
-	renderLineChart(window.lineLabels, window.lineValuesApplicants, window.lineValuesInstitutions, window.lineValuesAgencies);
+	// Line Chart for user logins
+	if (window.lineLabels && window.lineValuesApplicants && window.lineValuesInstitutions && window.lineValuesAgencies) {
+		renderLineChart(window.lineLabels, window.lineValuesApplicants, window.lineValuesInstitutions, window.lineValuesAgencies);
+	}
 
-	// Bar Chart
-	renderBarChart(window.barLabels, window.barValues);
+	// Bar Chart for courses added
+	if (window.barLabels && window.barValues) {
+		renderBarChart(window.barLabels, window.barValues);
+	}
 
-	// Line Chart
-	renderVisaLineChart(window.lineLabels, window.lineValuesVisa189, window.lineValuesVisa190, window.lineValuesVisa191);
+	// Line Chart for Visa Applicants
+	if (window.lineLabels && window.lineValuesVisa189 && window.lineValuesVisa190 && window.lineValuesVisa191) {
+		renderVisaLineChart(window.lineLabels, window.lineValuesVisa189, window.lineValuesVisa190, window.lineValuesVisa191);
+	}
 });
