@@ -326,13 +326,13 @@ def admin_statistics():
 
 
 	return render_template('admin_statistics.html', 
-    	                   header=False, footer=False,
-        	               pie_labels=pie_labels, pie_values=pie_values, 
-            	           line_labels=line_labels, line_values_applicants=line_values_applicants,
-                	       line_values_institutions=line_values_institutions, line_values_agencies=line_values_agencies,
-                    	   bar_labels=bar_labels, bar_values_science=bar_values_science,
-                	       bar_values_technology=bar_values_technology, bar_values_engineering=bar_values_engineering,
-                    	   bar_values_math=bar_values_math, bar_values_ict=bar_values_ict, bar_values_others=bar_values_others)
+												header=False, footer=False,
+												pie_labels=pie_labels, pie_values=pie_values, 
+												line_labels=line_labels, line_values_applicants=line_values_applicants,
+												line_values_institutions=line_values_institutions, line_values_agencies=line_values_agencies,
+												bar_labels=bar_labels, bar_values_science=bar_values_science,
+												bar_values_technology=bar_values_technology, bar_values_engineering=bar_values_engineering,
+												bar_values_math=bar_values_math, bar_values_ict=bar_values_ict, bar_values_others=bar_values_others)
 
 
 @main.route('/edu_statistics')
