@@ -424,3 +424,5 @@ def get_chart_migrant():
   line_values_visa491 = [30, 25, 20, 18, 22, 19]
   
   return line_labels, line_values_visa189, line_values_visa190, line_values_visa491
+
+

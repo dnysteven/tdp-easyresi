@@ -129,71 +129,6 @@ function renderVisaLineChart(lineLabels, lineValuesVisa189, lineValuesVisa190, l
 				}
 			]
 		},
-
-		document.addEventListener('DOMContentLoaded', function() {
-			const australiaGeoJsonUrl = 'https://unpkg.com/world-atlas/countries-50m.json'; // URL for GeoJSON data
-		
-			// Fetch the GeoJSON data for Australia
-			fetch(australiaGeoJsonUrl)
-				.then(response => response.json())
-				.then(data => {
-					// Filter to get Australia's data from the GeoJSON
-					const australia = ChartGeo.topojson.feature(data, data.objects.countries).features.find(country => country.properties.name === 'Australia');
-		
-					// Setup the chart with the map of Australia
-					const ctx = document.getElementById('visaGeoChart').getContext('2d');
-					const visaData = window.visaData;
-		
-					const chart = new Chart(ctx, {
-						type: 'choropleth',
-						data: {
-							labels: ['Western Australia', 'Victoria'], // Add more states as needed
-							datasets: [{
-								label: 'Visa Applications',
-								data: [
-									{
-										feature: australia, // Use Australia's GeoJSON for mapping
-										visa_189: visaData.WA.visa_189,
-										visa_190: visaData.WA.visa_190,
-										visa_191: visaData.WA.visa_191,
-										name: 'Western Australia'
-									},
-									{
-										feature: australia, // Again, Australia's GeoJSON for Victoria
-										visa_189: visaData.VIC.visa_189,
-										visa_190: visaData.VIC.visa_190,
-										visa_191: visaData.VIC.visa_191,
-										name: 'Victoria'
-									}
-								]
-							}]
-						},
-						options: {
-							showOutline: true,
-							showGraticule: false,
-							plugins: {
-								legend: {
-									display: true
-								},
-								tooltip: {
-									callbacks: {
-										label: function(context) {
-											const state = context.dataset.data[context.dataIndex];
-											return `${state.name}: Visa 189: ${state.visa_189}, Visa 190: ${state.visa_190}, Visa 191: ${state.visa_191}`;
-										}
-									}
-								}
-							},
-							scales: {
-								xy: {
-									projection: 'equalEarth'
-								}
-							}
-						}
-					});
-				});
-		});
-		
 		options: {
 			scales: {
 				y: {
@@ -214,7 +149,6 @@ function renderVisaLineChart(lineLabels, lineValuesVisa189, lineValuesVisa190, l
 		}
 	});
 }
-
 
 // Wait for the DOM content to load before rendering the charts
 document.addEventListener('DOMContentLoaded', function() {
