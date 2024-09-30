@@ -12,13 +12,14 @@
 </head>
 <body>
   <!-- Common Header -->
+  {% if header %}
   <header>
-  <div class="header-container">
-    <div class="logo">
-      <a href="{{ url_for('main.index') }}" class="logo-link">Easy Resi</a>
-    </div>
-    <nav class="navbar">
-      <ul class="nav-list">
+    <div class="header-container">
+      <div class="logo">
+        <a href="{{ url_for('main.index') }}" class="logo-link">Easy Resi</a>
+      </div>
+      <nav class="navbar">
+        <ul class="nav-list">
           <li><a href="{{ url_for('main.index') }}">Home</a></li>
           <li class="dropdown">
             <a href="#" class="dropbtn">Skilled Migration Visa</a>
@@ -41,6 +42,7 @@
       </nav>
     </div>
   </header>
+  {% endif %}
 
   <!-- Main Content Block -->
   <main>
@@ -49,11 +51,13 @@
     {% endblock %}
   </main>
 
+  {% if footer %}
   <!-- Common Footer -->
   <footer>
     <div class="container">
       <p>&copy; 2024 Easy Resi. All rights reserved.</p>
     </div>
   </footer>
+  {% endif %}
 </body>
 </html>
