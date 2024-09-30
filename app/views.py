@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
-from app.models import Data, db, User, UserRole, Login, VisaPoints
+from app.models import Data, db, User, UserRole
 from app.controllers import register_user, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, user_course_preferences, get_user_course_preferences, get_chart_admin, get_chart_migrant
 
 main = Blueprint('main', __name__)
@@ -163,7 +163,7 @@ def test():
 #@login_required
 def questionnaire():
   if current_app.config['ENV'] == 'development':
-    session['username'] = 'dnysteven'
+    session['username'] = '104685155@student.swin.edu.au'
     
   username = session.get('username')
   if not username:
@@ -215,7 +215,7 @@ def path_to_visa():
 	# Remove session flag after accessing the page to prevent further direct access
 
 	if current_app.config['ENV'] == 'development':
-		session['username'] = 'dnysteven'
+		session['username'] = '104685155@student.swin.edu.au'
 
 	username = session.get('username')
 	if not username:
@@ -240,7 +240,7 @@ def path_to_visa():
 def recommendation():
 	# Check if user has submitted the form in path_to_visa.html
 	if current_app.config['ENV'] == 'development':
-		session['username'] = 'dnysteven'
+		session['username'] = '104685155@student.swin.edu.au'
 
 	username = session.get('username')
 	if not username:
@@ -261,7 +261,7 @@ def recommendation():
 #@login_required
 def save_courses():
 	if current_app.config['ENV'] == 'development':
-		session['username'] = 'dnysteven'
+		session['username'] = '104685155@student.swin.edu.au'
 
 	username = session.get('username')
 	if not username:
@@ -285,7 +285,7 @@ def save_courses():
 #@login_required
 def profile():
 	if current_app.config['ENV'] == 'development':
-		session['username'] = 'dnysteven'
+		session['username'] = '104685155@student.swin.edu.au'
 
 	username = session.get('username')
 	if not username:

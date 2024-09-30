@@ -242,10 +242,8 @@ def visa_points_calculator(data):
   # State nomination points
   if data['nomination'] == 'state':
     points += 5
-  elif data['nomination'] == 'regional':
+  elif data['nomination'] == 'state_regional':
     points += 15
-  elif data['nomination'] == 'both':
-    points += 20
   else:
     points += 0
   
