@@ -213,7 +213,7 @@ class UniCourse(db.Model):
 		self.duration = duration
 		self.tuition_fee = tuition_fee
 		self.regional = regional
-  
+
 class UserCoursePref(db.Model):
 	__tablename__ = 'user_course_pref'
 
