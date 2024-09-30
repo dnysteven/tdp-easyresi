@@ -37,6 +37,13 @@ body {
   height: auto;
 }
 
+/* Styling the LineChart */
+.LineChart {
+  width: 90%; /* Use a larger percentage for the BarChart */
+  max-width: 800px; /* Limit maximum width */
+  height: auto;
+}
+
 /* Make the charts responsive */
 canvas {
   width: 100% !important; /* Force the canvas to fill its container */
