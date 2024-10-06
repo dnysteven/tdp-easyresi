@@ -224,3 +224,56 @@ footer {
 footer p {
   color: #333;
 }
+.chart-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-card h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Full width card for the bar chart */
+.full-width {
+  grid-column: span 2;
+}
+
+/* Styling the LineChart */
+.LineChart {
+  width: 90%; /* Use a larger percentage for the BarChart */
+  max-width: 800px; /* Limit maximum width */
+  height: auto;
+}
+
+/* Styling the BarChart */
+.BarChart {
+  width: 90%; /* Use a larger percentage for the BarChart */
+  max-width: 800px; /* Limit maximum width */
+  height: auto;
+}
+
+/* Styling the PieChart */
+.PieChart {
+  width: 90%; /* Use a larger percentage for the BarChart */
+  max-width: 800px; /* Limit maximum width */
+  height: auto;
+}
+
+canvas {
+  width: 100% !important;
+  height: 300px !important;
+}
+
+/* Responsive behavior */
+@media screen and (max-width: 1024px) {
+  .dashboard-grid {
+      grid-template-columns: 1fr;
+  }
+
+  .full-width {
+      grid-column: span 1;
+  }
+}
