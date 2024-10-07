@@ -222,16 +222,24 @@ def path_to_visa():
 	if not username:
 		return redirect(url_for('main.login'))
   
-	session.pop('eligible_for_path_to_visa', None)
+	#session.pop('eligible_for_path_to_visa', None)
 
 	if request.method == 'POST':
-		data = request.form.to_dict()
-		data['course_fees'] = ','.join(request.form.getlist('course_fees'))  # Store course fees as comma-separated string
+		# Collect the form data from path_to_visa.html
+		data = {
+			'education_level': request.form['education_level'],
+			'specialist_education': request.form['specialist_education'],
+			'professional_year': request.form.get('professional_year', 'off') == 'on',
+			'regional_study': request.form.get('regional_study', 'off') == 'on',
+			'course_duration': request.form['course_duration'],
+			'tuition_fee': request.form['tuition_fee'],
+			'state': request.form['state']
+		}
 
-		# Set session flag to allow access to recommendation.html
-		session['submitted_path_to_visa'] = True
+		# Save the form data to session for use in the redirected page
 		session['path_to_visa_data'] = data
 
+		# Redirect to the recommendation route
 		return redirect(url_for('main.recommendation'))
 
 	return render_template('path_to_visa.html', header=True, footer=True)
@@ -247,14 +255,18 @@ def recommendation():
 	if not username:
 		return redirect(url_for('main.login'))
 
-	if not session.get('submitted_path_to_visa'):
+	# Retrieve the form data from the session
+	data = session.get('path_to_visa_data', None)
+
+	if not data:
+		# If there's no form data in session, redirect back to path_to_visa
 		return redirect(url_for('main.path_to_visa'))
 
-	data = session.get('path_to_visa_data')
+	# Pass the form data to the controller to get recommended courses
 	recommended_courses = process_visa_path(data)
   
 	# Clear session flag after accessing the page
-	session.pop('submitted_path_to_visa', None)
+	session.pop('path_to_visa_data', None)
 
 	return render_template('recommendation.html', header=True, footer=True, recommended_courses=recommended_courses)
 

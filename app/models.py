@@ -33,8 +33,11 @@ class User(db.Model):
 	postcode = db.Column(db.String(4), nullable=True)
 	created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
-	# Define relationship with the Login model
+	# Define relationship with Login model
 	login = db.relationship('Login', backref='user', uselist=False, lazy=True)
+
+	# Define relationship with UniCourse model
+	courses = db.relationship('UniCourse', backref='provider', lazy=True)
 
 	def __init__(self, email, first_name, last_name, phone, user_role, edu_id=None, abn=None, street_address=None, suburb=None, state=None, postcode=None):
 		self.email = email
@@ -189,26 +192,27 @@ class University(db.Model):
   
 class UniCourse(db.Model):
 	__tablename__ = 'uni_course'
-	
-	id = db.Column(db.Integer, primary_key=True)
-	course_num = db.Column(db.String(50), nullable=False)
-	course_name = db.Column(db.String(100), nullable=False)
-	provider_id = db.Column(db.String(50), db.ForeignKey('users.username'), nullable=False)
-	univ_id = db.Column(db.Integer, db.ForeignKey('university.id'), nullable=False)
-	level = db.Column(db.String(50), nullable=False)
-	specialist = db.Column(db.Boolean, nullable=False)
-	prof_year = db.Column(db.Boolean, nullable=False)
-	duration = db.Column(db.Integer, nullable=False)
-	tuition_fee = db.Column(db.Numeric(10, 2), nullable=False)
-	regional = db.Column(db.Boolean, nullable=False)
 
-	def __init__(self, course_num, course_name, provider_id, univ_id, level, specialist, prof_year, duration, tuition_fee, regional):
+	id = db.Column(db.Integer, primary_key=True)
+	course_num = db.Column(db.String(50), unique=True, nullable=False)
+	course_name = db.Column(db.String(150), nullable=False)
+	provider_id = db.Column(db.String(50), db.ForeignKey('users.email'), nullable=False)  # ForeignKey to User
+	univ_id = db.Column(db.Integer, db.ForeignKey('university.id'), nullable=False)  # ForeignKey to University
+	level = db.Column(db.String(50), nullable=False)  # Bachelor, Master, Doctorate
+	specialist_education = db.Column(db.String(50), nullable=False)  # Specialist options: science, technology, etc.
+	prof_year = db.Column(db.Boolean, default=False)  # Professional year program
+	duration = db.Column(db.Integer, nullable=False)  # Course duration in years
+	tuition_fee = db.Column(db.String(50), nullable=False)  # Fee range (<60k, 60k-100k, >100k)
+	regional = db.Column(db.Boolean, default=False)  # Regional study
+	created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+	def __init__(self, course_num, course_name, provider_id, univ_id, level, specialist_education, prof_year, duration, tuition_fee, regional):
 		self.course_num = course_num
 		self.course_name = course_name
 		self.provider_id = provider_id
 		self.univ_id = univ_id
 		self.level = level
-		self.specialist = specialist
+		self.specialist_education = specialist_education
 		self.prof_year = prof_year
 		self.duration = duration
 		self.tuition_fee = tuition_fee
