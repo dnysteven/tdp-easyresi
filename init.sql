@@ -106,21 +106,20 @@ CREATE TABLE university (
 	email VARCHAR(100) NOT NULL
 );
 
--- Create uni_course table
+-- Table creation for UniCourse
 CREATE TABLE uni_course (
 	id SERIAL PRIMARY KEY,
-	course_num VARCHAR(50) NOT NULL,
-	course_name VARCHAR(100) NOT NULL,
-	provider_id VARCHAR(50) NOT NULL,
-	univ_id INTEGER NOT NULL,
+	course_num VARCHAR(50) UNIQUE NOT NULL,
+	course_name VARCHAR(150) NOT NULL,
+	provider_id VARCHAR(50) REFERENCES users(username) ON DELETE CASCADE,
+	univ_id INT REFERENCES university(id) ON DELETE CASCADE,
 	level VARCHAR(50) NOT NULL,
-	specialist BOOLEAN NOT NULL,
-	prof_year BOOLEAN NOT NULL,
-	duration INTEGER NOT NULL,
-	tuition_fee DECIMAL(10, 2) NOT NULL,
-	regional BOOLEAN NOT NULL,
-	CONSTRAINT fk_provider FOREIGN KEY (provider_id) REFERENCES users (username),
-	CONSTRAINT fk_univ FOREIGN KEY (univ_id) REFERENCES university (id)
+	specialist_education VARCHAR(50) NOT NULL,
+	prof_year BOOLEAN DEFAULT FALSE,
+	duration INT NOT NULL,
+	tuition_fee VARCHAR(50) NOT NULL,
+	regional BOOLEAN DEFAULT FALSE,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Update user_course_pref table (add created_at field)
