@@ -422,12 +422,8 @@ def get_chart_admin():
   return pie_labels, pie_values, line_labels, line_values_applicants, line_values_institutions, line_values_agencies, bar_labels, bar_values_science, bar_values_technology, bar_values_engineering, bar_values_math, bar_values_ict, bar_values_others
 
 def get_chart_migrant():
-  # Line Chart Data (Users logged in by group over the last 6 months)
-  line_labels = ['April', 'May', 'June', 'July', 'August', 'September']
-  line_values_visa189 = [120, 130, 100, 90, 110, 115]
-  line_values_visa190 = [40, 45, 30, 35, 50, 48]
-  line_values_visa491 = [30, 25, 20, 18, 22, 19]
+  # Pie Chart Data (Applicants Completed Specialist Education Qualification)
+  specialist_education_labels = ['Completed', 'Not Completed']
+  specialist_education_values = [300, 100]
   
-  return line_labels, line_values_visa189, line_values_visa190, line_values_visa491
-
-
+  return specialist_education_labels, specialist_education_values
