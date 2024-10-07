@@ -11,7 +11,7 @@
     <input class="login-input" type="password" id="password" name="password" required><br>
     <button type="submit" class="submit-button">Login</button>
   </form>
-  <p class="index-para">Don't have an account, register <a href="{{ url_for('main.register') }}">here</a></p>
+  <p class="login-para">Don't have an account, register <a href="{{ url_for('main.register') }}">here</a></p>
   {% if message %}
     <p>{{ message }}</p>
   {% endif %}
