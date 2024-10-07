@@ -12,7 +12,11 @@ Application{%endblock %} {% block css %}
   <ul>
     <li><a href="#">Agencies Statistics</a></li>
     <li><a href="#">Agencies Management</a></li>
-    <li><a href="#">Educational Institutions Statistics</a></li>
+    <li>
+      <a href="{{ url_for('main.edu_statistics') }}"
+        >Educational Institutions Statistics</a
+      >
+    </li>
     <li><a href="#">Course Management</a></li>
     <li><a href="#">Algorithm</a></li>
     <li><a href="#">Visa Requirements Management</a></li>

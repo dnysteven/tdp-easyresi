@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
-from app.models import Data, db, User, UserRole
+from app.models import Data, db, User, UserRole, UserGroup, CourseAdded, UserLogin
 from app.controllers import register_user, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, user_course_preferences, get_user_course_preferences, get_chart_admin, get_chart_migrant
 
 main = Blueprint('main', __name__)
@@ -304,37 +304,52 @@ def profile():
 # Route for the charts (admin_statistics)
 @main.route('/admin_statistics')
 def admin_statistics():
-	pie_labels, pie_values, line_labels, line_values_applicants, line_values_institutions, \
-  line_values_agencies, bar_labels, bar_values_science, bar_values_technology, bar_values_engineering, bar_values_math, bar_values_ict, bar_values_others = get_chart_admin()
-  
-  # Ensure that none of the variables are undefined or None
-	pie_labels = pie_labels or []
-	pie_values = pie_values or []
-  
-	line_labels = line_labels or []
-	line_values_applicants = line_values_applicants or []
-	line_values_institutions = line_values_institutions or []
-	line_values_agencies = line_values_agencies or []
+    # Query for pie chart data (User Groups)
+    user_groups = UserGroup.query.all()
+    pie_labels = [group.group_name for group in user_groups]
+    pie_values = [group.total_users for group in user_groups]
 
-	bar_labels = bar_labels or []
-	bar_values_science = bar_values_science or []
-	bar_values_technology = bar_values_technology or []
-	bar_values_engineering = bar_values_engineering or []
-	bar_values_math = bar_values_math or []
-	bar_values_ict = bar_values_ict or []
-	bar_values_others = bar_values_others or []
+    # Query for line chart data (User Logins by Month)
+    line_labels = ['April', 'May', 'June', 'July', 'August', 'September']
+    logins_applicants = UserLogin.query.filter_by(group_name='Applicants').all()
+    logins_institutions = UserLogin.query.filter_by(group_name='Educational Institution').all()
+    logins_agencies = UserLogin.query.filter_by(group_name='Migration Agencies').all()
 
+    # Extract data for each group (for the last 6 months)
+    line_values_applicants = [login.total_logins for login in logins_applicants]
+    line_values_institutions = [login.total_logins for login in logins_institutions]
+    line_values_agencies = [login.total_logins for login in logins_agencies]
 
-	return render_template('admin_statistics.html', 
-												header=False, footer=False,
-												pie_labels=pie_labels, pie_values=pie_values, 
-												line_labels=line_labels, line_values_applicants=line_values_applicants,
-												line_values_institutions=line_values_institutions, line_values_agencies=line_values_agencies,
-												bar_labels=bar_labels, bar_values_science=bar_values_science,
-												bar_values_technology=bar_values_technology, bar_values_engineering=bar_values_engineering,
-												bar_values_math=bar_values_math, bar_values_ict=bar_values_ict, bar_values_others=bar_values_others)
+    # Query for stacked bar chart data (Courses Added by Month)
+    bar_labels = ['April', 'May', 'June', 'July', 'August', 'September']
+    courses_science = CourseAdded.query.filter_by(category_name='Science').all()
+    courses_technology = CourseAdded.query.filter_by(category_name='Technology').all()
+    courses_engineering = CourseAdded.query.filter_by(category_name='Engineering').all()
+    courses_math = CourseAdded.query.filter_by(category_name='Math').all()
+    courses_ict = CourseAdded.query.filter_by(category_name='ICT').all()
+    courses_others = CourseAdded.query.filter_by(category_name='Others').all()
 
+    bar_values_science = [course.total_courses for course in courses_science]
+    bar_values_technology = [course.total_courses for course in courses_technology]
+    bar_values_engineering = [course.total_courses for course in courses_engineering]
+    bar_values_math = [course.total_courses for course in courses_math]
+    bar_values_ict = [course.total_courses for course in courses_ict]
+    bar_values_others = [course.total_courses for course in courses_others]
 
+    return render_template('admin_statistics.html',
+                           pie_labels=pie_labels, pie_values=pie_values,
+                           line_labels=line_labels,
+                           line_values_applicants=line_values_applicants,
+                           line_values_institutions=line_values_institutions,
+                           line_values_agencies=line_values_agencies,
+                           bar_labels=bar_labels, 
+                           bar_values_science=bar_values_science,
+                           bar_values_technology=bar_values_technology,
+                           bar_values_engineering=bar_values_engineering,
+                           bar_values_math=bar_values_math,
+                           bar_values_ict=bar_values_ict,
+                           bar_values_others=bar_values_others)
+    
 @main.route('/edu_statistics')
 def edu_statistics():
 	return render_template('edu_statistics.html')
