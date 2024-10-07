@@ -376,21 +376,6 @@ def migra_statistics():
 	specialist_education_values = specialist_education_values or []
 
 	return render_template('migra_statistics.html', header=True, footer=True,
-<<<<<<< HEAD
 													specialist_education_labels = specialist_education_labels,
 													specialist_education_values = specialist_education_values)
 										
-=======
-													line_labels=line_labels,
-													line_values_visa189=line_values_visa189,
-													line_values_visa190=line_values_visa190,
-													line_values_visa491=line_values_visa491)
- 
-@main.route('/applicant_profile')
-def applicant_profile():
-	return render_template('applicant_profile.html', header=True, footer=True)
-
-@main.route('/edu_profile')
-def edu_profile():
-	return render_template('edu_profile.html', header=True, footer=True)
->>>>>>> bd4f5635935c560e6cab82314ff9d41f31f7d93a
