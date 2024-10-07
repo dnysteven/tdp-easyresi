@@ -115,7 +115,7 @@ class ModelResult(db.Model):
 	def __init__(self, model_type, accuracy):
 		self.model_type = model_type
 		self.accuracy = accuracy
-  
+
 class VisaPoints(db.Model):
 	__tablename__ = 'visa_points'
 
@@ -241,3 +241,29 @@ class UserCoursePref(db.Model):
 		self.postcode = postcode
 		self.duration = duration
 		self.tuition_fee = tuition_fee
+
+# ---- Admin Dashboard Charts ----
+class UserGroup(db.Model):
+    __tablename__ = 'user_groups'
+
+    id = db.Column(db.Integer, primary_key=True)
+    group_name = db.Column(db.String(255), nullable=False)
+    total_users = db.Column(db.Integer, nullable=False)
+
+
+class UserLogin(db.Model):
+    __tablename__ = 'user_logins'
+
+    id = db.Column(db.Integer, primary_key=True)
+    group_name = db.Column(db.String(255), nullable=False)
+    login_month = db.Column(db.Date, nullable=False)
+    total_logins = db.Column(db.Integer, nullable=False)
+
+
+class CourseAdded(db.Model):
+    __tablename__ = 'courses_added'
+
+    id = db.Column(db.Integer, primary_key=True)
+    category_name = db.Column(db.String(255), nullable=False)
+    added_month = db.Column(db.Date, nullable=False)
+    total_courses = db.Column(db.Integer, nullable=False)

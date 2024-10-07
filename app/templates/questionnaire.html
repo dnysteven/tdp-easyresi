@@ -3,11 +3,11 @@
 {% block title %}Visa Points Form - My Application{% endblock %}
 
 {% block content %}
-  <h1>Calculate Your Visa Points</h1>    
-  <form action="/questionnaire" method="POST">
+  <h2>Calculate Your Visa Points</h1>    
+  <form class="questionnaire-form" action="/questionnaire" method="POST">
     <!-- Age Section -->
     <label for="age">Age:</label><br>
-    <select id="age" name="age" required>
+    <select class="input-register" id="age" name="age" required>
 			<option value="" selected readonly>Select</option>
 			<option value="18-24">18-24</option>
 			<option value="25-32">25-32</option>
@@ -18,7 +18,7 @@
 
     <!-- English Language Level -->
     <label for="english_level">English Language Level:</label><br>
-    <select id="english_level" name="english_level" required>
+    <select class="input-register" id="english_level" name="english_level" required>
 			<option value="" selected readonly>Select</option>
 			<option value="competent">Competent</option>
 			<option value="proficient">Proficient</option>
@@ -27,7 +27,7 @@
 
     <!-- Overseas Skilled Employment -->
     <label for="overseas_employment">How many years of skilled work experience do you have overseas?:</label><br>
-    <select id="overseas_employment" name="overseas_employment" required>
+    <select class="input-register" id="overseas_employment" name="overseas_employment" required>
 			<option value="" selected readonly>Select</option>
 			<option value="0-2">0-2 years</option>
 			<option value="3-4">3-4 years</option>
@@ -37,7 +37,7 @@
 
     <!-- Australian Skilled Employment -->
     <label for="australian_employment">How many years of skilled work experience do you have in Australia?:</label><br>
-    <select id="australian_employment" name="australian_employment" required>
+    <select class="input-register" id="australian_employment" name="australian_employment" required>
 			<option value="" selected readonly>Select</option>
 			<option value="0-1">Less than 1 year</option>
 			<option value="1-2">1-2 years</option>
@@ -48,7 +48,7 @@
 
     <!-- Educational Qualifications -->
     <label for="education_level">What is the highest level of education you have completed?:</label><br>
-    <select id="education_level" name="education_level" required>
+    <select class="input-register" id="education_level" name="education_level" required>
 			<option value="" selected readonly>Select</option>
 			<option value="doctorate">Doctorate</option>
 			<option value="bachelor">Bachelor's degree</option>
@@ -78,7 +78,7 @@
 
 		<!-- Partner Skills -->
 		<label for="partner_skills">Does your partner have skills that contribute to the points calculation?</label><br>
-		<select id="partner_skills" name="partner_skills" required>
+		<select class="input-register" id="partner_skills" name="partner_skills" required>
 			<option value="" selected readonly>Select</option>
 			<option value="age_eng_skills">Age and English skills</option>
 			<option value="comp_eng">Competency in English</option>
@@ -88,14 +88,14 @@
 
 		<!-- Nomination -->
 		<label for="nomination">Nomination</label><br>
-		<select id="nomination" name="nomination" required>
+		<select class="input-register" id="nomination" name="nomination" required>
 			<option value="" selected readonly>Select</option>
 			<option value="state">State Nomination</option>
 			<option value="state_regional">Both State and Regional Nomination</option>
 			<option value="none">None of the above</option>
 		</select><br><br>
 
-    <input type="submit" value="Submit">
+		<button class="submit-button" type="submit">Submit</button>
   </form>
   {% if message %}
   <p>{{ message }}</p>

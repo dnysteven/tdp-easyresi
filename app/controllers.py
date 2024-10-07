@@ -426,4 +426,8 @@ def get_chart_migrant():
   specialist_education_labels = ['Completed', 'Not Completed']
   specialist_education_values = [300, 100]
   
+<<<<<<< HEAD
   return specialist_education_labels, specialist_education_values
+=======
+  return line_labels, line_values_visa189, line_values_visa190, line_values_visa491
+>>>>>>> bd4f5635935c560e6cab82314ff9d41f31f7d93a
