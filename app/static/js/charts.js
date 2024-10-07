@@ -137,7 +137,7 @@ function renderStackedBarChart(barLabels, barValuesScience, barValuesTechnology,
 }
 
 // Function to render the Line Chart for Visa Applications
-function renderVisaLineChart(lineLabels, lineValuesVisa189, lineValuesVisa190, lineValuesVisa191) {
+function renderVisaLineChart(lineLabels, lineValuesVisa189, lineValuesVisa190, lineValuesVisa491) {
 	const ctxLine = document.getElementById('visaLineChart').getContext('2d');
 	const visaLineChart = new Chart(ctxLine, {
 		type: 'line',
@@ -161,8 +161,8 @@ function renderVisaLineChart(lineLabels, lineValuesVisa189, lineValuesVisa190, l
 					tension: 0.1
 				},
 				{
-					label: 'Visa 191 Applications',
-					data: lineValuesVisa191,
+					label: 'Visa 491 Applications',
+					data: lineValuesVisa491,
 					borderColor: 'rgba(94, 235, 52)',
 					backgroundColor: 'rgba(94, 235, 52)',
 					fill: false,
@@ -209,82 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 
 	// Line Chart for Visa Applicants
-	if (window.lineLabels && window.lineValuesVisa189 && window.lineValuesVisa190 && window.lineValuesVisa191) {
-		renderVisaLineChart(window.lineLabels, window.lineValuesVisa189, window.lineValuesVisa190, window.lineValuesVisa191);
+	if (window.lineLabels && window.lineValuesVisa189 && window.lineValuesVisa190 && window.lineValuesVisa491) {
+		renderVisaLineChart(window.lineLabels, window.lineValuesVisa189, window.lineValuesVisa190, window.lineValuesVisa491);
 	}
-
-	const australiaGeoJsonUrl = 'https://unpkg.com/world-atlas/countries-50m.json'; // URL for GeoJSON data
-
-	// Fetch the GeoJSON data for Australia
-	fetch(australiaGeoJsonUrl)
-			.then(response => response.json())
-			.then(data => {
-					// Filter to get Australia's data from the GeoJSON
-					const countries = ChartGeo.topojson.feature(data, data.objects.countries).features;
-					const australia = countries.find(country => country.properties.name === 'Australia');
-
-					// Check if Australia's data is found
-					if (!australia) {
-							console.error('Australia not found in the GeoJSON data');
-							return;
-					}
-
-					// Setup the chart with the map of Australia
-					const ctx = document.getElementById('visaGeoChart').getContext('2d');
-					const visaData = window.visaData;
-
-					const chart = new Chart(ctx, {
-							type: 'choropleth',
-							data: {
-									labels: ['Western Australia', 'Victoria'], // Add more states as needed
-									datasets: [{
-											label: 'Visa Applications',
-											outline: australia,
-											data: [
-													{
-															feature: australia, // Australia's GeoJSON for Western Australia
-															value: visaData.WA.visa_189 + visaData.WA.visa_190 + visaData.WA.visa_191,
-															visa_189: visaData.WA.visa_189,
-															visa_190: visaData.WA.visa_190,
-															visa_191: visaData.WA.visa_191,
-															name: 'Western Australia'
-													},
-													{
-															feature: australia, // Australia's GeoJSON for Victoria
-															value: visaData.VIC.visa_189 + visaData.VIC.visa_190 + visaData.VIC.visa_191,
-															visa_189: visaData.VIC.visa_189,
-															visa_190: visaData.VIC.visa_190,
-															visa_191: visaData.VIC.visa_191,
-															name: 'Victoria'
-													}
-											]
-									}]
-							},
-							options: {
-									showOutline: true,
-									showGraticule: false,
-									plugins: {
-											legend: {
-													display: true
-											},
-											tooltip: {
-													callbacks: {
-															label: function (context) {
-																	const state = context.dataset.data[context.dataIndex];
-																	return `${state.name}: Visa 189: ${state.visa_189}, Visa 190: ${state.visa_190}, Visa 191: ${state.visa_191}`;
-															}
-													}
-											}
-									},
-									scales: {
-											xy: {
-													projection: 'equalEarth'
-											}
-									}
-							}
-					});
-			})
-			.catch(error => {
-					console.error('Error fetching GeoJSON data:', error);
-			});
 });

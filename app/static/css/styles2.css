@@ -32,6 +32,11 @@ a {
   color: #ffffff; /* Text color */
 }
 
+.content-container {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
 /* Style the navigation bar */
 .navbar {
   display: flex;
@@ -117,25 +122,35 @@ a {
 
 /* Section Styles */
 section {
-  padding: 4rem 0;
+  padding: 1rem 0;
 }
 
-h3 {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
+h2 {
+  display: flex;
+  color: #1a1a4b;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  margin-top: 30px; 
+  margin-bottom: 30px;
+  font-size: 2rem;  
 }
 
 .index-para {
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 20px;
 }
 
+.login-para {
+  text-align: center;
+  margin-bottom: 140px;
+}
 /* Services Section */
 .service-cards {
   display: flex;
   justify-content: space-between;
   gap: 2rem;
+  margin-bottom: 100px;
 }
 
 .service-cards .card {
@@ -151,8 +166,6 @@ h3 {
   font-size: 1.5rem;
 }
 
-
-
 .login {
   display: flex;
   color: #1a1a4b;
@@ -165,7 +178,7 @@ h3 {
 
 /* Contact Section */
 .login-form {
-  max-width: 600px;
+  max-width: 500px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -174,7 +187,16 @@ h3 {
 }
 
 .register-form {
-  max-width: 800px;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.questionnaire-form {
+  max-width: 600px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -196,13 +218,6 @@ h3 {
   border-radius: 5px;
 }
 
-/*.input-register1 {
-  width: 35%;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-} */
-
 button {
   padding: 1rem;
   background-color: #0073e6;
@@ -216,6 +231,26 @@ button {
   background-color: #02293e;
 }
 
+/*Profile Section*/
+
+.profile-section {
+  margin-bottom: 2rem;
+}
+
+.profile-section h3 {
+  background-color: #02293e;
+  color: white;
+  padding: 0.1rem;
+  border-radius: 1px;
+}
+
+.profile-info {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 1px;
+  background-color: #f9f9f9;
+}
+
 /* Footer */
 footer {
   background-color: #f8f8f8;
@@ -225,4 +260,57 @@ footer {
 
 footer p {
   color: #333;
+}
+.chart-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-card h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Full width card for the bar chart */
+.full-width {
+  grid-column: span 2;
+}
+
+/* Styling the LineChart */
+.LineChart {
+  width: 90%; /* Use a larger percentage for the BarChart */
+  max-width: 800px; /* Limit maximum width */
+  height: auto;
+}
+
+/* Styling the BarChart */
+.BarChart {
+  width: 90%; /* Use a larger percentage for the BarChart */
+  max-width: 800px; /* Limit maximum width */
+  height: auto;
+}
+
+/* Styling the PieChart */
+.PieChart {
+  width: 90%; /* Use a larger percentage for the BarChart */
+  max-width: 800px; /* Limit maximum width */
+  height: auto;
+}
+
+canvas {
+  width: 100% !important;
+  height: 300px !important;
+}
+
+/* Responsive behavior */
+@media screen and (max-width: 1024px) {
+  .dashboard-grid {
+      grid-template-columns: 1fr;
+  }
+
+  .full-width {
+      grid-column: span 1;
+  }
 }

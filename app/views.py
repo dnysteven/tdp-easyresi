@@ -52,8 +52,8 @@ def login_required(f):
 @main.route('/register', methods=['GET', 'POST'])
 def register():
   # Check if user is already logged in
-	if 'username' in session:
-		return redirect(url_for('main.index'))
+	# if 'username' in session:
+	# 	return redirect(url_for('main.index'))
   
 	if request.method == 'POST':
 		data = {
@@ -357,16 +357,24 @@ def edu_statistics():
 @main.route('/migra_statistics')
 def migra_statistics():
 	# Get chart data from the controller
-	line_labels, line_values_visa189, line_values_visa190, line_values_visa191 = get_chart_migrant()
+	line_labels, line_values_visa189, line_values_visa190, line_values_visa491 = get_chart_migrant()
 
 	# Ensure that none of the variables are undefined or None
 	line_labels = line_labels or []  # Default to an empty list if None
 	line_values_visa189 = line_values_visa189 or []
 	line_values_visa190 = line_values_visa190 or []
-	line_values_visa191 = line_values_visa191 or []
+	line_values_visa491 = line_values_visa491 or []
 
-	return render_template('migra_statistics.html', header=False, footer=False,
+	return render_template('migra_statistics.html', header=True, footer=True,
 													line_labels=line_labels,
 													line_values_visa189=line_values_visa189,
 													line_values_visa190=line_values_visa190,
-													line_values_visa191=line_values_visa191)
+													line_values_visa491=line_values_visa491)
+ 
+@main.route('/applicant_profile')
+def applicant_profile():
+	return render_template('applicant_profile.html', header=True, footer=True)
+
+@main.route('/edu_profile')
+def edu_profile():
+	return render_template('edu_profile.html', header=True, footer=True)
