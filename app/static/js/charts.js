@@ -1,5 +1,5 @@
 // Function to create Pie Charts
-function renderPieChart(specialistEducationLabels, specialistEducationValues) {
+function sePieChart(specialistEducationLabels, specialistEducationValues) {
 	const ctx = document.getElementById('specialistEducationChart').getContext('2d');
 	new Chart(ctx, {
 	  type: 'pie',
@@ -7,8 +7,8 @@ function renderPieChart(specialistEducationLabels, specialistEducationValues) {
 		labels: specialistEducationLabels, 
 		datasets: [{
 		  data: specialistEducationValues,
-		  backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-		  hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+		  backgroundColor: ['#3498db'],
+		  hoverBackgroundColor: ['#2980b9']
 		}]
 	  },
 	  options: {
@@ -17,6 +17,15 @@ function renderPieChart(specialistEducationLabels, specialistEducationValues) {
 		plugins: {
 		  legend: {
 			position: 'bottom',
+			labels: {
+						color: '#333' // Legend text color
+					}
+				},
+				tooltip: {
+					backgroundColor: 'rgba(0, 0, 0, 0.7)', // Tooltip background color
+					bodyColor: '#fff', // Tooltip text color
+					borderColor: '#fff', // Tooltip border color
+					borderWidth: 1 // Tooltip border width
 		  }
 		}
 	  }
@@ -24,7 +33,7 @@ function renderPieChart(specialistEducationLabels, specialistEducationValues) {
 }
 
 // Function to create Pie Charts
-function renderPieChart(australianStudyRequirementLabels, australianStudyRequirementValues) {
+function asrPieChart(australianStudyRequirementLabels, australianStudyRequirementValues) {
 	const ctx = document.getElementById('australianStudyRequirementChart').getContext('2d');
 	new Chart(ctx, {
 	  type: 'pie',
@@ -49,7 +58,7 @@ function renderPieChart(australianStudyRequirementLabels, australianStudyRequire
 }
   
 // Function to create Pie Charts
-function renderPieChart(professionalYearLabels, professionalYearValues) {
+function pyPieChart(professionalYearLabels, professionalYearValues) {
 	const ctx = document.getElementById('professionalYearChart').getContext('2d');
 	new Chart(ctx, {
 	  type: 'pie',
@@ -74,7 +83,7 @@ function renderPieChart(professionalYearLabels, professionalYearValues) {
 }
 
 // Function to create Pie Charts
-function renderPieChart(communityLanguageLabels, communityLanguageValues) {
+function clPieChart(communityLanguageLabels, communityLanguageValues) {
 	const ctx = document.getElementById('communityLanguageChart').getContext('2d');
 	new Chart(ctx, {
 	  type: 'pie',
@@ -99,7 +108,7 @@ function renderPieChart(communityLanguageLabels, communityLanguageValues) {
 }
 
 // Function to create Pie Charts
-function renderPieChart(regionalStudyLabels, regionalStudyValues) {
+function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 	const ctx = document.getElementById('regionalStudyChart').getContext('2d');
 	new Chart(ctx, {
 	  type: 'pie',
@@ -124,7 +133,7 @@ function renderPieChart(regionalStudyLabels, regionalStudyValues) {
 }
 
   // Function to create Bar Charts
-  function renderBarChart(ageGroupLabels, ageGroupValues) {
+  function agBarChart(ageGroupLabels, ageGroupValues) {
 	const ctx = document.getElementById('ageGroupChart').getContext('2d');
 	new Chart(ctx, {
 	  type: 'bar',
@@ -158,7 +167,7 @@ function renderPieChart(regionalStudyLabels, regionalStudyValues) {
   }
   
     // Function to create Bar Charts
-	function renderBarChart(englishLevelLabels, englishLevelValues) {
+	function elBarChart(englishLevelLabels, englishLevelValues) {
 		const ctx = document.getElementById('englishLevelChart').getContext('2d');
 		new Chart(ctx, {
 		  type: 'bar',
@@ -192,8 +201,8 @@ function renderPieChart(regionalStudyLabels, regionalStudyValues) {
 	  }
 
 	  // Function to create Bar Charts
-	function renderBarChart(overseasEmploymentLabels, overseasEmploymentValues) {
-		const ctx = document.getElementById('overseasEmploymentChar').getContext('2d');
+	function oeBarChart(overseasEmploymentLabels, overseasEmploymentValues) {
+		const ctx = document.getElementById('overseasEmploymentChart').getContext('2d');
 		new Chart(ctx, {
 		  type: 'bar',
 		  data: {
@@ -226,7 +235,7 @@ function renderPieChart(regionalStudyLabels, regionalStudyValues) {
 	  }
 
 	  // Function to create Bar Charts
-	function renderBarChart(australianEmploymentLabels, australianEmploymentValues) {
+	function aeBarChart(australianEmploymentLabels, australianEmploymentValues) {
 		const ctx = document.getElementById('australianEmploymentChart').getContext('2d');
 		new Chart(ctx, {
 		  type: 'bar',
@@ -260,7 +269,7 @@ function renderPieChart(regionalStudyLabels, regionalStudyValues) {
 	  }
 
 	  // Function to create Bar Charts
-	function renderBarChart(educationLevelLabels, ducationLevelValues) {
+	function elBarChart(educationLevelLabels, ducationLevelValues) {
 		const ctx = document.getElementById('educationLevelChart').getContext('2d');
 		new Chart(ctx, {
 		  type: 'bar',
@@ -512,51 +521,51 @@ function renderPieChart(regionalStudyLabels, regionalStudyValues) {
 
 		// Pie Chart for Specialist Education
 	if (window.specialistEducationLabels && window.specialistEducationValues) {
-    renderPieChart(window.specialistEducationLabels, window.specialistEducationValues);
+    sePieChart(window.specialistEducationLabels, window.specialistEducationValues);
 	}
 
 		// Pie Chart for Australian Study Requirement
 	if (window.australianStudyRequirementLabels && window.australianStudyRequirementValues) {
-    renderPieChart(window.australianStudyRequirementLabels, window.australianStudyRequirementValues);
+    asrPieChart(window.australianStudyRequirementLabels, window.australianStudyRequirementValues);
 	}
 
 		// Pie Chart for Professional Year
 	if (window.professionalYearLabels && window.professionalYearValues) {
-    renderPieChart(window.professionalYearLabels, window.professionalYearValues);
+    pyPieChart(window.professionalYearLabels, window.professionalYearValues);
 	}
 
 		// Pie Chart for Community Language
 	if (window.communityLanguageLabels && window.communityLanguageValues) {
-    renderPieChart(window.communityLanguageLabels, window.communityLanguageValues);
+    clPieChart(window.communityLanguageLabels, window.communityLanguageValues);
 	}
 
 		// Pie Chart for Regional Study
 	if (window.regionalStudyLabels && window.regionalStudyValues) {
-    renderPieChart(window.regionalStudyLabels, window.regionalStudyValues);
+    rsPieChart(window.regionalStudyLabels, window.regionalStudyValues);
 	}
 
 		// Bar Chart for Age Groups
 	if (window.ageGroupLabels && window.ageGroupValues) {
-		renderBarChart(window.ageGroupLabels, window.ageGroupValues);
+		agBarChart(window.ageGroupLabels, window.ageGroupValues);
 	}
 
 	// Bar Chart for English Levels
 	if (window.englishLevelLabels && window.englishLevelValues) {
-		renderBarChart(window.englishLevelLabels, window.englishLevelValues);
+		elBarChart(window.englishLevelLabels, window.englishLevelValues);
 	}
 
 	// Bar Chart for Overseas Employment
 	if (window.overseasEmploymentLabels && window.overseasEmploymentValues) {
-		renderBarChart(window.overseasEmploymentLabels, window.overseasEmploymentValues);
+		oeBarChart(window.overseasEmploymentLabels, window.overseasEmploymentValues);
 	}
 
 	// Bar Chart for Australian Employment
 	if (window.australianEmploymentLabels && window.australianEmploymentValues) {
-		renderBarChart(window.australianEmploymentLabels, window.australianEmploymentValues);
+		aeBarChart(window.australianEmploymentLabels, window.australianEmploymentValues);
 	}
 
 	// Bar Chart for Education Levels
 	if (window.educationLevelLabels && window.educationLevelValues) {
-		renderBarChart(window.educationLevelLabels, window.educationLevelValues);
+		elBarChart(window.educationLevelLabels, window.educationLevelValues);
 	}	
 });

@@ -29,11 +29,25 @@ h1 {
     margin-bottom: 15px; /* Space below headings */
 }
 
-/* Canvas styling */
+/* Responsive design for canvas elements */
 canvas {
     max-width: 100%; /* Responsive canvas */
     height: auto; /* Maintain aspect ratio */
     display: block; /* Block display for proper sizing */
+}
+
+/* Specific styles for different charts */
+.PieChart,
+.BarChart {
+    width: 90%; /* Use a larger percentage for the charts */
+    max-width: 800px; /* Limit maximum width */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Fixed height for charts */
+canvas {
+    width: 100% !important; /* Full width for canvas */
+    height: 300px !important; /* Fixed height for charts */
 }
 
 /* Responsive design for smaller screens */
@@ -49,4 +63,4 @@ canvas {
     .chart-container h3 {
         font-size: 18px; /* Smaller headings on mobile */
     }
-}
+} 
