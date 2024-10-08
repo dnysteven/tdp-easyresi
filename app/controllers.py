@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from datetime import datetime, timezone
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy import func
 from app import db
 from app.models import Data, ModelResult, VisaPoints, UniCourse, User, Login, University, UserCoursePref, UserSession
 
@@ -307,43 +308,72 @@ def calculate_age(request):
 
 def process_visa_path(data):
   # Extract data from form submission
-  educational_qualification = data.get('educational_qualification')
-  specialist = data.get('specialist_education')
-  professional_year = data.get('professional_year')
+  educational_qualification = data.get('education_level')
+  specialist_education = data.get('specialist_education')
+  prof_year = data.get('proffesional_year', 'off')  # Default to 'off' if not checked
   course_duration = data.get('course_duration')
-  regional = data.get('regional')
-  course_fees = data.get('course_fees')
+  regional_study = data.get('regional_study', 'off')  # Default to 'off' if not checked
+  tuition_fee = data.get('tuition_fee')
+  state = data.get('state')
   
-  # Convert course_fees into a list if it's comma-separated
-  if course_fees:
-    course_fees = course_fees.split(',')
-  
-  # Build the query with mandatory filters
+  # Print the extracted data to the terminal
+  print("Data extracted from form submission:")
+  print(f"Educational Qualification: {educational_qualification}")
+  print(f"Specialist Education: {specialist_education}")
+  print(f"Professional Year: {prof_year}")
+  print(f"Course Duration: {course_duration}")
+  print(f"Regional Study: {regional_study}")
+  print(f"Tuition Fee: {tuition_fee}")
+  print(f"State: {state}")
+
+  # Build the query
   query = UniCourse.query \
-    .join(User, UniCourse.provider_id == User.username) \
-    .join(University, UniCourse.univ_id == University.id) \
-    .filter(
-      UniCourse.level == educational_qualification,
-      UniCourse.specialist == bool(int(specialist)),
-      UniCourse.prof_year == bool(int(professional_year)),
-      UniCourse.duration == int(course_duration)
-    )
+      .join(User, UniCourse.provider_id == User.email) \
+      .join(University, UniCourse.univ_id == University.id) \
+      .filter(University.state == state)
 
-  # Add the regional filter if it's checked
-  if regional:
-    query = query.filter_by(regional=True)
+  # Level filter logic
+  if educational_qualification == 'bachelor':
+    query = query.filter(func.lower(UniCourse.level) == 'bachelor')
+  elif educational_qualification == 'master':
+    query = query.filter(func.lower(UniCourse.level).in_(['bachelor', 'master']))
+  elif educational_qualification == 'doctorate':
+    query = query.filter(func.lower(UniCourse.level).in_(['bachelor', 'master', 'doctorate']))
 
-  # Add the course fees filter if any checkboxes were selected
-  if course_fees:
-    query = query.filter(UniCourse.fee_points.in_(course_fees))
+  # Specialist education filter logic
+  if specialist_education != 'none':
+    query = query.filter(func.lower(UniCourse.specialist_education) == specialist_education)
+    
+  # Specialist education filter logic
+  if tuition_fee != 'none':
+    query = query.filter(UniCourse.tuition_fee == tuition_fee)
 
+  # Duration filter logic
+  if course_duration == '2':
+    query = query.filter(UniCourse.duration <= 2)
+  elif course_duration == '4':
+    query = query.filter(UniCourse.duration <= 4)
+  elif course_duration == '6':
+    query = query.filter(UniCourse.duration <= 6)
+
+  # Professional year filter logic
+  if prof_year == 'on':  # Checkbox was checked
+    query = query.filter(UniCourse.prof_year == True)
+
+  # Regional study filter logic
+  if regional_study == 'on':  # Checkbox was checked
+    query = query.filter(UniCourse.regional == True)
+
+  # Execute the query to get recommended courses
   recommended_courses = query.all()
-  
+
   # Add points to each course based on the new function
   for course in recommended_courses:
     course.points = calculate_ref_points(course)
+    
+  sorted_courses = sorted(recommended_courses, key=lambda x: x.points, reverse=True)
 
-  return recommended_courses
+  return sorted_courses
 
 def calculate_ref_points(course):
   # Define points for levels
@@ -355,12 +385,11 @@ def calculate_ref_points(course):
 
   # Calculate points based on course attributes
   points = level_points.get(course.level.lower(), 0)  # Get points for level
-  points += 1 if course.specialist else 0  # Add 1 if specialist is True
-  points += 1 if course.prof_year else 0  # Add 1 if prof_year is True
+  points += 1 if course.specialist_education != 'none' else 0  # Add 1 if specialist_education is not 'none'
+  points += 1 if course.prof_year else 0  # Add 1 if professional year is True
   points += 1 if course.regional else 0  # Add 1 if regional is True
 
   return points
-
 
 def user_course_preferences(username, selected_courses, form_data):
   # Loop through selected courses and save the course preferences

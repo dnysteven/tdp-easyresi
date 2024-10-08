@@ -1,0 +1,376 @@
+course_num,course_name,provider_id,univ_id,level,specialist_education,prof_year,duration,tuition_fee,regional
+YN786,Bachelor of Arts,104685155@student.swin.edu.au,1,Bachelor,None,FALSE,4,60k-100k,FALSE
+JJ941,Bachelor of Engineering,104685155@student.swin.edu.au,1,Bachelor,Engineering,FALSE,4,<60k,FALSE
+RM811,Bachelor of Science,104685155@student.swin.edu.au,1,Bachelor,Engineering,FALSE,6,<60k,FALSE
+NL793,Bachelor of Arts,104685155@student.swin.edu.au,1,Bachelor,None,FALSE,4,>100k,FALSE
+PY846,Bachelor of Arts,104685155@student.swin.edu.au,1,Bachelor,None,FALSE,4,60k-100k,FALSE
+BB922,Master of Engineering,104685155@student.swin.edu.au,1,Master,Engineering,FALSE,2,<60k,TRUE
+QI041,Master of Data Science,104685155@student.swin.edu.au,1,Master,None,TRUE,4,60k-100k,TRUE
+RB424,Master of Business,104685155@student.swin.edu.au,1,Master,None,TRUE,4,>100k,FALSE
+BP825,Master of Business,104685155@student.swin.edu.au,1,Master,None,FALSE,4,>100k,FALSE
+BZ659,Master of Science,104685155@student.swin.edu.au,1,Master,None,TRUE,4,>100k,FALSE
+HZ480,Doctorate in IT,104685155@student.swin.edu.au,1,Doctorate,None,TRUE,4,>100k,TRUE
+MA421,Doctorate in Data Science,104685155@student.swin.edu.au,1,Doctorate,Science,TRUE,6,<60k,FALSE
+AH376,Doctorate in Science,104685155@student.swin.edu.au,1,Doctorate,None,FALSE,4,>100k,FALSE
+PP211,Doctorate in Science,104685155@student.swin.edu.au,1,Doctorate,Science,TRUE,6,<60k,TRUE
+NB711,Doctorate in Engineering,104685155@student.swin.edu.au,1,Doctorate,Engineering,TRUE,6,<60k,FALSE
+HB400,Bachelor of IT,104685155@student.swin.edu.au,2,Bachelor,None,FALSE,6,60k-100k,FALSE
+UH827,Bachelor of Arts,104685155@student.swin.edu.au,2,Bachelor,None,FALSE,6,60k-100k,FALSE
+WJ888,Bachelor of Engineering,104685155@student.swin.edu.au,2,Bachelor,Engineering,FALSE,6,>100k,FALSE
+WQ013,Bachelor of Arts,104685155@student.swin.edu.au,2,Bachelor,None,FALSE,4,>100k,FALSE
+TD009,Bachelor of Science,104685155@student.swin.edu.au,2,Bachelor,Mathematics,FALSE,6,<60k,FALSE
+LU571,Master of IT,104685155@student.swin.edu.au,2,Master,ICT,TRUE,2,<60k,TRUE
+EY202,Master of IT,104685155@student.swin.edu.au,2,Master,ICT,FALSE,2,<60k,TRUE
+UH653,Master of Engineering,104685155@student.swin.edu.au,2,Master,Engineering,TRUE,4,<60k,FALSE
+LR573,Master of Science,104685155@student.swin.edu.au,2,Master,Technology,FALSE,2,>100k,FALSE
+SY544,Master of IT,104685155@student.swin.edu.au,2,Master,ICT,FALSE,4,>100k,TRUE
+CL255,Doctorate in IT,104685155@student.swin.edu.au,2,Doctorate,None,TRUE,6,<60k,FALSE
+NQ981,Doctorate in Engineering,104685155@student.swin.edu.au,2,Doctorate,Engineering,TRUE,4,60k-100k,FALSE
+OI997,Doctorate in Data Science,104685155@student.swin.edu.au,2,Doctorate,Science,TRUE,4,>100k,FALSE
+OW548,Doctorate in IT,104685155@student.swin.edu.au,2,Doctorate,ICT,TRUE,6,>100k,FALSE
+QE017,Doctorate in Business,104685155@student.swin.edu.au,2,Doctorate,None,TRUE,6,60k-100k,TRUE
+QA384,Bachelor of IT,104685155@student.swin.edu.au,3,Bachelor,ICT,FALSE,6,<60k,FALSE
+KR952,Bachelor of IT,104685155@student.swin.edu.au,3,Bachelor,None,FALSE,6,<60k,FALSE
+YP045,Bachelor of Engineering,104685155@student.swin.edu.au,3,Bachelor,Engineering,FALSE,6,<60k,FALSE
+WZ511,Bachelor of IT,104685155@student.swin.edu.au,3,Bachelor,ICT,FALSE,6,<60k,FALSE
+MR481,Bachelor of Engineering,104685155@student.swin.edu.au,3,Bachelor,Engineering,FALSE,4,<60k,FALSE
+EL184,Master of Science,104685155@student.swin.edu.au,3,Master,Engineering,TRUE,2,60k-100k,TRUE
+VQ863,Master of Science,104685155@student.swin.edu.au,3,Master,Engineering,FALSE,4,<60k,TRUE
+IE230,Master of Engineering,104685155@student.swin.edu.au,3,Master,Engineering,TRUE,2,60k-100k,FALSE
+PK266,Master of Data Science,104685155@student.swin.edu.au,3,Master,None,TRUE,4,60k-100k,FALSE
+AG881,Master of Engineering,104685155@student.swin.edu.au,3,Master,Engineering,TRUE,2,60k-100k,FALSE
+MN661,Doctorate in Data Science,104685155@student.swin.edu.au,3,Doctorate,Science,FALSE,4,>100k,TRUE
+TE799,Doctorate in Data Science,104685155@student.swin.edu.au,3,Doctorate,Science,TRUE,4,<60k,TRUE
+HP632,Doctorate in Business,104685155@student.swin.edu.au,3,Doctorate,None,FALSE,4,>100k,FALSE
+UF304,Doctorate in Business,104685155@student.swin.edu.au,3,Doctorate,None,FALSE,4,60k-100k,TRUE
+YB686,Doctorate in Business,104685155@student.swin.edu.au,3,Doctorate,None,TRUE,6,60k-100k,TRUE
+RV290,Bachelor of Engineering,104685155@student.swin.edu.au,4,Bachelor,Engineering,FALSE,6,>100k,FALSE
+OK691,Bachelor of IT,104685155@student.swin.edu.au,4,Bachelor,ICT,FALSE,4,60k-100k,FALSE
+AH929,Bachelor of Engineering,104685155@student.swin.edu.au,4,Bachelor,Engineering,FALSE,6,>100k,FALSE
+PW344,Bachelor of Engineering,104685155@student.swin.edu.au,4,Bachelor,Engineering,FALSE,6,>100k,FALSE
+TQ279,Bachelor of IT,104685155@student.swin.edu.au,4,Bachelor,ICT,FALSE,6,<60k,FALSE
+MH691,Master of IT,104685155@student.swin.edu.au,4,Master,ICT,FALSE,2,>100k,TRUE
+GZ124,Master of IT,104685155@student.swin.edu.au,4,Master,ICT,TRUE,2,<60k,FALSE
+BT980,Master of Data Science,104685155@student.swin.edu.au,4,Master,Science,FALSE,4,>100k,TRUE
+OA202,Master of Science,104685155@student.swin.edu.au,4,Master,ICT,TRUE,4,>100k,FALSE
+KZ000,Master of IT,104685155@student.swin.edu.au,4,Master,ICT,FALSE,2,>100k,FALSE
+QH815,Doctorate in Business,104685155@student.swin.edu.au,4,Doctorate,None,TRUE,4,60k-100k,TRUE
+ZF951,Doctorate in IT,104685155@student.swin.edu.au,4,Doctorate,None,TRUE,6,60k-100k,FALSE
+QE746,Doctorate in Engineering,104685155@student.swin.edu.au,4,Doctorate,Engineering,FALSE,4,<60k,FALSE
+MH299,Doctorate in Engineering,104685155@student.swin.edu.au,4,Doctorate,Engineering,FALSE,4,>100k,TRUE
+WI015,Doctorate in Engineering,104685155@student.swin.edu.au,4,Doctorate,Engineering,TRUE,6,>100k,TRUE
+PG142,Bachelor of IT,104685155@student.swin.edu.au,5,Bachelor,ICT,FALSE,4,60k-100k,FALSE
+JS597,Bachelor of Science,104685155@student.swin.edu.au,5,Bachelor,Science,FALSE,6,60k-100k,FALSE
+NZ541,Bachelor of Science,104685155@student.swin.edu.au,5,Bachelor,Science,FALSE,4,>100k,FALSE
+XR144,Bachelor of IT,104685155@student.swin.edu.au,5,Bachelor,ICT,FALSE,6,<60k,FALSE
+EZ872,Bachelor of Engineering,104685155@student.swin.edu.au,5,Bachelor,Engineering,FALSE,6,<60k,FALSE
+GO543,Master of Business,104685155@student.swin.edu.au,5,Master,None,TRUE,4,>100k,TRUE
+OF255,Master of Science,104685155@student.swin.edu.au,5,Master,Science,FALSE,2,<60k,FALSE
+QG965,Master of IT,104685155@student.swin.edu.au,5,Master,None,TRUE,4,<60k,FALSE
+DR091,Master of Business,104685155@student.swin.edu.au,5,Master,None,TRUE,2,60k-100k,FALSE
+XD147,Master of Data Science,104685155@student.swin.edu.au,5,Master,None,TRUE,4,>100k,FALSE
+MZ975,Doctorate in Engineering,104685155@student.swin.edu.au,5,Doctorate,Engineering,TRUE,4,<60k,FALSE
+PE718,Doctorate in Data Science,104685155@student.swin.edu.au,5,Doctorate,Science,FALSE,4,60k-100k,TRUE
+CJ187,Doctorate in Data Science,104685155@student.swin.edu.au,5,Doctorate,Science,FALSE,6,60k-100k,FALSE
+BD653,Doctorate in Science,104685155@student.swin.edu.au,5,Doctorate,None,FALSE,6,60k-100k,TRUE
+VG221,Doctorate in Business,104685155@student.swin.edu.au,5,Doctorate,None,TRUE,4,<60k,FALSE
+MI239,Bachelor of IT,104685155@student.swin.edu.au,6,Bachelor,ICT,FALSE,6,>100k,FALSE
+NG728,Bachelor of Business,104685155@student.swin.edu.au,6,Bachelor,None,FALSE,4,<60k,FALSE
+JB191,Bachelor of Business,104685155@student.swin.edu.au,6,Bachelor,None,FALSE,4,>100k,FALSE
+QJ364,Bachelor of Arts,104685155@student.swin.edu.au,6,Bachelor,None,FALSE,6,60k-100k,FALSE
+WP198,Bachelor of IT,104685155@student.swin.edu.au,6,Bachelor,ICT,FALSE,4,<60k,FALSE
+BF015,Master of Data Science,104685155@student.swin.edu.au,6,Master,Science,FALSE,4,60k-100k,TRUE
+MC249,Master of Science,104685155@student.swin.edu.au,6,Master,Engineering,TRUE,4,<60k,TRUE
+CK313,Master of Data Science,104685155@student.swin.edu.au,6,Master,None,FALSE,4,>100k,TRUE
+BV139,Master of Data Science,104685155@student.swin.edu.au,6,Master,None,TRUE,4,>100k,FALSE
+TK558,Master of Data Science,104685155@student.swin.edu.au,6,Master,None,FALSE,4,>100k,TRUE
+VW146,Doctorate in Engineering,104685155@student.swin.edu.au,6,Doctorate,Engineering,TRUE,6,>100k,FALSE
+XV814,Doctorate in Science,104685155@student.swin.edu.au,6,Doctorate,None,FALSE,6,>100k,TRUE
+FW288,Doctorate in Business,104685155@student.swin.edu.au,6,Doctorate,None,TRUE,6,>100k,TRUE
+SR162,Doctorate in Science,104685155@student.swin.edu.au,6,Doctorate,ICT,FALSE,6,60k-100k,TRUE
+KM168,Doctorate in Data Science,104685155@student.swin.edu.au,6,Doctorate,Science,FALSE,4,60k-100k,TRUE
+JC156,Bachelor of Science,104685155@student.swin.edu.au,7,Bachelor,None,FALSE,4,>100k,FALSE
+NU260,Bachelor of Arts,104685155@student.swin.edu.au,7,Bachelor,None,FALSE,4,>100k,FALSE
+EB544,Bachelor of Arts,104685155@student.swin.edu.au,7,Bachelor,None,FALSE,4,<60k,FALSE
+LL998,Bachelor of Arts,104685155@student.swin.edu.au,7,Bachelor,None,FALSE,6,>100k,FALSE
+SH621,Bachelor of Business,104685155@student.swin.edu.au,7,Bachelor,None,FALSE,6,>100k,FALSE
+ZK059,Master of Science,104685155@student.swin.edu.au,7,Master,Technology,TRUE,4,>100k,TRUE
+LK857,Master of Data Science,104685155@student.swin.edu.au,7,Master,None,TRUE,4,>100k,FALSE
+AT519,Master of Business,104685155@student.swin.edu.au,7,Master,None,FALSE,2,<60k,FALSE
+CU138,Master of IT,104685155@student.swin.edu.au,7,Master,None,TRUE,4,60k-100k,TRUE
+XQ012,Master of Engineering,104685155@student.swin.edu.au,7,Master,Engineering,TRUE,2,>100k,FALSE
+WY880,Doctorate in IT,104685155@student.swin.edu.au,7,Doctorate,ICT,TRUE,4,60k-100k,TRUE
+NS594,Doctorate in Science,104685155@student.swin.edu.au,7,Doctorate,Mathematics,TRUE,4,<60k,TRUE
+QO211,Doctorate in Business,104685155@student.swin.edu.au,7,Doctorate,None,FALSE,6,60k-100k,TRUE
+XA920,Doctorate in Engineering,104685155@student.swin.edu.au,7,Doctorate,Engineering,TRUE,4,>100k,TRUE
+OK284,Doctorate in Engineering,104685155@student.swin.edu.au,7,Doctorate,Engineering,TRUE,4,>100k,FALSE
+RP737,Bachelor of Engineering,104685155@student.swin.edu.au,8,Bachelor,Engineering,FALSE,4,<60k,FALSE
+FO852,Bachelor of Engineering,104685155@student.swin.edu.au,8,Bachelor,Engineering,FALSE,6,60k-100k,FALSE
+SP522,Bachelor of Arts,104685155@student.swin.edu.au,8,Bachelor,None,FALSE,4,60k-100k,FALSE
+VG624,Bachelor of IT,104685155@student.swin.edu.au,8,Bachelor,None,FALSE,6,<60k,FALSE
+AM792,Bachelor of Engineering,104685155@student.swin.edu.au,8,Bachelor,Engineering,FALSE,4,>100k,FALSE
+XD852,Master of Science,104685155@student.swin.edu.au,8,Master,Engineering,TRUE,2,60k-100k,FALSE
+HT822,Master of Engineering,104685155@student.swin.edu.au,8,Master,Engineering,FALSE,4,60k-100k,TRUE
+CB350,Master of Engineering,104685155@student.swin.edu.au,8,Master,Engineering,FALSE,2,>100k,TRUE
+OR525,Master of Business,104685155@student.swin.edu.au,8,Master,None,FALSE,2,<60k,TRUE
+SA879,Master of Data Science,104685155@student.swin.edu.au,8,Master,Science,TRUE,4,60k-100k,FALSE
+UG691,Doctorate in IT,104685155@student.swin.edu.au,8,Doctorate,None,FALSE,4,<60k,TRUE
+TE464,Doctorate in IT,104685155@student.swin.edu.au,8,Doctorate,None,TRUE,6,60k-100k,TRUE
+LB333,Doctorate in Data Science,104685155@student.swin.edu.au,8,Doctorate,None,TRUE,4,60k-100k,FALSE
+RM364,Doctorate in Business,104685155@student.swin.edu.au,8,Doctorate,None,TRUE,6,<60k,TRUE
+LP505,Doctorate in Data Science,104685155@student.swin.edu.au,8,Doctorate,None,TRUE,4,<60k,TRUE
+BD137,Bachelor of Arts,104685155@student.swin.edu.au,9,Bachelor,None,FALSE,6,>100k,FALSE
+AP061,Bachelor of IT,104685155@student.swin.edu.au,9,Bachelor,ICT,FALSE,6,<60k,FALSE
+AC478,Bachelor of Science,104685155@student.swin.edu.au,9,Bachelor,None,FALSE,6,<60k,FALSE
+SA210,Bachelor of Arts,104685155@student.swin.edu.au,9,Bachelor,None,FALSE,6,60k-100k,FALSE
+IC465,Bachelor of Arts,104685155@student.swin.edu.au,9,Bachelor,None,FALSE,4,60k-100k,FALSE
+RU463,Master of Engineering,104685155@student.swin.edu.au,9,Master,Engineering,FALSE,2,60k-100k,TRUE
+HX912,Master of IT,104685155@student.swin.edu.au,9,Master,ICT,TRUE,4,<60k,FALSE
+AQ537,Master of Science,104685155@student.swin.edu.au,9,Master,Engineering,TRUE,2,<60k,FALSE
+ZC509,Master of Science,104685155@student.swin.edu.au,9,Master,Technology,FALSE,4,<60k,TRUE
+ZX455,Master of Science,104685155@student.swin.edu.au,9,Master,Mathematics,FALSE,4,60k-100k,TRUE
+UO213,Doctorate in Science,104685155@student.swin.edu.au,9,Doctorate,Engineering,FALSE,4,<60k,TRUE
+SY116,Doctorate in IT,104685155@student.swin.edu.au,9,Doctorate,ICT,FALSE,6,>100k,TRUE
+VL620,Doctorate in IT,104685155@student.swin.edu.au,9,Doctorate,None,TRUE,6,>100k,TRUE
+YE285,Doctorate in Engineering,104685155@student.swin.edu.au,9,Doctorate,Engineering,FALSE,4,<60k,FALSE
+MU378,Doctorate in Engineering,104685155@student.swin.edu.au,9,Doctorate,Engineering,TRUE,6,<60k,FALSE
+OR607,Bachelor of Engineering,104685155@student.swin.edu.au,10,Bachelor,Engineering,FALSE,4,60k-100k,FALSE
+XS432,Bachelor of IT,104685155@student.swin.edu.au,10,Bachelor,None,FALSE,4,60k-100k,FALSE
+EX553,Bachelor of Engineering,104685155@student.swin.edu.au,10,Bachelor,Engineering,FALSE,4,60k-100k,FALSE
+QD897,Bachelor of Engineering,104685155@student.swin.edu.au,10,Bachelor,Engineering,FALSE,4,<60k,FALSE
+SW916,Bachelor of Business,104685155@student.swin.edu.au,10,Bachelor,None,FALSE,6,60k-100k,FALSE
+QK796,Master of Science,104685155@student.swin.edu.au,10,Master,None,TRUE,2,<60k,TRUE
+QV091,Master of Business,104685155@student.swin.edu.au,10,Master,None,TRUE,4,<60k,FALSE
+WB433,Master of Science,104685155@student.swin.edu.au,10,Master,Science,TRUE,4,<60k,TRUE
+UX327,Master of Business,104685155@student.swin.edu.au,10,Master,None,FALSE,4,>100k,FALSE
+YP220,Master of Engineering,104685155@student.swin.edu.au,10,Master,Engineering,TRUE,4,60k-100k,FALSE
+IR960,Doctorate in IT,104685155@student.swin.edu.au,10,Doctorate,None,TRUE,4,>100k,FALSE
+KT457,Doctorate in Science,104685155@student.swin.edu.au,10,Doctorate,None,FALSE,6,<60k,FALSE
+MD975,Doctorate in Engineering,104685155@student.swin.edu.au,10,Doctorate,Engineering,TRUE,4,<60k,TRUE
+TC359,Doctorate in IT,104685155@student.swin.edu.au,10,Doctorate,None,TRUE,6,60k-100k,TRUE
+NV027,Doctorate in Science,104685155@student.swin.edu.au,10,Doctorate,Science,TRUE,6,60k-100k,TRUE
+ET012,Bachelor of Business,104685155@student.swin.edu.au,11,Bachelor,None,FALSE,6,<60k,FALSE
+YT702,Bachelor of Engineering,104685155@student.swin.edu.au,11,Bachelor,Engineering,FALSE,6,<60k,FALSE
+NB632,Bachelor of IT,104685155@student.swin.edu.au,11,Bachelor,ICT,FALSE,6,60k-100k,FALSE
+DC929,Bachelor of Business,104685155@student.swin.edu.au,11,Bachelor,None,FALSE,4,<60k,FALSE
+QA314,Bachelor of IT,104685155@student.swin.edu.au,11,Bachelor,ICT,FALSE,4,>100k,FALSE
+IP713,Master of Engineering,104685155@student.swin.edu.au,11,Master,Engineering,FALSE,4,<60k,FALSE
+WJ662,Master of Business,104685155@student.swin.edu.au,11,Master,None,FALSE,2,<60k,FALSE
+EJ687,Master of Data Science,104685155@student.swin.edu.au,11,Master,Science,FALSE,2,60k-100k,TRUE
+WU477,Master of Business,104685155@student.swin.edu.au,11,Master,None,FALSE,2,<60k,TRUE
+TK499,Master of Science,104685155@student.swin.edu.au,11,Master,ICT,TRUE,2,<60k,FALSE
+IZ367,Doctorate in Science,104685155@student.swin.edu.au,11,Doctorate,Mathematics,FALSE,6,<60k,FALSE
+YR016,Doctorate in Business,104685155@student.swin.edu.au,11,Doctorate,None,FALSE,6,60k-100k,FALSE
+XE674,Doctorate in Data Science,104685155@student.swin.edu.au,11,Doctorate,Science,TRUE,4,>100k,FALSE
+ZC158,Doctorate in Engineering,104685155@student.swin.edu.au,11,Doctorate,Engineering,FALSE,4,<60k,TRUE
+LQ842,Doctorate in Business,104685155@student.swin.edu.au,11,Doctorate,None,TRUE,6,60k-100k,TRUE
+BW142,Bachelor of IT,104685155@student.swin.edu.au,12,Bachelor,ICT,FALSE,6,<60k,FALSE
+OU811,Bachelor of Business,104685155@student.swin.edu.au,12,Bachelor,None,FALSE,6,>100k,FALSE
+RC076,Bachelor of IT,104685155@student.swin.edu.au,12,Bachelor,None,FALSE,6,60k-100k,FALSE
+CQ638,Bachelor of Engineering,104685155@student.swin.edu.au,12,Bachelor,Engineering,FALSE,4,<60k,FALSE
+MG475,Bachelor of IT,104685155@student.swin.edu.au,12,Bachelor,None,FALSE,4,60k-100k,FALSE
+XF532,Master of Business,104685155@student.swin.edu.au,12,Master,None,FALSE,2,>100k,FALSE
+MU868,Master of Business,104685155@student.swin.edu.au,12,Master,None,FALSE,4,60k-100k,TRUE
+OO301,Master of IT,104685155@student.swin.edu.au,12,Master,None,TRUE,2,>100k,TRUE
+BE408,Master of Data Science,104685155@student.swin.edu.au,12,Master,Science,FALSE,2,<60k,FALSE
+DO059,Master of Data Science,104685155@student.swin.edu.au,12,Master,Science,FALSE,4,<60k,FALSE
+AT368,Doctorate in Science,104685155@student.swin.edu.au,12,Doctorate,Engineering,FALSE,4,<60k,FALSE
+VI297,Doctorate in Science,104685155@student.swin.edu.au,12,Doctorate,Technology,FALSE,4,60k-100k,FALSE
+DS761,Doctorate in Engineering,104685155@student.swin.edu.au,12,Doctorate,Engineering,FALSE,6,<60k,FALSE
+DG499,Doctorate in Engineering,104685155@student.swin.edu.au,12,Doctorate,Engineering,FALSE,4,60k-100k,TRUE
+WU555,Doctorate in Data Science,104685155@student.swin.edu.au,12,Doctorate,None,TRUE,4,>100k,FALSE
+OH243,Bachelor of Science,104685155@student.swin.edu.au,13,Bachelor,None,FALSE,4,<60k,FALSE
+MZ999,Bachelor of Engineering,104685155@student.swin.edu.au,13,Bachelor,Engineering,FALSE,6,60k-100k,FALSE
+JQ880,Bachelor of Engineering,104685155@student.swin.edu.au,13,Bachelor,Engineering,FALSE,4,>100k,FALSE
+ME162,Bachelor of Science,104685155@student.swin.edu.au,13,Bachelor,Engineering,FALSE,4,60k-100k,FALSE
+QF124,Bachelor of IT,104685155@student.swin.edu.au,13,Bachelor,ICT,FALSE,4,<60k,FALSE
+EG418,Master of Engineering,104685155@student.swin.edu.au,13,Master,Engineering,FALSE,2,<60k,TRUE
+SP791,Master of Engineering,104685155@student.swin.edu.au,13,Master,Engineering,FALSE,2,>100k,TRUE
+FD555,Master of Data Science,104685155@student.swin.edu.au,13,Master,Science,TRUE,2,>100k,TRUE
+GG488,Master of Engineering,104685155@student.swin.edu.au,13,Master,Engineering,FALSE,2,>100k,TRUE
+EJ633,Master of Business,104685155@student.swin.edu.au,13,Master,None,TRUE,4,<60k,FALSE
+HC046,Doctorate in Data Science,104685155@student.swin.edu.au,13,Doctorate,Science,FALSE,4,60k-100k,FALSE
+EN672,Doctorate in Business,104685155@student.swin.edu.au,13,Doctorate,None,FALSE,6,<60k,TRUE
+XV689,Doctorate in Engineering,104685155@student.swin.edu.au,13,Doctorate,Engineering,FALSE,4,>100k,FALSE
+SU017,Doctorate in Science,104685155@student.swin.edu.au,13,Doctorate,Science,TRUE,4,<60k,TRUE
+TI547,Doctorate in Business,104685155@student.swin.edu.au,13,Doctorate,None,TRUE,4,>100k,TRUE
+QK656,Bachelor of Arts,104685155@student.swin.edu.au,14,Bachelor,None,FALSE,6,60k-100k,FALSE
+SA493,Bachelor of Business,104685155@student.swin.edu.au,14,Bachelor,None,FALSE,4,60k-100k,FALSE
+NA814,Bachelor of Business,104685155@student.swin.edu.au,14,Bachelor,None,FALSE,6,>100k,FALSE
+PY994,Bachelor of IT,104685155@student.swin.edu.au,14,Bachelor,ICT,FALSE,6,60k-100k,FALSE
+IR950,Bachelor of Science,104685155@student.swin.edu.au,14,Bachelor,Engineering,FALSE,4,<60k,FALSE
+KQ235,Master of Business,104685155@student.swin.edu.au,14,Master,None,FALSE,2,>100k,TRUE
+EB356,Master of Business,104685155@student.swin.edu.au,14,Master,None,FALSE,2,60k-100k,FALSE
+UQ496,Master of Science,104685155@student.swin.edu.au,14,Master,Science,FALSE,4,60k-100k,FALSE
+FI690,Master of Science,104685155@student.swin.edu.au,14,Master,Engineering,FALSE,2,>100k,FALSE
+FP138,Master of Data Science,104685155@student.swin.edu.au,14,Master,None,TRUE,4,>100k,TRUE
+OQ144,Doctorate in Science,104685155@student.swin.edu.au,14,Doctorate,Mathematics,FALSE,4,<60k,TRUE
+LH276,Doctorate in IT,104685155@student.swin.edu.au,14,Doctorate,ICT,TRUE,4,60k-100k,TRUE
+RQ698,Doctorate in Business,104685155@student.swin.edu.au,14,Doctorate,None,TRUE,4,<60k,TRUE
+AR808,Doctorate in IT,104685155@student.swin.edu.au,14,Doctorate,ICT,TRUE,6,<60k,TRUE
+KU905,Doctorate in Engineering,104685155@student.swin.edu.au,14,Doctorate,Engineering,FALSE,4,<60k,TRUE
+WH355,Bachelor of Business,104685155@student.swin.edu.au,15,Bachelor,None,FALSE,4,>100k,FALSE
+HE839,Bachelor of Arts,104685155@student.swin.edu.au,15,Bachelor,None,FALSE,4,60k-100k,FALSE
+IJ202,Bachelor of Business,104685155@student.swin.edu.au,15,Bachelor,None,FALSE,6,<60k,FALSE
+WL497,Bachelor of Science,104685155@student.swin.edu.au,15,Bachelor,Mathematics,FALSE,4,>100k,FALSE
+OA096,Bachelor of IT,104685155@student.swin.edu.au,15,Bachelor,None,FALSE,4,>100k,FALSE
+SI652,Master of Business,104685155@student.swin.edu.au,15,Master,None,FALSE,2,60k-100k,TRUE
+EE625,Master of Data Science,104685155@student.swin.edu.au,15,Master,Science,TRUE,2,<60k,FALSE
+RO403,Master of Business,104685155@student.swin.edu.au,15,Master,None,FALSE,2,>100k,FALSE
+KW972,Master of Data Science,104685155@student.swin.edu.au,15,Master,None,TRUE,2,60k-100k,TRUE
+FG435,Master of Data Science,104685155@student.swin.edu.au,15,Master,Science,FALSE,4,60k-100k,TRUE
+OW693,Doctorate in IT,104685155@student.swin.edu.au,15,Doctorate,None,FALSE,6,60k-100k,TRUE
+RG042,Doctorate in Business,104685155@student.swin.edu.au,15,Doctorate,None,TRUE,4,60k-100k,TRUE
+WK356,Doctorate in Engineering,104685155@student.swin.edu.au,15,Doctorate,Engineering,FALSE,4,60k-100k,TRUE
+LK193,Doctorate in Business,104685155@student.swin.edu.au,15,Doctorate,None,FALSE,6,<60k,TRUE
+XV820,Doctorate in Business,104685155@student.swin.edu.au,15,Doctorate,None,FALSE,6,>100k,FALSE
+GR183,Bachelor of Engineering,104685155@student.swin.edu.au,16,Bachelor,Engineering,FALSE,6,>100k,FALSE
+DW242,Bachelor of Arts,104685155@student.swin.edu.au,16,Bachelor,None,FALSE,6,>100k,FALSE
+QB831,Bachelor of Engineering,104685155@student.swin.edu.au,16,Bachelor,Engineering,FALSE,6,60k-100k,FALSE
+IH348,Bachelor of Arts,104685155@student.swin.edu.au,16,Bachelor,None,FALSE,4,>100k,FALSE
+GI561,Bachelor of Arts,104685155@student.swin.edu.au,16,Bachelor,None,FALSE,4,<60k,FALSE
+OF955,Master of Data Science,104685155@student.swin.edu.au,16,Master,None,TRUE,2,>100k,FALSE
+GM283,Master of Business,104685155@student.swin.edu.au,16,Master,None,FALSE,2,60k-100k,TRUE
+ON941,Master of IT,104685155@student.swin.edu.au,16,Master,None,TRUE,2,<60k,FALSE
+PH063,Master of IT,104685155@student.swin.edu.au,16,Master,None,FALSE,4,>100k,FALSE
+XD949,Master of Business,104685155@student.swin.edu.au,16,Master,None,TRUE,2,60k-100k,TRUE
+CC561,Doctorate in Science,104685155@student.swin.edu.au,16,Doctorate,None,TRUE,6,60k-100k,FALSE
+PQ438,Doctorate in Science,104685155@student.swin.edu.au,16,Doctorate,Technology,TRUE,6,>100k,TRUE
+IS239,Doctorate in IT,104685155@student.swin.edu.au,16,Doctorate,None,FALSE,6,60k-100k,TRUE
+YK123,Doctorate in Business,104685155@student.swin.edu.au,16,Doctorate,None,FALSE,4,>100k,FALSE
+VZ751,Doctorate in Science,104685155@student.swin.edu.au,16,Doctorate,None,FALSE,4,>100k,TRUE
+OT123,Bachelor of Engineering,104685155@student.swin.edu.au,17,Bachelor,Engineering,FALSE,6,<60k,FALSE
+ZP074,Bachelor of IT,104685155@student.swin.edu.au,17,Bachelor,ICT,FALSE,4,60k-100k,FALSE
+DQ448,Bachelor of Arts,104685155@student.swin.edu.au,17,Bachelor,None,FALSE,4,>100k,FALSE
+FV048,Bachelor of IT,104685155@student.swin.edu.au,17,Bachelor,ICT,FALSE,4,>100k,FALSE
+KL886,Bachelor of Engineering,104685155@student.swin.edu.au,17,Bachelor,Engineering,FALSE,4,>100k,FALSE
+XV087,Master of Engineering,104685155@student.swin.edu.au,17,Master,Engineering,TRUE,2,60k-100k,FALSE
+NO026,Master of Engineering,104685155@student.swin.edu.au,17,Master,Engineering,FALSE,2,<60k,FALSE
+QE525,Master of Business,104685155@student.swin.edu.au,17,Master,None,FALSE,2,<60k,FALSE
+MY210,Master of Business,104685155@student.swin.edu.au,17,Master,None,TRUE,4,>100k,FALSE
+DF866,Master of IT,104685155@student.swin.edu.au,17,Master,ICT,FALSE,2,>100k,FALSE
+RD751,Doctorate in Engineering,104685155@student.swin.edu.au,17,Doctorate,Engineering,FALSE,4,60k-100k,FALSE
+SL055,Doctorate in Business,104685155@student.swin.edu.au,17,Doctorate,None,TRUE,4,60k-100k,TRUE
+VH708,Doctorate in IT,104685155@student.swin.edu.au,17,Doctorate,ICT,TRUE,6,<60k,FALSE
+EO882,Doctorate in Data Science,104685155@student.swin.edu.au,17,Doctorate,Science,TRUE,4,<60k,TRUE
+EJ284,Doctorate in IT,104685155@student.swin.edu.au,17,Doctorate,ICT,FALSE,4,60k-100k,FALSE
+UW025,Bachelor of Engineering,104685155@student.swin.edu.au,18,Bachelor,Engineering,FALSE,4,60k-100k,FALSE
+YR227,Bachelor of Business,104685155@student.swin.edu.au,18,Bachelor,None,FALSE,4,<60k,FALSE
+UY894,Bachelor of IT,104685155@student.swin.edu.au,18,Bachelor,None,FALSE,4,60k-100k,FALSE
+ZZ028,Bachelor of Arts,104685155@student.swin.edu.au,18,Bachelor,None,FALSE,4,60k-100k,FALSE
+NU886,Bachelor of Arts,104685155@student.swin.edu.au,18,Bachelor,None,FALSE,6,60k-100k,FALSE
+LN232,Master of Science,104685155@student.swin.edu.au,18,Master,ICT,FALSE,4,>100k,TRUE
+RQ916,Master of Business,104685155@student.swin.edu.au,18,Master,None,TRUE,4,>100k,TRUE
+JN632,Master of Data Science,104685155@student.swin.edu.au,18,Master,Science,FALSE,4,>100k,FALSE
+YU672,Master of Data Science,104685155@student.swin.edu.au,18,Master,Science,FALSE,4,<60k,FALSE
+IR276,Master of IT,104685155@student.swin.edu.au,18,Master,ICT,FALSE,2,60k-100k,FALSE
+JB627,Doctorate in Science,104685155@student.swin.edu.au,18,Doctorate,Science,TRUE,6,>100k,FALSE
+WC135,Doctorate in Science,104685155@student.swin.edu.au,18,Doctorate,None,TRUE,4,<60k,TRUE
+OD455,Doctorate in Science,104685155@student.swin.edu.au,18,Doctorate,Technology,FALSE,6,>100k,TRUE
+PO143,Doctorate in Engineering,104685155@student.swin.edu.au,18,Doctorate,Engineering,FALSE,6,<60k,FALSE
+YL206,Doctorate in IT,104685155@student.swin.edu.au,18,Doctorate,ICT,TRUE,6,<60k,FALSE
+HC395,Bachelor of Engineering,104685155@student.swin.edu.au,19,Bachelor,Engineering,FALSE,6,60k-100k,FALSE
+LR364,Bachelor of Engineering,104685155@student.swin.edu.au,19,Bachelor,Engineering,FALSE,4,60k-100k,FALSE
+DS245,Bachelor of IT,104685155@student.swin.edu.au,19,Bachelor,None,FALSE,6,60k-100k,FALSE
+FN959,Bachelor of Engineering,104685155@student.swin.edu.au,19,Bachelor,Engineering,FALSE,6,>100k,FALSE
+EP036,Bachelor of Science,104685155@student.swin.edu.au,19,Bachelor,Technology,FALSE,6,<60k,FALSE
+RZ608,Master of Science,104685155@student.swin.edu.au,19,Master,None,TRUE,4,60k-100k,TRUE
+DP967,Master of IT,104685155@student.swin.edu.au,19,Master,None,FALSE,2,60k-100k,FALSE
+MW953,Master of Business,104685155@student.swin.edu.au,19,Master,None,FALSE,4,60k-100k,TRUE
+CJ965,Master of Engineering,104685155@student.swin.edu.au,19,Master,Engineering,FALSE,2,<60k,FALSE
+LJ721,Master of Business,104685155@student.swin.edu.au,19,Master,None,TRUE,4,60k-100k,TRUE
+OF997,Doctorate in Science,104685155@student.swin.edu.au,19,Doctorate,None,FALSE,4,>100k,FALSE
+SP921,Doctorate in Science,104685155@student.swin.edu.au,19,Doctorate,Engineering,FALSE,4,60k-100k,FALSE
+FB557,Doctorate in Business,104685155@student.swin.edu.au,19,Doctorate,None,TRUE,6,<60k,FALSE
+SH982,Doctorate in IT,104685155@student.swin.edu.au,19,Doctorate,ICT,FALSE,4,60k-100k,TRUE
+ZG986,Doctorate in Science,104685155@student.swin.edu.au,19,Doctorate,None,FALSE,6,60k-100k,TRUE
+QA820,Bachelor of IT,104685155@student.swin.edu.au,20,Bachelor,None,FALSE,4,<60k,FALSE
+OU812,Bachelor of Engineering,104685155@student.swin.edu.au,20,Bachelor,Engineering,FALSE,4,60k-100k,FALSE
+OG288,Bachelor of Business,104685155@student.swin.edu.au,20,Bachelor,None,FALSE,4,60k-100k,FALSE
+HE454,Bachelor of Business,104685155@student.swin.edu.au,20,Bachelor,None,FALSE,6,>100k,FALSE
+JU133,Bachelor of IT,104685155@student.swin.edu.au,20,Bachelor,None,FALSE,4,60k-100k,FALSE
+LM949,Master of Data Science,104685155@student.swin.edu.au,20,Master,Science,FALSE,2,60k-100k,FALSE
+LL397,Master of Engineering,104685155@student.swin.edu.au,20,Master,Engineering,FALSE,4,<60k,TRUE
+ZR748,Master of Science,104685155@student.swin.edu.au,20,Master,Science,FALSE,4,60k-100k,TRUE
+AA936,Master of Science,104685155@student.swin.edu.au,20,Master,Technology,FALSE,4,<60k,FALSE
+GQ912,Master of Science,104685155@student.swin.edu.au,20,Master,Technology,FALSE,2,>100k,FALSE
+AV130,Doctorate in Data Science,104685155@student.swin.edu.au,20,Doctorate,None,FALSE,4,<60k,FALSE
+MC688,Doctorate in Data Science,104685155@student.swin.edu.au,20,Doctorate,Science,FALSE,6,>100k,TRUE
+IB435,Doctorate in Business,104685155@student.swin.edu.au,20,Doctorate,None,FALSE,6,>100k,FALSE
+YU012,Doctorate in Engineering,104685155@student.swin.edu.au,20,Doctorate,Engineering,TRUE,6,<60k,TRUE
+XB840,Doctorate in Business,104685155@student.swin.edu.au,20,Doctorate,None,TRUE,4,<60k,FALSE
+BE329,Bachelor of Arts,104685155@student.swin.edu.au,21,Bachelor,None,FALSE,6,60k-100k,FALSE
+WT869,Bachelor of Arts,104685155@student.swin.edu.au,21,Bachelor,None,FALSE,4,<60k,FALSE
+AM041,Bachelor of Engineering,104685155@student.swin.edu.au,21,Bachelor,Engineering,FALSE,4,>100k,FALSE
+ZV045,Bachelor of Business,104685155@student.swin.edu.au,21,Bachelor,None,FALSE,4,<60k,FALSE
+WK546,Bachelor of Engineering,104685155@student.swin.edu.au,21,Bachelor,Engineering,FALSE,4,>100k,FALSE
+OM397,Master of Engineering,104685155@student.swin.edu.au,21,Master,Engineering,TRUE,4,60k-100k,TRUE
+RX704,Master of Data Science,104685155@student.swin.edu.au,21,Master,None,TRUE,2,>100k,FALSE
+HO744,Master of Business,104685155@student.swin.edu.au,21,Master,None,FALSE,2,>100k,FALSE
+FL952,Master of Science,104685155@student.swin.edu.au,21,Master,ICT,TRUE,2,>100k,TRUE
+OV229,Master of IT,104685155@student.swin.edu.au,21,Master,ICT,FALSE,2,<60k,FALSE
+YL262,Doctorate in Science,104685155@student.swin.edu.au,21,Doctorate,Engineering,FALSE,6,60k-100k,TRUE
+CX769,Doctorate in Data Science,104685155@student.swin.edu.au,21,Doctorate,None,TRUE,6,<60k,TRUE
+LC628,Doctorate in Data Science,104685155@student.swin.edu.au,21,Doctorate,Science,TRUE,6,<60k,FALSE
+OA621,Doctorate in Business,104685155@student.swin.edu.au,21,Doctorate,None,FALSE,4,<60k,FALSE
+MR087,Doctorate in Science,104685155@student.swin.edu.au,21,Doctorate,None,TRUE,4,60k-100k,FALSE
+FW229,Bachelor of Engineering,104685155@student.swin.edu.au,22,Bachelor,Engineering,FALSE,4,60k-100k,FALSE
+ZS796,Bachelor of Business,104685155@student.swin.edu.au,22,Bachelor,None,FALSE,4,>100k,FALSE
+HV475,Bachelor of Science,104685155@student.swin.edu.au,22,Bachelor,Mathematics,FALSE,4,60k-100k,FALSE
+SL044,Bachelor of Engineering,104685155@student.swin.edu.au,22,Bachelor,Engineering,FALSE,4,60k-100k,FALSE
+YK680,Bachelor of Engineering,104685155@student.swin.edu.au,22,Bachelor,Engineering,FALSE,6,>100k,FALSE
+SH925,Master of Science,104685155@student.swin.edu.au,22,Master,None,FALSE,4,>100k,TRUE
+OH035,Master of Engineering,104685155@student.swin.edu.au,22,Master,Engineering,FALSE,2,<60k,FALSE
+FN338,Master of Business,104685155@student.swin.edu.au,22,Master,None,TRUE,4,60k-100k,FALSE
+QS175,Master of Engineering,104685155@student.swin.edu.au,22,Master,Engineering,FALSE,2,>100k,FALSE
+SG495,Master of Data Science,104685155@student.swin.edu.au,22,Master,Science,TRUE,4,60k-100k,FALSE
+PH142,Doctorate in Business,104685155@student.swin.edu.au,22,Doctorate,None,FALSE,6,60k-100k,TRUE
+HS417,Doctorate in Business,104685155@student.swin.edu.au,22,Doctorate,None,TRUE,4,60k-100k,TRUE
+YG552,Doctorate in Data Science,104685155@student.swin.edu.au,22,Doctorate,None,TRUE,4,60k-100k,TRUE
+SF059,Doctorate in IT,104685155@student.swin.edu.au,22,Doctorate,ICT,FALSE,4,<60k,TRUE
+UP808,Doctorate in Business,104685155@student.swin.edu.au,22,Doctorate,None,TRUE,6,<60k,TRUE
+AG888,Bachelor of Science,104685155@student.swin.edu.au,23,Bachelor,Technology,FALSE,6,60k-100k,FALSE
+MP789,Bachelor of IT,104685155@student.swin.edu.au,23,Bachelor,None,FALSE,4,>100k,FALSE
+QM616,Bachelor of Science,104685155@student.swin.edu.au,23,Bachelor,Mathematics,FALSE,6,>100k,FALSE
+AJ514,Bachelor of IT,104685155@student.swin.edu.au,23,Bachelor,ICT,FALSE,4,<60k,FALSE
+OB812,Bachelor of Engineering,104685155@student.swin.edu.au,23,Bachelor,Engineering,FALSE,6,<60k,FALSE
+BU332,Master of Engineering,104685155@student.swin.edu.au,23,Master,Engineering,TRUE,2,<60k,TRUE
+QY339,Master of Science,104685155@student.swin.edu.au,23,Master,ICT,TRUE,2,<60k,FALSE
+AJ491,Master of Business,104685155@student.swin.edu.au,23,Master,None,TRUE,2,<60k,TRUE
+VA362,Master of Engineering,104685155@student.swin.edu.au,23,Master,Engineering,TRUE,4,>100k,FALSE
+SY455,Master of Business,104685155@student.swin.edu.au,23,Master,None,TRUE,2,>100k,TRUE
+AV800,Doctorate in Business,104685155@student.swin.edu.au,23,Doctorate,None,TRUE,6,60k-100k,FALSE
+XE401,Doctorate in Data Science,104685155@student.swin.edu.au,23,Doctorate,None,TRUE,4,<60k,TRUE
+DH875,Doctorate in Data Science,104685155@student.swin.edu.au,23,Doctorate,Science,FALSE,6,<60k,TRUE
+MM474,Doctorate in Data Science,104685155@student.swin.edu.au,23,Doctorate,None,FALSE,4,60k-100k,FALSE
+EY932,Doctorate in Business,104685155@student.swin.edu.au,23,Doctorate,None,TRUE,6,>100k,FALSE
+MO326,Bachelor of Engineering,104685155@student.swin.edu.au,24,Bachelor,Engineering,FALSE,4,60k-100k,FALSE
+LM027,Bachelor of Arts,104685155@student.swin.edu.au,24,Bachelor,None,FALSE,4,<60k,FALSE
+MM442,Bachelor of Engineering,104685155@student.swin.edu.au,24,Bachelor,Engineering,FALSE,6,60k-100k,FALSE
+RB777,Bachelor of Engineering,104685155@student.swin.edu.au,24,Bachelor,Engineering,FALSE,4,>100k,FALSE
+WB877,Bachelor of Science,104685155@student.swin.edu.au,24,Bachelor,Engineering,FALSE,4,60k-100k,FALSE
+KX548,Master of Business,104685155@student.swin.edu.au,24,Master,None,FALSE,4,60k-100k,TRUE
+LY304,Master of Data Science,104685155@student.swin.edu.au,24,Master,None,TRUE,4,<60k,TRUE
+EP530,Master of Science,104685155@student.swin.edu.au,24,Master,Engineering,FALSE,4,<60k,TRUE
+AK361,Master of Data Science,104685155@student.swin.edu.au,24,Master,Science,TRUE,2,>100k,TRUE
+OO429,Master of IT,104685155@student.swin.edu.au,24,Master,ICT,TRUE,2,>100k,TRUE
+FA745,Doctorate in Engineering,104685155@student.swin.edu.au,24,Doctorate,Engineering,FALSE,6,<60k,TRUE
+OC357,Doctorate in Engineering,104685155@student.swin.edu.au,24,Doctorate,Engineering,FALSE,6,60k-100k,FALSE
+QK975,Doctorate in Engineering,104685155@student.swin.edu.au,24,Doctorate,Engineering,FALSE,6,60k-100k,FALSE
+PZ183,Doctorate in Engineering,104685155@student.swin.edu.au,24,Doctorate,Engineering,TRUE,6,60k-100k,TRUE
+OC325,Doctorate in Data Science,104685155@student.swin.edu.au,24,Doctorate,Science,FALSE,6,>100k,FALSE
+QQ013,Bachelor of IT,104685155@student.swin.edu.au,25,Bachelor,None,FALSE,6,<60k,FALSE
+FT086,Bachelor of Science,104685155@student.swin.edu.au,25,Bachelor,None,FALSE,4,>100k,FALSE
+DZ961,Bachelor of IT,104685155@student.swin.edu.au,25,Bachelor,ICT,FALSE,4,<60k,FALSE
+ZI782,Bachelor of Science,104685155@student.swin.edu.au,25,Bachelor,ICT,FALSE,6,<60k,FALSE
+MU153,Bachelor of IT,104685155@student.swin.edu.au,25,Bachelor,ICT,FALSE,6,60k-100k,FALSE
+RV801,Master of Data Science,104685155@student.swin.edu.au,25,Master,None,TRUE,4,60k-100k,TRUE
+OD365,Master of Science,104685155@student.swin.edu.au,25,Master,Technology,FALSE,2,60k-100k,TRUE
+IO410,Master of Science,104685155@student.swin.edu.au,25,Master,Engineering,TRUE,4,60k-100k,TRUE
+RO222,Master of Data Science,104685155@student.swin.edu.au,25,Master,Science,TRUE,4,60k-100k,TRUE
+TQ123,Master of IT,104685155@student.swin.edu.au,25,Master,None,FALSE,4,60k-100k,FALSE
+EE557,Doctorate in Engineering,104685155@student.swin.edu.au,25,Doctorate,Engineering,TRUE,4,60k-100k,TRUE
+NA143,Doctorate in Engineering,104685155@student.swin.edu.au,25,Doctorate,Engineering,FALSE,4,>100k,TRUE
+GK441,Doctorate in IT,104685155@student.swin.edu.au,25,Doctorate,None,TRUE,6,60k-100k,TRUE
+ZD409,Doctorate in Data Science,104685155@student.swin.edu.au,25,Doctorate,Science,FALSE,4,<60k,TRUE
+RH687,Doctorate in Business,104685155@student.swin.edu.au,25,Doctorate,None,FALSE,4,>100k,FALSE
