@@ -1,0 +1,52 @@
+/* General body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Light background for contrast */
+    margin: 0;
+    padding: 20px;
+}
+
+/* Dashboard title */
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Chart container styles */
+.chart-container {
+    background-color: #fff; /* White background for charts */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin: 20px 0; /* Space between chart containers */
+    padding: 20px; /* Padding around content */
+}
+
+/* Chart headings */
+.chart-container h3 {
+    text-align: center;
+    color: #444; /* Darker color for better readability */
+    margin-bottom: 15px; /* Space below headings */
+}
+
+/* Canvas styling */
+canvas {
+    max-width: 100%; /* Responsive canvas */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Block display for proper sizing */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .chart-container {
+        padding: 15px; /* Reduced padding */
+    }
+
+    h1 {
+        font-size: 24px; /* Smaller title on mobile */
+    }
+
+    .chart-container h3 {
+        font-size: 18px; /* Smaller headings on mobile */
+    }
+}
