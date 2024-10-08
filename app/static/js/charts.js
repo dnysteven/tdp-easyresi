@@ -1,12 +1,12 @@
 // Function to create Pie Charts
-function createPieChart(canvasId, labels, data) {
-	const ctx = document.getElementById(canvasId).getContext('2d');
+function renderPieChart(specialistEducationLabels, specialistEducationValues) {
+	const ctx = document.getElementById('specialistEducationChart').getContext('2d');
 	new Chart(ctx, {
 	  type: 'pie',
 	  data: {
-		labels: labels,
+		labels: specialistEducationLabels, 
 		datasets: [{
-		  data: data,
+		  data: specialistEducationValues,
 		  backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
 		  hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
 		}]
@@ -21,18 +21,117 @@ function createPieChart(canvasId, labels, data) {
 		}
 	  }
 	});
-  }
+}
+
+// Function to create Pie Charts
+function renderPieChart(australianStudyRequirementLabels, australianStudyRequirementValues) {
+	const ctx = document.getElementById('australianStudyRequirementChart').getContext('2d');
+	new Chart(ctx, {
+	  type: 'pie',
+	  data: {
+		labels: australianStudyRequirementLabels,  
+		datasets: [{
+		  data: australianStudyRequirementValues,  
+		  backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+		  hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+		}]
+	  },
+	  options: {
+		responsive: true,
+		maintainAspectRatio: false,
+		plugins: {
+		  legend: {
+			position: 'bottom',
+		  }
+		}
+	  }
+	});
+}
   
+// Function to create Pie Charts
+function renderPieChart(professionalYearLabels, professionalYearValues) {
+	const ctx = document.getElementById('professionalYearChart').getContext('2d');
+	new Chart(ctx, {
+	  type: 'pie',
+	  data: {
+		labels: professionalYearLabels,  
+		datasets: [{
+		  data: professionalYearValues,  
+		  backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+		  hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+		}]
+	  },
+	  options: {
+		responsive: true,
+		maintainAspectRatio: false,
+		plugins: {
+		  legend: {
+			position: 'bottom',
+		  }
+		}
+	  }
+	});
+}
+
+// Function to create Pie Charts
+function renderPieChart(communityLanguageLabels, communityLanguageValues) {
+	const ctx = document.getElementById('communityLanguageChart').getContext('2d');
+	new Chart(ctx, {
+	  type: 'pie',
+	  data: {
+		labels: communityLanguageLabels,  
+		datasets: [{
+		  data: communityLanguageValues,  
+		  backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+		  hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+		}]
+	  },
+	  options: {
+		responsive: true,
+		maintainAspectRatio: false,
+		plugins: {
+		  legend: {
+			position: 'bottom',
+		  }
+		}
+	  }
+	});
+}
+
+// Function to create Pie Charts
+function renderPieChart(regionalStudyLabels, regionalStudyValues) {
+	const ctx = document.getElementById('regionalStudyChart').getContext('2d');
+	new Chart(ctx, {
+	  type: 'pie',
+	  data: {
+		labels: regionalStudyLabels,  
+		datasets: [{
+		  data: regionalStudyValues,  
+		  backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+		  hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+		}]
+	  },
+	  options: {
+		responsive: true,
+		maintainAspectRatio: false,
+		plugins: {
+		  legend: {
+			position: 'bottom',
+		  }
+		}
+	  }
+	});
+}
+
   // Function to create Bar Charts
-  function createBarChart(canvasId, labels, data) {
-	const ctx = document.getElementById(canvasId).getContext('2d');
+  function renderBarChart(ageGroupLabels, ageGroupValues) {
+	const ctx = document.getElementById('ageGroupChart').getContext('2d');
 	new Chart(ctx, {
 	  type: 'bar',
 	  data: {
-		labels: labels,
+		labels: ageGroupLabels,
 		datasets: [{
-		  label: 'Count',
-		  data: data,
+		  data: ageGroupValues,
 		  backgroundColor: '#36A2EB',
 		  borderColor: '#36A2EB',
 		  borderWidth: 1
@@ -58,6 +157,141 @@ function createPieChart(canvasId, labels, data) {
 	});
   }
   
+    // Function to create Bar Charts
+	function renderBarChart(englishLevelLabels, englishLevelValues) {
+		const ctx = document.getElementById('englishLevelChart').getContext('2d');
+		new Chart(ctx, {
+		  type: 'bar',
+		  data: {
+			labels: englishLevelLabels,
+			datasets: [{
+			  data: englishLevelValues,
+			  backgroundColor: '#36A2EB',
+			  borderColor: '#36A2EB',
+			  borderWidth: 1
+			}]
+		  },
+		  options: {
+			responsive: true,
+			maintainAspectRatio: false,
+			scales: {
+			  x: {
+				beginAtZero: true
+			  },
+			  y: {
+				beginAtZero: true
+			  }
+			},
+			plugins: {
+			  legend: {
+				display: false
+			  }
+			}
+		  }
+		});
+	  }
+
+	  // Function to create Bar Charts
+	function renderBarChart(overseasEmploymentLabels, overseasEmploymentValues) {
+		const ctx = document.getElementById('overseasEmploymentChar').getContext('2d');
+		new Chart(ctx, {
+		  type: 'bar',
+		  data: {
+			labels: overseasEmploymentLabels,
+			datasets: [{
+			  data: overseasEmploymentValues,
+			  backgroundColor: '#36A2EB',
+			  borderColor: '#36A2EB',
+			  borderWidth: 1
+			}]
+		  },
+		  options: {
+			responsive: true,
+			maintainAspectRatio: false,
+			scales: {
+			  x: {
+				beginAtZero: true
+			  },
+			  y: {
+				beginAtZero: true
+			  }
+			},
+			plugins: {
+			  legend: {
+				display: false
+			  }
+			}
+		  }
+		});
+	  }
+
+	  // Function to create Bar Charts
+	function renderBarChart(australianEmploymentLabels, australianEmploymentValues) {
+		const ctx = document.getElementById('australianEmploymentChart').getContext('2d');
+		new Chart(ctx, {
+		  type: 'bar',
+		  data: {
+			labels: australianEmploymentLabels,
+			datasets: [{
+			  data: australianEmploymentValues,
+			  backgroundColor: '#36A2EB',
+			  borderColor: '#36A2EB',
+			  borderWidth: 1
+			}]
+		  },
+		  options: {
+			responsive: true,
+			maintainAspectRatio: false,
+			scales: {
+			  x: {
+				beginAtZero: true
+			  },
+			  y: {
+				beginAtZero: true
+			  }
+			},
+			plugins: {
+			  legend: {
+				display: false
+			  }
+			}
+		  }
+		});
+	  }
+
+	  // Function to create Bar Charts
+	function renderBarChart(educationLevelLabels, ducationLevelValues) {
+		const ctx = document.getElementById('educationLevelChart').getContext('2d');
+		new Chart(ctx, {
+		  type: 'bar',
+		  data: {
+			labels: educationLevelLabels,
+			datasets: [{
+			  data: ducationLevelValues,
+			  backgroundColor: '#36A2EB',
+			  borderColor: '#36A2EB',
+			  borderWidth: 1
+			}]
+		  },
+		  options: {
+			responsive: true,
+			maintainAspectRatio: false,
+			scales: {
+			  x: {
+				beginAtZero: true
+			  },
+			  y: {
+				beginAtZero: true
+			  }
+			},
+			plugins: {
+			  legend: {
+				display: false
+			  }
+			}
+		  }
+		});
+	  }
   // Function to render the Pie Chart for registered users by groups
   function renderPieChart(pieLabels, pieValues) {
 	const ctxPie = document.getElementById('myPieChart').getContext('2d');
@@ -275,5 +509,54 @@ function createPieChart(canvasId, labels, data) {
 	if (window.lineLabels && window.lineValuesVisa189 && window.lineValuesVisa190 && window.lineValuesVisa491) {
 	  renderVisaLineChart(window.lineLabels, window.lineValuesVisa189, window.lineValuesVisa190, window.lineValuesVisa491);
 	}
-  });
-  
+
+		// Pie Chart for Specialist Education
+	if (window.specialistEducationLabels && window.specialistEducationValues) {
+    renderPieChart(window.specialistEducationLabels, window.specialistEducationValues);
+	}
+
+		// Pie Chart for Australian Study Requirement
+	if (window.australianStudyRequirementLabels && window.australianStudyRequirementValues) {
+    renderPieChart(window.australianStudyRequirementLabels, window.australianStudyRequirementValues);
+	}
+
+		// Pie Chart for Professional Year
+	if (window.professionalYearLabels && window.professionalYearValues) {
+    renderPieChart(window.professionalYearLabels, window.professionalYearValues);
+	}
+
+		// Pie Chart for Community Language
+	if (window.communityLanguageLabels && window.communityLanguageValues) {
+    renderPieChart(window.communityLanguageLabels, window.communityLanguageValues);
+	}
+
+		// Pie Chart for Regional Study
+	if (window.regionalStudyLabels && window.regionalStudyValues) {
+    renderPieChart(window.regionalStudyLabels, window.regionalStudyValues);
+	}
+
+		// Bar Chart for Age Groups
+	if (window.ageGroupLabels && window.ageGroupValues) {
+		renderBarChart(window.ageGroupLabels, window.ageGroupValues);
+	}
+
+	// Bar Chart for English Levels
+	if (window.englishLevelLabels && window.englishLevelValues) {
+		renderBarChart(window.englishLevelLabels, window.englishLevelValues);
+	}
+
+	// Bar Chart for Overseas Employment
+	if (window.overseasEmploymentLabels && window.overseasEmploymentValues) {
+		renderBarChart(window.overseasEmploymentLabels, window.overseasEmploymentValues);
+	}
+
+	// Bar Chart for Australian Employment
+	if (window.australianEmploymentLabels && window.australianEmploymentValues) {
+		renderBarChart(window.australianEmploymentLabels, window.australianEmploymentValues);
+	}
+
+	// Bar Chart for Education Levels
+	if (window.educationLevelLabels && window.educationLevelValues) {
+		renderBarChart(window.educationLevelLabels, window.educationLevelValues);
+	}	
+});
