@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Course Management{% endblock %}
+
+{% block content %}
+
+<h2>Courses Details</h2>
+
+<form class="recommend-form" method="POST" action="{{ url_for('main.save_courses') }}">
+    <table border="1" cellpadding="5" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Course Number</th>
+          <th>Course Name</th>
+          <th>Course Provider</th>
+          <th>University</th>
+          <th>State</th>
+          <th>Postcode</th>
+          <th>Education Level</th>
+          <th>Specialist Education</th>
+          <th>Professional Year</th>
+          <th>Duration (Years)</th>
+          <th>Tuition Fee</th>
+          <th>Regional Study</th>
+          <th>Contact Info</th>
+          <th>Save Option</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        
+      </tbody>
+    </table>
+
+{% endblock %}

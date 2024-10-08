@@ -32,6 +32,11 @@ a {
   color: #ffffff; /* Text color */
 }
 
+th, td {
+  font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+  font-size: 0.87rem;
+}
+
 .content-container {
   margin-left: 2rem;
   margin-right: 2rem;
@@ -202,6 +207,11 @@ h2 {
   flex-direction: column;
   gap: 5px;
   margin-bottom: 20px;
+}
+
+.recommend-form {
+  margin-left: 3.5rem;
+  margin-right: 2rem; 
 }
 
 .login-input {

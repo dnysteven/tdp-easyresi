@@ -381,12 +381,12 @@ def migra_statistics():
 										
 @main.route('/edu_profile')
 def edu_profile():
-	return render_template('edu_profile.html')
+	return render_template('edu_profile.html', header=True, footer=True)
 
 @main.route('/applicant_profile')
 def applicant_profile():
-	return render_template('applicant_profile.html')
+	return render_template('applicant_profile.html', header=True, footer=True)
 
 @main.route('/agent_profile')
 def agent_profile():
-	return render_template('agent_profile.html')
+	return render_template('agent_profile.html', header=True, footer=True)

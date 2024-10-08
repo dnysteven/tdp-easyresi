@@ -3,10 +3,10 @@
 {% block title %}Course Recommendation{% endblock %}
 
 {% block content %}
-  <h1>Recommended Courses</h1>
+  <h2>Recommended Courses</h2>
 
   {% if recommended_courses %}
-    <form method="POST" action="{{ url_for('main.save_courses') }}">
+    <form class="recommend-form" method="POST" action="{{ url_for('main.save_courses') }}">
       <table border="1" cellpadding="5" cellspacing="0">
         <thead>
           <tr>
