@@ -428,3 +428,7 @@ def edu_profile():
 @main.route('/agent_profile')
 def agent_profile():
 	return render_template('agent_profile.html', header=True, footer=True)
+
+@main.route('/manage_course')
+def manage_course():
+	return render_template('manage_course.html', header=True, footer=True)

@@ -7,7 +7,7 @@
 
   {% if visa_189_eligible or visa_190_eligible or visa_491_eligible %}
     <ul>
-      <p>Your points is: {{ points }}</p>
+      <p class="content-container">Your points is:<strong> {{ points }}</strong></p>
       {% if visa_189_eligible %}
         <section class="content-container">
           <h2>Visa Subclass 189</h2>
@@ -43,5 +43,5 @@
     </section>
   {% endif %}
 
-  <a href="{{ url_for('main.questionnaire') }}">Go Back to Questionnaire</a>
+  <p class="content-container"><a href="{{ url_for('main.questionnaire') }}">Go Back to Questionnaire</a></p>
 {% endblock %}
