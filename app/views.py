@@ -379,3 +379,14 @@ def migra_statistics():
 													specialist_education_labels = specialist_education_labels,
 													specialist_education_values = specialist_education_values)
 										
+@main.route('/edu_profile')
+def edu_profile():
+	return render_template('edu_profile.html')
+
+@main.route('/applicant_profile')
+def applicant_profile():
+	return render_template('applicant_profile.html')
+
+@main.route('/agent_profile')
+def agent_profile():
+	return render_template('agent_profile.html')
