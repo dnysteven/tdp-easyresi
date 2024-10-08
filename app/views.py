@@ -424,3 +424,7 @@ def applicant_profile():
 @main.route('/edu_profile')
 def edu_profile():
 	return render_template('edu_profile.html', header=True, footer=True)
+
+@main.route('/agent_profile')
+def agent_profile():
+	return render_template('agent_profile.html', header=True, footer=True)
