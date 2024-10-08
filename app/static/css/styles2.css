@@ -36,10 +36,14 @@ th, td {
   font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
   font-size: 0.87rem;
 }
-
 .content-container {
   margin-left: 2rem;
   margin-right: 2rem;
+}
+
+.recommend-form {
+  margin-left: 3.5rem;
+  margin-right: 2rem; 
 }
 
 /* Style the navigation bar */

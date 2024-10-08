@@ -6,7 +6,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from datetime import datetime, timezone
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy import func
 from app import db
 from app.models import Data, ModelResult, VisaPoints, UniCourse, User, Login, University, UserCoursePref, UserSession
 
@@ -308,88 +307,60 @@ def calculate_age(request):
 
 def process_visa_path(data):
   # Extract data from form submission
-  educational_qualification = data.get('education_level')
-  specialist_education = data.get('specialist_education')
-  prof_year = data.get('proffesional_year', 'off')  # Default to 'off' if not checked
+  educational_qualification = data.get('educational_qualification')
+  specialist = data.get('specialist_education')
+  professional_year = data.get('professional_year')
   course_duration = data.get('course_duration')
-  regional_study = data.get('regional_study', 'off')  # Default to 'off' if not checked
-  tuition_fee = data.get('tuition_fee')
-  state = data.get('state')
+  regional = data.get('regional')
+  course_fees = data.get('course_fees')
   
-  # Print the extracted data to the terminal
-  print("Data extracted from form submission:")
-  print(f"Educational Qualification: {educational_qualification}")
-  print(f"Specialist Education: {specialist_education}")
-  print(f"Professional Year: {prof_year}")
-  print(f"Course Duration: {course_duration}")
-  print(f"Regional Study: {regional_study}")
-  print(f"Tuition Fee: {tuition_fee}")
-  print(f"State: {state}")
-
-  # Build the query
+  # Convert course_fees into a list if it's comma-separated
+  if course_fees:
+    course_fees = course_fees.split(',')
+  
+  # Build the query with mandatory filters
   query = UniCourse.query \
-      .join(User, UniCourse.provider_id == User.email) \
-      .join(University, UniCourse.univ_id == University.id) \
-      .filter(University.state == state)
+    .join(User, UniCourse.provider_id == User.username) \
+    .join(University, UniCourse.univ_id == University.id) \
+    .filter(
+      UniCourse.level == educational_qualification,
+      UniCourse.specialist == bool(int(specialist)),
+      UniCourse.prof_year == bool(int(professional_year)),
+      UniCourse.duration == int(course_duration)
+    )
 
-  # Level filter logic
-  if educational_qualification == 'bachelor':
-    query = query.filter(func.lower(UniCourse.level) == 'bachelor')
-  elif educational_qualification == 'master':
-    query = query.filter(func.lower(UniCourse.level).in_(['bachelor', 'master']))
-  elif educational_qualification == 'doctorate':
-    query = query.filter(func.lower(UniCourse.level).in_(['bachelor', 'master', 'doctorate']))
+  # Add the regional filter if it's checked
+  if regional:
+    query = query.filter_by(regional=True)
 
-  # Specialist education filter logic
-  if specialist_education != 'none':
-    query = query.filter(func.lower(UniCourse.specialist_education) == specialist_education)
-    
-  # Specialist education filter logic
-  if tuition_fee != 'none':
-    query = query.filter(UniCourse.tuition_fee == tuition_fee)
+  # Add the course fees filter if any checkboxes were selected
+  if course_fees:
+    query = query.filter(UniCourse.fee_points.in_(course_fees))
 
-  # Duration filter logic
-  if course_duration == '2':
-    query = query.filter(UniCourse.duration <= 2)
-  elif course_duration == '4':
-    query = query.filter(UniCourse.duration <= 4)
-  elif course_duration == '6':
-    query = query.filter(UniCourse.duration <= 6)
-
-  # Professional year filter logic
-  if prof_year == 'on':  # Checkbox was checked
-    query = query.filter(UniCourse.prof_year == True)
-
-  # Regional study filter logic
-  if regional_study == 'on':  # Checkbox was checked
-    query = query.filter(UniCourse.regional == True)
-
-  # Execute the query to get recommended courses
   recommended_courses = query.all()
-
+  
   # Add points to each course based on the new function
   for course in recommended_courses:
     course.points = calculate_ref_points(course)
-    
-  sorted_courses = sorted(recommended_courses, key=lambda x: x.points, reverse=True)
 
-  return sorted_courses
+  return recommended_courses
 
 def calculate_ref_points(course):
   # Define points for levels
   level_points = {
-      'bachelor': 1,
-      'master': 2,
-      'doctorate': 3
+    'bachelor': 1,
+    'master': 2,
+    'doctorate': 3
   }
 
   # Calculate points based on course attributes
   points = level_points.get(course.level.lower(), 0)  # Get points for level
-  points += 1 if course.specialist_education != 'none' else 0  # Add 1 if specialist_education is not 'none'
-  points += 1 if course.prof_year else 0  # Add 1 if professional year is True
+  points += 1 if course.specialist else 0  # Add 1 if specialist is True
+  points += 1 if course.prof_year else 0  # Add 1 if prof_year is True
   points += 1 if course.regional else 0  # Add 1 if regional is True
 
   return points
+
 
 def user_course_preferences(username, selected_courses, form_data):
   # Loop through selected courses and save the course preferences
@@ -452,7 +423,43 @@ def get_chart_admin():
 
 def get_chart_migrant():
   # Pie Chart Data (Applicants Completed Specialist Education Qualification)
-  specialist_education_labels = ['Completed', 'Not Completed']
+  specialist_education_labels = ['yes', 'no']
   specialist_education_values = [300, 100]
   
-  return specialist_education_labels, specialist_education_values
+  # Pie Chart Data (Applicants Met Australian Study Requirement)
+  australian_study_labels = ['yes', 'no']
+  australian_study_values = [200, 100]
+  
+  # Pie Chart Data (Applicants Completed Professional Year in Australia)
+  professional_year_labels = ['yes', 'no']
+  professional_year_values = [100, 100]
+  
+   # Pie Chart Data (Applicants Who Can Speak Community Language)
+  community_language_labels = ['yes', 'no']
+  community_language_values = [100, 200]
+  
+  # Pie Chart Data (Applicants Completed Regional Study)
+  regional_study_labels = ['yes', 'no']
+  regional_study_values = [100, 300]
+  
+  # Bar Chart Data (Applicants by Age Group)
+  age_group_labels = ['18-24', '25-32', '33-39', '40-44', '>=45']
+  age_group_values = [50, 100, 120, 200, 70]
+  
+  # Bar Chart Data (Applicants by English Language Level)
+  english_level_labels = ['competent', 'proficient', 'superior']
+  english_level_values = [50, 100, 120]
+  
+  # Bar Chart Data (Overseas Skilled Employment)
+  overseas_employment_labels = ['0-1', '1-2', '3-4', '5-7', '>=8']
+  overseas_employment_values = [50, 60, 70, 80, 90]
+  
+  # Bar Chart Data (Australian Skilled Employment)
+  australian_employment_labels = ['0-1', '1-2', '3-4', '5-7', '>=8']
+  australian_employment_values = [90, 80, 70, 60, 50]
+  
+   # Bar Chart Data (Highest Level of Education)
+  education_level_labels = ['doctorate', 'bachelor', 'diploma_or_trade', 'other_recognised']
+  education_level_values = [100, 80, 60, 40]
+  
+  return specialist_education_labels, specialist_education_values, australian_study_labels, australian_study_values, professional_year_labels, professional_year_values, community_language_labels, community_language_values, regional_study_labels, regional_study_values, age_group_labels, age_group_values, english_level_labels, english_level_values, overseas_employment_labels, overseas_employment_values, australian_employment_labels, australian_employment_values, education_level_labels, education_level_values
