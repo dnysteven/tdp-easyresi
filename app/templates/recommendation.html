@@ -2,12 +2,17 @@
 
 {% block title %}Course Recommendation{% endblock %}
 
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles2.css') }}">
+{% endblock %}
+
 {% block content %}
   <h2>Recommended Courses</h2>
 
   {% if recommended_courses %}
     <form class="recommend-form" method="POST" action="{{ url_for('main.save_courses') }}">
-      <table border="1" cellpadding="5" cellspacing="0">
+      <table id="recommendationTable" class="recommendationTable" border="1" cellpadding="5" cellspacing="0">
         <thead>
           <tr>
             <th>Course Number</th>
@@ -23,6 +28,8 @@
             <th>Tuition Fee</th>
             <th>Regional Study</th>
             <th>Contact Info</th>
+            <th>Monthly Cost of Living</th>
+            <th>Annual Cost of Living</th>
             <th>Save Option</th>
           </tr>
         </thead>
@@ -42,6 +49,8 @@
               <td>{{ course.tuition_fee }}</td>
               <td>{{ 'Yes' if course.regional else 'No' }}</td>
               <td>{{ course.university.email }}</td>
+              <td>{{ course.cost_of_living or 'N/A' }}</td>
+              <td>{{ course.cost_of_living_annual or 'N/A' }}</td>
               <td>
                 <input type="checkbox" name="save_course" value="{{ course.course_num }}">
               </td>
@@ -55,4 +64,9 @@
   {% else %}
     <p>No courses matched your criteria.</p>
   {% endif %}
+
+  <!-- jQuery and DataTables JS -->
+  <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+  <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 {% endblock %}

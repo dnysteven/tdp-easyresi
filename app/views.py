@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
-from app.models import Data, db, User, UserRole, UserGroup, CourseAdded, UserLogin
-from app.controllers import register_user, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, user_course_preferences, get_user_course_preferences, get_chart_admin, get_chart_migrant
+from app.models import Data, db, User, UserRole, UserGroup, CourseAdded, UserLogin, UniCourse
+from app.controllers import register_user, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, user_course_preferences, get_user_course_preferences, get_chart_admin, get_chart_migrant, get_courses, add_course, edit_course, delete_course
 
 main = Blueprint('main', __name__)
 
@@ -349,18 +349,18 @@ def admin_statistics():
     bar_values_others = [course.total_courses for course in courses_others]
 
     return render_template('admin_statistics.html',
-                           pie_labels=pie_labels, pie_values=pie_values,
-                           line_labels=line_labels,
-                           line_values_applicants=line_values_applicants,
-                           line_values_institutions=line_values_institutions,
-                           line_values_agencies=line_values_agencies,
-                           bar_labels=bar_labels, 
-                           bar_values_science=bar_values_science,
-                           bar_values_technology=bar_values_technology,
-                           bar_values_engineering=bar_values_engineering,
-                           bar_values_math=bar_values_math,
-                           bar_values_ict=bar_values_ict,
-                           bar_values_others=bar_values_others)
+													pie_labels=pie_labels, pie_values=pie_values,
+													line_labels=line_labels,
+													line_values_applicants=line_values_applicants,
+													line_values_institutions=line_values_institutions,
+													line_values_agencies=line_values_agencies,
+													bar_labels=bar_labels, 
+													bar_values_science=bar_values_science,
+													bar_values_technology=bar_values_technology,
+													bar_values_engineering=bar_values_engineering,
+													bar_values_math=bar_values_math,
+													bar_values_ict=bar_values_ict,
+													bar_values_others=bar_values_others)
     
 @main.route('/edu_statistics')
 def edu_statistics():
@@ -396,10 +396,10 @@ def migra_statistics():
 	return render_template(
         'migra_statistics.html', header=True, footer=True,
 							specialist_education_labels=specialist_education_labels,
-    						specialist_education_values=specialist_education_values,
-                			australian_study_labels=australian_study_labels,
-    						australian_study_values=australian_study_values,
-    						professional_year_labels=professional_year_labels,
+							specialist_education_values=specialist_education_values,
+							australian_study_labels=australian_study_labels,
+							australian_study_values=australian_study_values,
+							professional_year_labels=professional_year_labels,
 							professional_year_values=professional_year_values,
 							community_language_labels=community_language_labels,
 							community_language_values=community_language_values,
@@ -416,7 +416,7 @@ def migra_statistics():
 							education_level_labels=education_level_labels,
 							education_level_values=education_level_values
 )
- 
+
 @main.route('/applicant_profile')
 def applicant_profile():
 	return render_template('applicant_profile.html', header=True, footer=True)
@@ -429,6 +429,47 @@ def edu_profile():
 def agent_profile():
 	return render_template('agent_profile.html', header=True, footer=True)
 
-@main.route('/manage_course')
-def manage_course():
-	return render_template('manage_course.html', header=True, footer=True)
+@main.route('/courses')
+@login_required
+def courses():
+  courses = get_courses()
+  return render_template('courses.html', header=True, footer=True, courses=courses)
+
+@main.route('/add_course', methods=['POST'])
+@login_required
+def add_course():
+	data = request.form
+	add_course(data)
+	return redirect(url_for('main.courses'))
+
+@main.route('/edit_course/<int:course_id>', methods=['POST'])
+@login_required
+def edit_course(course_id):
+	data = request.form
+	edit_course(course_id, data)
+	return redirect(url_for('main.courses'))
+
+@main.route('/delete_course/<int:course_id>', methods=['POST'])
+@login_required
+def delete_course(course_id):
+	delete_course(course_id)
+	return redirect(url_for('main.courses'))
+
+@main.route('/get_course/<int:course_id>', methods=['GET'])
+@login_required
+def get_course(course_id):
+	course = UniCourse.query.get(course_id)
+	if course:
+		return {
+			'course_name': course.course_name,
+			'level': course.level,
+			'duration': course.duration,
+			'tuition_fee': course.tuition_fee,
+			'specialist': course.specialist,
+			'prof_year': course.prof_year,
+			'regional': course.regional,
+			'provider_id': course.provider_id,
+			'univ_id': course.univ_id
+		}
+	else:
+		return {"error": "Course not found"}, 404

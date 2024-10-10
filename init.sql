@@ -139,6 +139,17 @@ CREATE TABLE user_course_pref (
 	CONSTRAINT fk_user_course FOREIGN KEY (username) REFERENCES users (username)
 );
 
+CREATE TABLE IF NOT EXISTS cost_of_living (
+	id SERIAL PRIMARY KEY,
+	state CHAR(3) NOT NULL,
+	area VARCHAR(100) NOT NULL,
+	rent DOUBLE PRECISION NOT NULL,
+	grocery DOUBLE PRECISION NOT NULL,
+	transportation DOUBLE PRECISION NOT NULL,
+	utilities DOUBLE PRECISION NOT NULL,
+	entertainment DOUBLE PRECISION NOT NULL
+);
+
 -- Tables for Admin Dashboard Page
 CREATE TABLE user_groups (
     id SERIAL PRIMARY KEY,

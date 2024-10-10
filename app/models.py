@@ -245,6 +245,27 @@ class UserCoursePref(db.Model):
 		self.postcode = postcode
 		self.duration = duration
 		self.tuition_fee = tuition_fee
+  
+class CostOfLiving(db.Model):
+	__tablename__ = 'cost_of_living'
+	
+	id = db.Column(db.Integer, primary_key=True)
+	state = db.Column(db.String(100), nullable=False)
+	area = db.Column(db.String(100), nullable=False)
+	rent = db.Column(db.Float, nullable=False)
+	grocery = db.Column(db.Float, nullable=False)
+	transportation = db.Column(db.Float, nullable=False)
+	utilities = db.Column(db.Float, nullable=False)
+	entertainment = db.Column(db.Float, nullable=False)
+
+	def __init__(self, state, area, rent, grocery, transportation, utilities, entertainment):
+		self.state = state
+		self.area = area
+		self.rent = rent
+		self.grocery = grocery
+		self.transportation = transportation
+		self.utilities = utilities
+		self.entertainment = entertainment
 
 # ---- Admin Dashboard Charts ----
 class UserGroup(db.Model):

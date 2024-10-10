@@ -77,10 +77,11 @@ header {
 }
 
  /* Styling the BarChart */
- .BarChart {
+.BarChart {
   width: 90%; /* Use a larger percentage for the BarChart */
   max-width: 800px; /* Limit maximum width */
   height: auto;
+}
 
 /* Full width card for the bar chart */
 .full-width {
@@ -113,10 +114,10 @@ canvas {
 /* Responsive behavior */
 @media screen and (max-width: 1024px) {
   .dashboard-grid {
-      grid-template-columns: 1fr;
+    grid-template-columns: 1fr;
   }
 
   .full-width {
-      grid-column: span 1;
+    grid-column: span 1;
   }
 }

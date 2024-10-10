@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Course Management{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles2.css') }}">
+{% endblock %}
+
+{% block content %}
+  <h2>Courses Details</h2>
+  <table id="coursesTable" class="coursesTable">
+    <thead>
+      <tr>
+        <th>Course Number</th>
+        <th>Course Name</th>
+        <th>Provider</th>
+        <th>University</th>
+        <th>Address</th>
+        <th>Education Level</th>
+        <th>Specialist Education</th>
+        <th>Professional Year</th>
+        <th>Duration (Years)</th>
+        <th>Tuition Fee</th>
+        <th>Regional Study</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for course in courses %}
+      <tr>
+        <td>{{ course.UniCourse.course_num }}</td>
+        <td>{{ course.UniCourse.course_name }}</td>
+        <td>{{ course.first_name }} {{ course.last_name }}</td>
+        <td>{{ course.University.university }}</td>
+        <td>{{ course.University.street }}, {{ course.University.suburb }} {{ course.University.state }} {{ course.University.postcode }}</td>
+        <td>{{ course.UniCourse.level }}</td>
+        <td>{{ 'Yes' if course.UniCourse.specialist else 'No' }}</td>
+        <td>{{ 'Yes' if course.UniCourse.prof_year else 'No' }}</td>
+        <td>{{ course.UniCourse.duration }}</td>
+        <td>{{ course.UniCourse.tuition_fee }}</td>
+        <td>{{ 'Yes' if course.UniCourse.regional else 'No' }}</td>
+        <td>
+          <a href="{{ url_for('main.edit_course', course_id=course.UniCourse.id) }}">
+            <button>Edit</button>
+          </a>
+          <a href="{{ url_for('main.delete_course', course_id=course.UniCourse.id) }}">
+            <button>Delete</button>
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- jQuery and DataTables JS -->
+  <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+  <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+{% endblock %}

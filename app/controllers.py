@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import func
 from app import db
-from app.models import Data, ModelResult, VisaPoints, UniCourse, User, Login, University, UserCoursePref, UserSession
+from app.models import Data, ModelResult, VisaPoints, UniCourse, User, Login, University, UserCoursePref, UserSession, CostOfLiving
 
 # Define a path to store the model .pkl files in the ml folder
 MODEL_PATH = os.path.join(os.getcwd(), 'ml')
@@ -315,16 +315,6 @@ def process_visa_path(data):
   regional_study = data.get('regional_study', 'off')  # Default to 'off' if not checked
   tuition_fee = data.get('tuition_fee')
   state = data.get('state')
-  
-  # Print the extracted data to the terminal
-  print("Data extracted from form submission:")
-  print(f"Educational Qualification: {educational_qualification}")
-  print(f"Specialist Education: {specialist_education}")
-  print(f"Professional Year: {prof_year}")
-  print(f"Course Duration: {course_duration}")
-  print(f"Regional Study: {regional_study}")
-  print(f"Tuition Fee: {tuition_fee}")
-  print(f"State: {state}")
 
   # Build the query
   query = UniCourse.query \
@@ -366,11 +356,36 @@ def process_visa_path(data):
 
   # Execute the query to get recommended courses
   recommended_courses = query.all()
+  
+  # Add cost of living calculation for each course
+  for course in recommended_courses:
+    if course.regional:
+      # If the course is regional, query the cost_of_living for the corresponding state and area = 'regional'
+      cost_living_entry = CostOfLiving.query.filter_by(state=state, area='regional').first()
+    else:
+      # If the course is metro, query the cost_of_living for the corresponding state and area = 'metro'
+      cost_living_entry = CostOfLiving.query.filter_by(state=state, area='metro').first()
+
+    # Calculate the sum of rent, grocery, transportation, utilities, and entertainment
+    if cost_living_entry:
+      cost_of_living = (
+        cost_living_entry.rent +
+        cost_living_entry.grocery +
+        cost_living_entry.transportation +
+        cost_living_entry.utilities +
+        cost_living_entry.entertainment
+      )
+      # Monthly & Annual cost of living
+      course.cost_of_living = cost_of_living
+      course.cost_of_living_annual = cost_of_living * 12
+    else:
+      course.cost_of_living = None
+      course.cost_of_living_annual = None
 
   # Add points to each course based on the new function
   for course in recommended_courses:
     course.points = calculate_ref_points(course)
-    
+
   sorted_courses = sorted(recommended_courses, key=lambda x: x.points, reverse=True)
 
   return sorted_courses
@@ -463,7 +478,7 @@ def get_chart_migrant():
   professional_year_labels = ['yes', 'no']
   professional_year_values = [100, 100]
   
-   # Pie Chart Data (Applicants Who Can Speak Community Language)
+  # Pie Chart Data (Applicants Who Can Speak Community Language)
   community_language_labels = ['yes', 'no']
   community_language_values = [100, 200]
   
@@ -487,8 +502,54 @@ def get_chart_migrant():
   australian_employment_labels = ['0-1', '1-2', '3-4', '5-7', '>=8']
   australian_employment_values = [90, 80, 70, 60, 50]
   
-   # Bar Chart Data (Highest Level of Education)
+  # Bar Chart Data (Highest Level of Education)
   education_level_labels = ['doctorate', 'bachelor', 'diploma_or_trade', 'other_recognised']
   education_level_values = [100, 80, 60, 40]
   
   return specialist_education_labels, specialist_education_values, australian_study_labels, australian_study_values, professional_year_labels, professional_year_values, community_language_labels, community_language_values, regional_study_labels, regional_study_values, age_group_labels, age_group_values, english_level_labels, english_level_values, overseas_employment_labels, overseas_employment_values, australian_employment_labels, australian_employment_values, education_level_labels, education_level_values
+
+# Get all courses
+def get_courses():
+  courses = db.session.query(UniCourse, User.first_name, User.last_name, University) \
+            .join(User, UniCourse.provider_id == User.email) \
+            .join(University, UniCourse.univ_id == University.id) \
+            .all()
+  return courses
+
+# Add new course
+def add_course(data):
+  new_course = UniCourse(
+    course_name=data['course_name'],
+    level=data['level'],
+    duration=data['duration'],
+    tuition_fee=data['tuition_fee'],
+    specialist=data.get('specialist') == 'on',
+    prof_year=data.get('prof_year') == 'on',
+    regional=data.get('regional') == 'on',
+    provider_id=data['provider_id'],
+    univ_id=data['univ_id']
+  )
+  db.session.add(new_course)
+  db.session.commit()
+
+# Edit existing course
+def edit_course(course_id, data):
+  course = UniCourse.query.get(course_id)
+  if course:
+    course.course_name = data['course_name']
+    course.level = data['level']
+    course.duration = data['duration']
+    course.tuition_fee = data['tuition_fee']
+    course.specialist = data.get('specialist') == 'on'
+    course.prof_year = data.get('prof_year') == 'on'
+    course.regional = data.get('regional') == 'on'
+    course.provider_id = data['provider_id']
+    course.univ_id = data['univ_id']
+    db.session.commit()
+
+# Delete course
+def delete_course(course_id):
+  course = UniCourse.query.get(course_id)
+  if course:
+    db.session.delete(course)
+    db.session.commit()
