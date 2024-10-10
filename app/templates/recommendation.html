@@ -11,7 +11,7 @@
   <h2>Recommended Courses</h2>
 
   {% if recommended_courses %}
-    <form class="recommend-form" method="POST" action="{{ url_for('main.save_courses') }}">
+    <form class="recommend-form" method="POST" action="{{ url_for('main.user_course_pref') }}">
       <table id="recommendationTable" class="recommendationTable" border="1" cellpadding="5" cellspacing="0">
         <thead>
           <tr>
@@ -31,6 +31,7 @@
             <th>Monthly Cost of Living</th>
             <th>Annual Cost of Living</th>
             <th>Save Option</th>
+            <th class="hidden">Points</th>
           </tr>
         </thead>
         <tbody>
@@ -52,8 +53,9 @@
               <td>{{ course.cost_of_living or 'N/A' }}</td>
               <td>{{ course.cost_of_living_annual or 'N/A' }}</td>
               <td>
-                <input type="checkbox" name="save_course" value="{{ course.course_num }}">
+                <input type="checkbox" name="save_course" value="{{ course.id }}">
               </td>
+              <td class="hidden">{{ course.points }}</td>
             </tr>
           {% endfor %}
         </tbody>

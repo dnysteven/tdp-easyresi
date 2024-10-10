@@ -297,15 +297,6 @@ def visa_points_calculator(data):
 
   return points, visa_189_eligible, visa_190_eligible, visa_491_eligible
 
-def calculate_age(request):
-  date_of_birth_str = request.form.get('date_of_birth')
-  date_of_birth = datetime.strptime(date_of_birth_str, '%Y-%m-%d')
-  
-  today = datetime.today()
-  age = today.year - date_of_birth.year - ((today.month, today.day) < (date_of_birth.month, date_of_birth.day))
-  
-  return date_of_birth, age
-
 def process_visa_path(data):
   # Extract data from form submission
   educational_qualification = data.get('education_level')
@@ -334,9 +325,13 @@ def process_visa_path(data):
   if specialist_education != 'none':
     query = query.filter(func.lower(UniCourse.specialist_education) == specialist_education)
     
-  # Specialist education filter logic
-  if tuition_fee != 'none':
-    query = query.filter(UniCourse.tuition_fee == tuition_fee)
+  # Tuition fee filter logic
+  if tuition_fee == '<60k':
+    query = query.filter(UniCourse.tuition_fee < 60000)
+  elif tuition_fee == '60k-100k':
+    query = query.filter(UniCourse.tuition_fee.between(60000, 100000))
+  elif tuition_fee == '>100k':
+    query = query.filter(UniCourse.tuition_fee > 100000)
 
   # Duration filter logic
   if course_duration == '2':
@@ -406,38 +401,44 @@ def calculate_ref_points(course):
 
   return points
 
-def user_course_preferences(username, selected_courses, form_data):
-  # Loop through selected courses and save the course preferences
+def user_course_pref(selected_courses, username):
+  # Create a list to store new entries to be added
+  saved_courses = []
+
   for course_id in selected_courses:
-    course_num = form_data.get(f'course_num_{course_id}')
-    course_name = form_data.get(f'course_name_{course_id}')
-    provider_name = form_data.get(f'provider_name_{course_id}')
-    university_name = form_data.get(f'university_name_{course_id}')
-    university_address = form_data.get(f'university_address_{course_id}')
-    state = form_data.get(f'state_{course_id}')
-    postcode = form_data.get(f'postcode_{course_id}')
-    duration = form_data.get(f'duration_{course_id}')
-    tuition_fee = form_data.get(f'tuition_fee_{course_id}')
+    # Query the course data by course_id
+    course = UniCourse.query.filter_by(id=course_id).first()
 
-    # Create a new UserCoursePref object
-    user_pref = UserCoursePref(
-      username=username,
-      course_num=course_num,  # Save course_num instead of course_id
-      course_name=course_name,
-      provider_name=provider_name,
-      university_name=university_name,
-      university_address=university_address,
-      state=state,
-      postcode=postcode,
-      duration=int(duration),
-      tuition_fee=float(tuition_fee)
-    )
-    
-    # Add the course to the session
-    db.session.add(user_pref)
+    if course:
+      if course.regional:
+          cost_living_entry = CostOfLiving.query.filter_by(state=course.university.state, area='regional').first()
+      else:
+          cost_living_entry = CostOfLiving.query.filter_by(state=course.university.state, area='metro').first()
 
-  # Commit the changes to the database in one transaction
-  db.session.commit()
+      # Calculate cost_of_living and cost_of_living_annual
+      cost_of_living = (
+          cost_living_entry.rent +
+          cost_living_entry.grocery +
+          cost_living_entry.transportation +
+          cost_living_entry.utilities +
+          cost_living_entry.entertainment
+      )
+      cost_of_living_annual = cost_of_living * 12
+
+      # Create a new entry for each selected course
+      saved_course = UserCoursePref(
+          username=username,
+          course_id=course.id,
+          cost_of_living=cost_of_living,
+          cost_of_living_annual=cost_of_living_annual,
+          created_at=datetime.utcnow()  # Automatically add the timestamp
+      )
+      # Append to the list of saved courses
+      saved_courses.append(saved_course)
+
+  if saved_courses:
+    db.session.bulk_save_objects(saved_courses)
+    db.session.commit()
   
 def get_user_course_preferences(username):
   # Query the user_course_pref table based on the username

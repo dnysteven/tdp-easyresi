@@ -111,32 +111,25 @@ CREATE TABLE uni_course (
 	id SERIAL PRIMARY KEY,
 	course_num VARCHAR(50) UNIQUE NOT NULL,
 	course_name VARCHAR(150) NOT NULL,
-	provider_id VARCHAR(50) REFERENCES users(username) ON DELETE CASCADE,
+	provider_id VARCHAR(50) REFERENCES users(email) ON DELETE CASCADE,
 	univ_id INT REFERENCES university(id) ON DELETE CASCADE,
 	level VARCHAR(50) NOT NULL,
 	specialist_education VARCHAR(50) NOT NULL,
 	prof_year BOOLEAN DEFAULT FALSE,
 	duration INT NOT NULL,
-	tuition_fee VARCHAR(50) NOT NULL,
+	tuition_fee DOUBLE PRECISION NOT NULL,
 	regional BOOLEAN DEFAULT FALSE,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Update user_course_pref table (add created_at field)
-CREATE TABLE user_course_pref (
+CREATE TABLE IF NOT EXISTS user_course_pref (
 	id SERIAL PRIMARY KEY,
-	username VARCHAR(50) NOT NULL,
-	course_num VARCHAR(50) NOT NULL,
-	course_name VARCHAR(100) NOT NULL,
-	provider_name VARCHAR(100) NOT NULL,
-	university_name VARCHAR(100) NOT NULL,
-	university_address VARCHAR(255) NOT NULL,
-	state VARCHAR(3) NOT NULL,
-	postcode CHAR(4) NOT NULL,
-	duration INTEGER NOT NULL,
-	tuition_fee DECIMAL(10, 2) NOT NULL,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	CONSTRAINT fk_user_course FOREIGN KEY (username) REFERENCES users (username)
+	username VARCHAR(255) REFERENCES users(email) ON DELETE CASCADE,
+	course_id INTEGER REFERENCES uni_course(id) ON DELETE CASCADE,
+	cost_of_living DOUBLE PRECISION NOT NULL,
+	cost_of_living_annual DOUBLE PRECISION NOT NULL,
+	created_at TIMESTAMP NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS cost_of_living (

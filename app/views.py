@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
 from app.models import Data, db, User, UserRole, UserGroup, CourseAdded, UserLogin, UniCourse
-from app.controllers import register_user, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, user_course_preferences, get_user_course_preferences, get_chart_admin, get_chart_migrant, get_courses, add_course, edit_course, delete_course
+from app.controllers import register_user, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, user_course_pref, get_user_course_preferences, get_chart_admin, get_chart_migrant, get_courses, add_course, edit_course, delete_course
 
 main = Blueprint('main', __name__)
 
@@ -160,18 +160,12 @@ def test():
 	return render_template('test.html', header=True, footer=True,)
 
 @main.route('/questionnaire', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def questionnaire():
-  if current_app.config['ENV'] == 'development':
-    session['username'] = '104685155@student.swin.edu.au'
-    
   username = session.get('username')
-  if not username:
-    return redirect(url_for('main.login'))
-  
   if request.method == 'POST':
     data = request.form.to_dict()
-    data['username'] = session['username']
+    data['username'] = username
     
     # Calculate points and eligibility
     points, visa_189_eligible, visa_190_eligible, visa_491_eligible = visa_points_calculator(data)
@@ -187,10 +181,11 @@ def questionnaire():
   return render_template('questionnaire.html', header=True, footer=True)
 
 @main.route('/visa_points', methods=['GET'])
-#@login_required
+@login_required
 def visa_points():
+  # Redirect if questionnaire not completed
   if not session.get('completed_questionnaire'):
-    return redirect(url_for('main.questionnaire'))  # Redirect if questionnaire not completed
+    return redirect(url_for('main.questionnaire'))
   
   points = session.get('points')
   visa_189_eligible = session.get('visa_189_eligible', False)
@@ -207,23 +202,8 @@ def visa_points():
                         visa_190_eligible=visa_190_eligible, visa_491_eligible=visa_491_eligible)
 
 @main.route('/path_to_visa', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def path_to_visa():
-	# Check if the user has accessed visa_points and is eligible for the Path to Visa page
-	#if not session.get('eligible_for_path_to_visa'):
-		#return redirect(url_for('main.index'))
-
-	# Remove session flag after accessing the page to prevent further direct access
-
-	if current_app.config['ENV'] == 'development':
-		session['username'] = '104685155@student.swin.edu.au'
-
-	username = session.get('username')
-	if not username:
-		return redirect(url_for('main.login'))
-  
-	#session.pop('eligible_for_path_to_visa', None)
-
 	if request.method == 'POST':
 		# Collect the form data from path_to_visa.html
 		data = {
@@ -245,21 +225,13 @@ def path_to_visa():
 	return render_template('path_to_visa.html', header=True, footer=True)
 
 @main.route('/recommendation', methods=['GET'])
-#@login_required
+@login_required
 def recommendation():
-	# Check if user has submitted the form in path_to_visa.html
-	if current_app.config['ENV'] == 'development':
-		session['username'] = '104685155@student.swin.edu.au'
-
-	username = session.get('username')
-	if not username:
-		return redirect(url_for('main.login'))
-
 	# Retrieve the form data from the session
 	data = session.get('path_to_visa_data', None)
 
+	# Check if user has submitted the form in path_to_visa.html
 	if not data:
-		# If there's no form data in session, redirect back to path_to_visa
 		return redirect(url_for('main.path_to_visa'))
 
 	# Pass the form data to the controller to get recommended courses
@@ -270,29 +242,14 @@ def recommendation():
 
 	return render_template('recommendation.html', header=True, footer=True, recommended_courses=recommended_courses)
 
-@main.route('/save_courses', methods=['POST'])
-#@login_required
-def save_courses():
-	if current_app.config['ENV'] == 'development':
-		session['username'] = '104685155@student.swin.edu.au'
-
+@main.route('/user_course_pref', methods=['POST'])
+@login_required
+def user_course_pref():
+	selected_courses = request.form.getlist('user_course_pref')
 	username = session.get('username')
-	if not username:
-		return redirect(url_for('main.login'))  
-
-	username = session['username']
-	selected_courses = request.form.getlist('save_courses')
-
 	if selected_courses:
-		# Call the function to save multiple courses at once
-		user_course_preferences(username, selected_courses, request.form)
-		flash(f"Successfully saved {len(selected_courses)} course(s).")
-  
-		return redirect(url_for('main.profile'))
-	else:
-		flash("No courses were selected.")
-
-	return redirect(url_for('main.recommendation'))
+		user_course_pref(selected_courses, username)
+	return redirect(url_for('main.index'))
 
 @main.route('/profile', methods=['GET'])
 #@login_required
