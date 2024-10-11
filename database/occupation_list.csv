@@ -1,0 +1,505 @@
+﻿occupation,anzsco,type
+Construction Project Manager,133111,MLTSSL
+Engineering Manager,133211,MLTSSL
+Child Care Centre Manager,134111,MLTSSL
+Nursing Clinical Director,134212,MLTSSL
+Primary Health Organisation Manager,134213,MLTSSL
+Welfare Centre Manager,134214,MLTSSL
+Arts Administrator Or Manager,139911,MLTSSL
+Environmental Manager,139912,MLTSSL
+Dancer Or Choreographer,211112,MLTSSL
+Music Director,211212,MLTSSL
+Musician (Instrumental),211213,MLTSSL
+Artistic Director,212111,MLTSSL
+Accountant (General),221111,MLTSSL
+Management Accountant,221112,MLTSSL
+Taxation Accountant,221113,MLTSSL
+External Auditor,221213,MLTSSL
+Internal Auditor,221214,MLTSSL
+Actuary,224111,MLTSSL
+Statistician,224113,MLTSSL
+Economist,224311,MLTSSL
+Land Economist,224511,MLTSSL
+Valuer,224512,MLTSSL
+Management Consultant,224711,MLTSSL
+Architect,232111,MLTSSL
+Landscape Architect,232112,MLTSSL
+Surveyor,232212,MLTSSL
+Cartographer,232213,MLTSSL
+Other Spatial Scientist,232214,MLTSSL
+Chemical Engineer,233111,MLTSSL
+Materials Engineer,233112,MLTSSL
+Civil Engineer,233211,MLTSSL
+Geotechnical Engineer,233212,MLTSSL
+Quantity Surveyor,233213,MLTSSL
+Structural Engineer,233214,MLTSSL
+Transport Engineer,233215,MLTSSL
+Electrical Engineer,233311,MLTSSL
+Electronics Engineer,233411,MLTSSL
+Industrial Engineer,233511,MLTSSL
+Mechanical Engineer,233512,MLTSSL
+Production Or Plant Engineer,233513,MLTSSL
+Mining Engineer (Excluding Petroleum),233611,MLTSSL
+Petroleum Engineer,233612,MLTSSL
+Aeronautical Engineer,233911,MLTSSL
+Agricultural Engineer,233912,MLTSSL
+Biomedical Engineer,233913,MLTSSL
+Engineering Technologist,233914,MLTSSL
+Environmental Engineer,233915,MLTSSL
+Naval Architect,233916,MLTSSL
+Engineering Professionals (Nec),233999,MLTSSL
+Agricultural Consultant,234111,MLTSSL
+Agricultural Scientist,234112,MLTSSL
+Forester,234113,MLTSSL
+Chemist,234211,MLTSSL
+Food Technologist,234212,MLTSSL
+Environmental Consultant,234312,MLTSSL
+Environmental Research Scientist,234313,MLTSSL
+Environmental Scientist (Nec),234399,MLTSSL
+Geophysicist,234412,MLTSSL
+Hydrogeologist,234413,MLTSSL
+Life Scientist (General),234511,MLTSSL
+Biochemist,234513,MLTSSL
+Biotechnologist,234514,MLTSSL
+Botanist,234515,MLTSSL
+Marine Biologist,234516,MLTSSL
+Microbiologist,234517,MLTSSL
+Zoologist,234518,MLTSSL
+Life Scientists (Nec),234599,MLTSSL
+Medical Laboratory Scientist,234611,MLTSSL
+Veterinarian,234711,MLTSSL
+Conservator,234911,MLTSSL
+Metallurgist,234912,MLTSSL
+Meteorologist,234913,MLTSSL
+Physicist,234914,MLTSSL
+Natural And Physical Science Professionals (Nec),234999,MLTSSL
+Early Childhood (Pre‑Primary School) Teacher,241111,MLTSSL
+Secondary School Teacher,241411,MLTSSL
+Special Needs Teacher,241511,MLTSSL
+Teacher Of The Hearing Impaired,241512,MLTSSL
+Teacher Of The Sight Impaired,241513,MLTSSL
+Special Education Teachers (Nec),241599,MLTSSL
+University Lecturer,242111,MLTSSL
+Medical Diagnostic Radiographer,251211,MLTSSL
+Medical Radiation Therapist,251212,MLTSSL
+Nuclear Medicine Technologist,251213,MLTSSL
+Sonographer,251214,MLTSSL
+Optometrist,251411,MLTSSL
+Orthotist Or Prosthetist,251912,MLTSSL
+Chiropractor,252111,MLTSSL
+Osteopath,252112,MLTSSL
+Occupational Therapist,252411,MLTSSL
+Physiotherapist,252511,MLTSSL
+Podiatrist,252611,MLTSSL
+Audiologist,252711,MLTSSL
+Speech Pathologist,252712,MLTSSL
+General Practitioner,253111,MLTSSL
+Specialist Physician (General Medicine),253311,MLTSSL
+Cardiologist,253312,MLTSSL
+Clinical Haematologist,253313,MLTSSL
+Medical Oncologist,253314,MLTSSL
+Endocrinologist,253315,MLTSSL
+Gastroenterologist,253316,MLTSSL
+Intensive Care Specialist,253317,MLTSSL
+Neurologist,253318,MLTSSL
+Paediatrician,253321,MLTSSL
+Renal Medicine Specialist,253322,MLTSSL
+Rheumatologist,253323,MLTSSL
+Thoracic Medicine Specialist,253324,MLTSSL
+Specialist Physicians (Nec),253399,MLTSSL
+Psychiatrist,253411,MLTSSL
+Surgeon (General),253511,MLTSSL
+Cardiothoracic Surgeon,253512,MLTSSL
+Neurosurgeon,253513,MLTSSL
+Orthopaedic Surgeon,253514,MLTSSL
+Otorhinolaryngologist,253515,MLTSSL
+Paediatric Surgeon,253516,MLTSSL
+Plastic And Reconstructive Surgeon,253517,MLTSSL
+Urologist,253518,MLTSSL
+Vascular Surgeon,253521,MLTSSL
+Dermatologist,253911,MLTSSL
+Emergency Medicine Specialist,253912,MLTSSL
+Obstetrician And Gynaecologist,253913,MLTSSL
+Ophthalmologist,253914,MLTSSL
+Pathologist,253915,MLTSSL
+Diagnostic And Interventional Radiologist,253917,MLTSSL
+Radiation Oncologist,253918,MLTSSL
+Medical Practitioners (Nec),253999,MLTSSL
+Midwife,254111,MLTSSL
+Nurse Practitioner,254411,MLTSSL
+Registered Nurse (Aged Care),254412,MLTSSL
+Registered Nurse (Child And Family Health),254413,MLTSSL
+Registered Nurse (Community Health),254414,MLTSSL
+Registered Nurse (Critical Care And Emergency),254415,MLTSSL
+Registered Nurse (Developmental Disability),254416,MLTSSL
+Registered Nurse (Disability And Rehabilitation),254417,MLTSSL
+Registered Nurse (Medical),254418,MLTSSL
+Registered Nurse (Medical Practice),254421,MLTSSL
+Registered Nurse (Mental Health),254422,MLTSSL
+Registered Nurse (Perioperative),254423,MLTSSL
+Registered Nurse (Surgical),254424,MLTSSL
+Registered Nurse (Paediatrics),254425,MLTSSL
+Registered Nurses (Nec),254499,MLTSSL
+Ict Business Analyst,261111,MLTSSL
+Systems Analyst,261112,MLTSSL
+Multimedia Specialist,261211,MLTSSL
+Analyst Programmer,261311,MLTSSL
+Developer Programmer,261312,MLTSSL
+Software Engineer,261313,MLTSSL
+Software And Applications Programmers (Nec),261399,MLTSSL
+Ict Security Specialist,262112,MLTSSL
+Computer Network And Systems Engineer,263111,MLTSSL
+Telecommunications Engineer,263311,MLTSSL
+Telecommunications Network Engineer,263312,MLTSSL
+Barrister,271111,MLTSSL
+Solicitor,271311,MLTSSL
+Clinical Psychologist,272311,MLTSSL
+Educational Psychologist,272312,MLTSSL
+Organisational Psychologist,272313,MLTSSL
+Psychologists (Nec),272399,MLTSSL
+Social Worker,272511,MLTSSL
+Civil Engineering Draftsperson,312211,MLTSSL
+Civil Engineering Technician,312212,MLTSSL
+Electrical Engineering Draftsperson,312311,MLTSSL
+Electrical Engineering Technician,312312,MLTSSL
+Radio Communications Technician,313211,MLTSSL
+Telecommunications Field Engineer,313212,MLTSSL
+Telecommunications Network Planner,313213,MLTSSL
+Telecommunications Technical Officer Or Technologist,313214,MLTSSL
+Automotive Electrician,321111,MLTSSL
+Motor Mechanic (General),321211,MLTSSL
+Diesel Motor Mechanic,321212,MLTSSL
+Motorcycle Mechanic,321213,MLTSSL
+Small Engine Mechanic,321214,MLTSSL
+Sheetmetal Trades Worker,322211,MLTSSL
+Metal Fabricator,322311,MLTSSL
+Pressure Welder,322312,MLTSSL
+Welder (First Class),322313,MLTSSL
+Fitter (General),323211,MLTSSL
+Fitter And Turner,323212,MLTSSL
+Fitter‑Welder,323213,MLTSSL
+Metal Machinist (First Class),323214,MLTSSL
+Locksmith,323313,MLTSSL
+Panelbeater,324111,MLTSSL
+Bricklayer,331111,MLTSSL
+Stonemason,331112,MLTSSL
+Carpenter And Joiner,331211,MLTSSL
+Carpenter,331212,MLTSSL
+Joiner,331213,MLTSSL
+Painting Trades Worker,332211,MLTSSL
+Glazier,333111,MLTSSL
+Fibrous Plasterer,333211,MLTSSL
+Solid Plasterer,333212,MLTSSL
+Wall And Floor Tiler,333411,MLTSSL
+Plumber (General),334111,MLTSSL
+Airconditioning And Mechanical Services Plumber,334112,MLTSSL
+Drainer,334113,MLTSSL
+Gasfitter,334114,MLTSSL
+Roof Plumber,334115,MLTSSL
+Electrician (General),341111,MLTSSL
+Electrician (Special Class),341112,MLTSSL
+Lift Mechanic,341113,MLTSSL
+Airconditioning And Refrigeration Mechanic,342111,MLTSSL
+Technical Cable Jointer,342212,MLTSSL
+Electronic Equipment Trades Worker,342313,MLTSSL
+Electronic Instrument Trades Worker (General),342314,MLTSSL
+Electronic Instrument Trades Worker (Special Class),342315,MLTSSL
+Chef,351311,MLTSSL
+Horse Trainer,361112,MLTSSL
+Cabinetmaker,394111,MLTSSL
+Boat Builder And Repairer,399111,MLTSSL
+Shipwright,399112,MLTSSL
+Tennis Coach,452316,MLTSSL
+Footballer,452411,MLTSSL
+Flower Grower,121212,STSOL
+Grape Grower,121215,STSOL
+Vegetable Grower (Aus)/Market Gardener (Nz),121221,STSOL
+Apiarist,121311,STSOL
+Poultry Farmer,121321,STSOL
+Sales And Marketing Manager,131112,STSOL
+Advertising Manager,131113,STSOL
+Corporate Services Manager,132111,STSOL
+Finance Manager,132211,STSOL
+Human Resource Manager,132311,STSOL
+Research And Development Manager,132511,STSOL
+Manufacturer,133411,STSOL
+Production Manager (Forestry),133511,STSOL
+Production Manager (Manufacturing),133512,STSOL
+Production Manager (Mining),133513,STSOL
+Supply And Distribution Manager ,133611,STSOL
+Health And Welfare Services Managers (Nec),134299,STSOL
+School Principal,134311,STSOL
+Education Managers (Nec),134499,STSOL
+Ict Project Manager,135112,STSOL
+Ict Managers (Nec),135199,STSOL
+Laboratory Manager,139913,STSOL
+Quality Assurance Manager,139914,STSOL
+Specialist Managers (Nec) Except: Ambassador; Or Archbishop; Or Bishop,139999,STSOL
+Cafe Or Restaurant Manager,141111,STSOL
+Hotel Or Motel Manager,141311,STSOL
+Accommodation And Hospitality Managers (Nec),141999,STSOL
+Customer Service Manager,149212,STSOL
+Conference And Event Organiser,149311,STSOL
+Transport Company Manager,149413,STSOL
+Facilities Manager,149913,STSOL
+Music Professionals (Nec),211299,STSOL
+Photographer,211311,STSOL
+Book Or Script Editor,212212,STSOL
+"Director (Film, Television, Radio Or Stage)",212312,STSOL
+Film And Video Editor,212314,STSOL
+Program Director (Television Or Radio),212315,STSOL
+Stage Manager,212316,STSOL
+Technical Director,212317,STSOL
+Video Producer,212318,STSOL
+Copywriter,212411,STSOL
+Newspaper Or Periodical Editor,212412,STSOL
+Print Journalist,212413,STSOL
+Technical Writer,212415,STSOL
+Television Journalist,212416,STSOL
+Journalists And Other Writers (Nec),212499,STSOL
+Company Secretary,221211,STSOL
+Commodities Trader,222111,STSOL
+Finance Broker,222112,STSOL
+Insurance Broker,222113,STSOL
+Financial Brokers (Nec),222199,STSOL
+Financial Market Dealer,222211,STSOL
+Stockbroking Dealer,222213,STSOL
+Financial Dealers (Nec),222299,STSOL
+Financial Investment Adviser,222311,STSOL
+Financial Investment Manager,222312,STSOL
+Recruitment Consultant ,223112,STSOL
+Ict Trainer,223211,STSOL
+Mathematician,224112,STSOL
+Gallery Or Museum Curator,224212,STSOL
+Health Information Manager,224213,STSOL
+Records Manager,224214,STSOL
+Librarian,224611,STSOL
+Organisation And Methods Analyst,224712,STSOL
+Patents Examiner,224914,STSOL
+Information And Organisation Professionals (Nec),224999,STSOL
+Advertising Specialist,225111,STSOL
+Marketing Specialist,225113,STSOL
+Ict Account Manager,225211,STSOL
+Ict Business Development Manager,225212,STSOL
+Ict Sales Representative,225213,STSOL
+Public Relations Professional,225311,STSOL
+Technical Sales Representatives (Nec) Including Education Sales Representatives,225499,STSOL
+Fashion Designer,232311,STSOL
+Industrial Designer,232312,STSOL
+Jewellery Designer,232313,STSOL
+Graphic Designer,232411,STSOL
+Illustrator,232412,STSOL
+Web Designer,232414,STSOL
+Interior Designer,232511,STSOL
+Urban And Regional Planner,232611,STSOL
+Geologist,234411,STSOL
+Primary School Teacher,241213,STSOL
+Middle School Teacher (Aus) / Intermediate School Teacher (Nz),241311,STSOL
+Education Adviser,249111,STSOL
+Art Teacher (Private Tuition),249211,STSOL
+Dance Teacher (Private Tuition),249212,STSOL
+Music Teacher (Private Tuition),249214,STSOL
+Private Tutors And Teachers (Nec),249299,STSOL
+Teacher Of English To Speakers Of Other Languages,249311,STSOL
+Dietitian,251111,STSOL
+Nutritionist,251112,STSOL
+Occupational Health And Safety Adviser,251312,STSOL
+Orthoptist,251412,STSOL
+Hospital Pharmacist,251511,STSOL
+Industrial Pharmacist,251512,STSOL
+Retail Pharmacist,251513,STSOL
+Health Promotion Officer,251911,STSOL
+Health Diagnostic And Promotion Professionals (Nec),251999,STSOL
+Acupuncturist,252211,STSOL
+Naturopath,252213,STSOL
+Traditional Chinese Medicine Practitioner,252214,STSOL
+Complementary Health Therapists (Nec),252299,STSOL
+Dental Specialist,252311,STSOL
+Resident Medical Officer,253112,STSOL
+Nurse Educator,254211,STSOL
+Nurse Researcher,254212,STSOL
+Nurse Manager,254311,STSOL
+Web Developer,261212,STSOL
+Software Tester ,261314,STSOL
+Database Administrator,262111,STSOL
+Systems Administrator,262113,STSOL
+Network Administrator,263112,STSOL
+Network Analyst,263113,STSOL
+Ict Quality Assurance Engineer,263211,STSOL
+Ict Support Engineer,263212,STSOL
+Ict Systems Test Engineer,263213,STSOL
+Ict Support And Test Engineers (Nec),263299,STSOL
+Judicial And Other Legal Professionals (Nec),271299,STSOL
+Careers Counsellor,272111,STSOL
+Drug And Alcohol Counsellor,272112,STSOL
+Family And Marriage Counsellor,272113,STSOL
+Rehabilitation Counsellor,272114,STSOL
+Student Counsellor,272115,STSOL
+Counsellors (Nec),272199,STSOL
+Psychotherapist,272314,STSOL
+Interpreter,272412,STSOL
+Social Professionals (Nec),272499,STSOL
+Recreation Officer,272612,STSOL
+Welfare Worker,272613,STSOL
+Anaesthetic Technician,311211,STSOL
+Cardiac Technician,311212,STSOL
+Medical Laboratory Technician,311213,STSOL
+Pharmacy Technician,311215,STSOL
+Medical Technicians (Nec),311299,STSOL
+Meat Inspector,311312,STSOL
+Primary Products Inspectors (Nec),311399,STSOL
+Chemistry Technician,311411,STSOL
+Earth Science Technician,311412,STSOL
+Life Science Technician,311413,STSOL
+Science Technicians (Nec),311499,STSOL
+Architectural Draftsperson,312111,STSOL
+Building Inspector,312113,STSOL
+"Architectural, Building And Surveying Technicians (Nec)",312199,STSOL
+Mechanical Engineering Technician,312512,STSOL
+Metallurgical Or Materials Technician,312912,STSOL
+Mine Deputy,312913,STSOL
+Hardware Technician,313111,STSOL
+Ict Customer Support Officer,313112,STSOL
+Web Administrator,313113,STSOL
+Ict Support Technicians (Nec),313199,STSOL
+Farrier,322113,STSOL
+Aircraft Maintenance Engineer (Avionics),323111,STSOL
+Aircraft Maintenance Engineer (Mechanical),323112,STSOL
+Aircraft Maintenance Engineer (Structures),323113,STSOL
+Metal Fitters And Machinists (Nec),323299,STSOL
+Precision Instrument Maker And Repairer,323314,STSOL
+Toolmaker,323412,STSOL
+Vehicle Body Builder,324211,STSOL
+Vehicle Trimmer,324212,STSOL
+Roof Tiler,333311,STSOL
+Business Machine Mechanic,342311,STSOL
+Cabler (Data And Telecommunications),342411,STSOL
+Telecommunications Linesworker,342413,STSOL
+Baker,351111,STSOL
+Pastrycook,351112,STSOL
+Butcher Or Smallgoods Maker,351211,STSOL
+Cook,351411,STSOL
+Dog Handler Or Trainer,361111,STSOL
+Animal Attendants And Trainers (Nec),361199,STSOL
+Veterinary Nurse,361311,STSOL
+Florist,362111,STSOL
+Gardener (General),362211,STSOL
+Arborist,362212,STSOL
+Landscape Gardener,362213,STSOL
+Greenkeeper,362311,STSOL
+Hairdresser,391111,STSOL
+Print Finisher,392111,STSOL
+Printing Machinist,392311,STSOL
+Dressmaker Or Tailor,393213,STSOL
+Upholsterer,393311,STSOL
+Furniture Finisher,394211,STSOL
+Wood Machinist,394213,STSOL
+Wood Machinists And Other Wood Trades Workers (Nec),394299,STSOL
+Power Generation Plant Operator,399213,STSOL
+Jeweller,399411,STSOL
+"Camera Operator (Film, Television Or Video)",399512,STSOL
+Make Up Artist,399514,STSOL
+Sound Technician,399516,STSOL
+Performing Arts Technicians (Nec),399599,STSOL
+Signwriter,399611,STSOL
+Ambulance Officer,411111,STSOL
+Intensive Care Ambulance Paramedic,411112,STSOL
+Dental Technician,411213,STSOL
+Diversional Therapist,411311,STSOL
+Enrolled Nurse,411411,STSOL
+Massage Therapist,411611,STSOL
+Community Worker,411711,STSOL
+Disabilities Services Officer,411712,STSOL
+Family Support Worker,411713,STSOL
+Residential Care Officer,411715,STSOL
+Youth Worker,411716,STSOL
+Diving Instructor (Open Water),452311,STSOL
+Gymnastics Coach Or Instructor,452312,STSOL
+Horse Riding Coach Or Instructor,452313,STSOL
+Snowsport Instructor,452314,STSOL
+Swimming Coach Or Instructor,452315,STSOL
+Other Sports Coach Or Instructor,452317,STSOL
+Sports Development Officer,452321,STSOL
+Sportspersons (Nec),452499,STSOL
+Contract Administrator,511111,STSOL
+Program Or Project Administrator,511112,STSOL
+Insurance Loss Adjuster,599612,STSOL
+Insurance Agent,611211,STSOL
+Retail Buyer,639211,STSOL
+Aquaculture Farmer,121111,ROL
+Cotton Grower,121211,ROL
+Fruit Or Nut Grower,121213,ROL
+"Grain, Oilseed Or Pasture Grower (Aus)/Field Crop Grower (Nz)",121214,ROL
+Mixed Crop Farmer,121216,ROL
+Sugar Cane Grower,121217,ROL
+Crop Farmers (Nec),121299,ROL
+Beef Cattle Farmer,121312,ROL
+Dairy Cattle Farmer,121313,ROL
+Deer Farmer,121314,ROL
+Goat Farmer,121315,ROL
+Horse Breeder,121316,ROL
+Mixed Livestock Farmer,121317,ROL
+Pig Farmer,121318,ROL
+Sheep Farmer,121322,ROL
+Livestock Farmers (Nec),121399,ROL
+Mixed Crop And Livestock Farmer,121411,ROL
+Public Relations Manager,131114,ROL
+Policy And Planning Manager,132411,ROL
+Project Builder,133112,ROL
+Procurement Manager,133612,ROL
+Medical Administrator,134211,ROL
+Regional Education Manager,134412,ROL
+Sports Administrator,139915,ROL
+Caravan Park And Camping Ground Manager,141211,ROL
+Post Office Manager,142115,ROL
+Amusement Centre Manager,149111,ROL
+Fitness Centre Manager,149112,ROL
+Sports Centre Manager,149113,ROL
+Cinema Or Theatre Manager,149912,ROL
+Financial Institution Branch Manager,149914,ROL
+Human Resource Adviser,223111,ROL
+Workplace Relations Adviser,223113,ROL
+Policy Analyst,224412,ROL
+Liaison Officer,224912,ROL
+Market Research Analyst,225112,ROL
+Aeroplane Pilot,231111,ROL
+Flying Instructor,231113,ROL
+Helicopter Pilot,231114,ROL
+Ship’S Master,231213,ROL
+Multimedia Designer,232413,ROL
+Wine Maker,234213,ROL
+Conservation Officer,234311,ROL
+Exercise Physiologist,234915,ROL
+Vocational Education Teacher,242211,ROL
+Environmental Health Officer,251311,ROL
+Dentist,252312,ROL
+Anaesthetist,253211,ROL
+Intellectual Property Lawyer,271214,ROL
+Translator,272413,ROL
+Community Arts Worker,272611,ROL
+Agricultural Technician,311111,ROL
+Operating Theatre Technician,311214,ROL
+Pathology Collector,311216,ROL
+Construction Estimator,312114,ROL
+Surveying Or Spatial Science Technician,312116,ROL
+Mechanical Engineering Draftsperson,312511,ROL
+Safety Inspector,312611,ROL
+Maintenance Planner,312911,ROL
+Building And Engineering Technicians (Nec),312999,ROL
+Vehicle Painter,324311,ROL
+Floor Finisher,332111,ROL
+Electrical Linesworker,342211,ROL
+Zookeeper,361114,ROL
+Nurseryperson,362411,ROL
+Gas Or Petroleum Operator,399212,ROL
+Dental Hygienist,411211,ROL
+Dental Therapist,411214,ROL
+Emergency Service Worker,441211,ROL
+Driving Instructor,451211,ROL
+Funeral Workers (Nec),451399,ROL
+Flight Attendant,451711,ROL
+First Aid Trainer,451815,ROL
+Jockey,452413,ROL
+Clinical Coder,599915,ROL
+Property Manager,612112,ROL
+Real Estate Representative,612115,ROL

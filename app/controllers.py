@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import func
 from app import db
-from app.models import Data, ModelResult, VisaPoints, UniCourse, User, Login, University, UserCoursePref, UserSession, CostOfLiving
+from app.models import Data, ModelResult, VisaPoints, UniCourse, User, Login, University, UserCoursePref, UserSession, CostOfLiving, OccupationList
 
 # Define a path to store the model .pkl files in the ml folder
 MODEL_PATH = os.path.join(os.getcwd(), 'ml')
@@ -152,6 +152,17 @@ def predict_model(features):
   prediction = model.predict([features])
   return prediction[0]
 
+def get_occupation_list(visa_189_eligible, visa_190_eligible, visa_491_eligible):
+  if visa_189_eligible and not visa_190_eligible and not visa_491_eligible:
+    # If eligible for 189 only
+    return OccupationList.query.filter_by(type='MLTSSL').all()
+  elif visa_189_eligible and visa_190_eligible and not visa_491_eligible:
+    # If eligible for both 189 and 190
+    return OccupationList.query.filter(OccupationList.type.in_(['MLTSSL', 'STSOL'])).all()
+  else:
+    # If eligible for all or visa 491
+    return OccupationList.query.all()
+
 def visa_points_calculator(data):
   points = 0
   
@@ -205,29 +216,65 @@ def visa_points_calculator(data):
   elif data['education_level'] == 'other_recognised':
     points += 5
 
+  # # Specialist education qualification points
+  # if 'specialist_education' in data and data['specialist_education'] == 'yes':
+  #   specialist_education = True
+  #   points += 10
+
+  # # Australian study requirement points
+  # if 'australian_study' in data and data['australian_study'] == 'yes':
+  #   australian_study = True
+  #   points += 5
+
+  # # Professional year in Australia points
+  # if 'professional_year' in data and data['professional_year'] == 'yes':
+  #   professional_year = True
+  #   points += 5
+
+  # # Community language points
+  # if 'community_language' in data and data['community_language'] == 'yes':
+  #   community_language = True
+  #   points += 5
+
+  # # Regional study points
+  # if 'regional_study' in data and data['regional_study'] == 'yes':
+  #   regional_study = True
+  #   points += 5
+  
+  # Initialize all optional fields to prevent UnboundLocalError
+  specialist_education = False
+  australian_study = False
+  professional_year = False
+  community_language = False
+  regional_study = False
+  
+  # Convert 'yes'/'no' to boolean
+  def to_bool(value):
+    return value.lower() == 'yes' if value else False
+
   # Specialist education qualification points
-  if 'specialist_education' in data and data['specialist_education'] == 'yes':
+  if to_bool(data.get('specialist_education', 'no')):
     specialist_education = True
     points += 10
 
   # Australian study requirement points
-  if 'australian_study' in data and data['australian_study'] == 'yes':
+  if to_bool(data.get('australian_study', 'no')):
     australian_study = True
     points += 5
 
   # Professional year in Australia points
-  if 'professional_year' in data and data['professional_year'] == 'yes':
+  if to_bool(data.get('professional_year', 'no')):
     professional_year = True
     points += 5
 
   # Community language points
-  if 'community_language' in data and data['community_language'] == 'yes':
-    community_language = True
+  if to_bool(data.get('community_language', 'no')):
+    community_language = community_language
     points += 5
 
   # Regional study points
-  if 'regional_study' in data and data['regional_study'] == 'yes':
-    regional_study = True
+  if to_bool(data.get('regional_study', 'no')):
+    regional_study = regional_study
     points += 5
 
   # Partner skills points
@@ -259,17 +306,19 @@ def visa_points_calculator(data):
       visa_190_eligible = True
     elif data['nomination'] == 'state_regional':
       visa_491_eligible = True
+      
+  occupation_list = get_occupation_list(visa_189_eligible, visa_190_eligible, visa_491_eligible)
   
   # Convert 'yes'/'no' to boolean
-  def to_bool(value):
-    return value.lower() == 'yes'
+  # def to_bool(value):
+  #   return value.lower() == 'yes'
   
-  # Convert 'yes'/'no' to boolean for checkbox values
-  specialist_education = to_bool(data.get('specialist_education', 'no'))
-  australian_study = to_bool(data.get('australian_study', 'no'))
-  professional_year = to_bool(data.get('professional_year', 'no'))
-  community_language = to_bool(data.get('community_language', 'no'))
-  regional_study = to_bool(data.get('regional_study', 'no'))
+  # # Convert 'yes'/'no' to boolean for checkbox values
+  # specialist_education = to_bool(data.get('specialist_education', 'no'))
+  # australian_study = to_bool(data.get('australian_study', 'no'))
+  # professional_year = to_bool(data.get('professional_year', 'no'))
+  # community_language = to_bool(data.get('community_language', 'no'))
+  # regional_study = to_bool(data.get('regional_study', 'no'))
   
   # Save to database with username
   visa_points_entry = VisaPoints(
@@ -295,7 +344,7 @@ def visa_points_calculator(data):
   db.session.add(visa_points_entry)
   db.session.commit()
 
-  return points, visa_189_eligible, visa_190_eligible, visa_491_eligible
+  return points, visa_189_eligible, visa_190_eligible, visa_491_eligible, occupation_list
 
 def process_visa_path(data):
   # Extract data from form submission

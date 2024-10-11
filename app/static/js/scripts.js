@@ -73,4 +73,13 @@ $(document).ready(function() {
     "info": true,          // Show table information (e.g., "Showing X of Y entries")
     "pageLength": 10       // Set the default page length
   });
+
+  // Initialize DataTables for the courses table
+  $('#occupationTable').DataTable({
+    "paging": true,        // Enable pagination
+    "searching": true,     // Enable searching
+    "ordering": true,      // Enable column-based sorting
+    "info": true,          // Show table information (e.g., "Showing X of Y entries")
+    "pageLength": 10       // Set the default page length
+  });
 });

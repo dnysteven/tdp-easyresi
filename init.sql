@@ -94,6 +94,13 @@ CREATE TABLE IF NOT EXISTS visa_points (
 	CONSTRAINT fk_username FOREIGN KEY (username) REFERENCES users(email)
 );
 
+CREATE TABLE IF NOT EXISTS occupation_list (
+	id SERIAL PRIMARY KEY,
+	occupation VARCHAR(255) NOT NULL,
+	anzsco CHAR(6) NOT NULL,
+	type CHAR(6) NOT NULL
+);
+
 -- Create university table with id as primary key
 CREATE TABLE university (
 	id SERIAL PRIMARY KEY,

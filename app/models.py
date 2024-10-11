@@ -119,6 +119,19 @@ class ModelResult(db.Model):
 		self.model_type = model_type
 		self.accuracy = accuracy
 
+class OccupationList(db.Model):
+	__tablename__ = 'occupation_list'
+
+	id = db.Column(db.Integer, primary_key=True)
+	occupation = db.Column(db.String(255), nullable=False)
+	anzsco = db.Column(db.String(6), nullable=False)
+	type = db.Column(db.String(6), nullable=False)
+
+	def __init__(self, occupation, anzsco, type):
+		self.occupation = occupation
+		self.anzsco = anzsco
+		self.type = type
+
 class VisaPoints(db.Model):
 	__tablename__ = 'visa_points'
 
