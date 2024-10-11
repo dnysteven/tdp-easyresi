@@ -1,6 +1,7 @@
 import os
 import joblib
 import pandas as pd
+from flask import session
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -24,6 +25,18 @@ def check_login(email, password):
     return True, user.user_role
   
   return False, None
+
+def get_user_name():
+  if 'username' in session:
+    # Get the user from the database
+    user = User.query.filter_by(email=session['username']).first()
+    
+    if user:
+      # Return the first and last name of the user
+      return user.first_name, user.last_name
+  
+  # Return None if the user is not found
+  return None, None
 
 # Register a new user
 def register_user(data):
@@ -215,31 +228,6 @@ def visa_points_calculator(data):
     points += 10
   elif data['education_level'] == 'other_recognised':
     points += 5
-
-  # # Specialist education qualification points
-  # if 'specialist_education' in data and data['specialist_education'] == 'yes':
-  #   specialist_education = True
-  #   points += 10
-
-  # # Australian study requirement points
-  # if 'australian_study' in data and data['australian_study'] == 'yes':
-  #   australian_study = True
-  #   points += 5
-
-  # # Professional year in Australia points
-  # if 'professional_year' in data and data['professional_year'] == 'yes':
-  #   professional_year = True
-  #   points += 5
-
-  # # Community language points
-  # if 'community_language' in data and data['community_language'] == 'yes':
-  #   community_language = True
-  #   points += 5
-
-  # # Regional study points
-  # if 'regional_study' in data and data['regional_study'] == 'yes':
-  #   regional_study = True
-  #   points += 5
   
   # Initialize all optional fields to prevent UnboundLocalError
   specialist_education = False
@@ -308,17 +296,6 @@ def visa_points_calculator(data):
       visa_491_eligible = True
       
   occupation_list = get_occupation_list(visa_189_eligible, visa_190_eligible, visa_491_eligible)
-  
-  # Convert 'yes'/'no' to boolean
-  # def to_bool(value):
-  #   return value.lower() == 'yes'
-  
-  # # Convert 'yes'/'no' to boolean for checkbox values
-  # specialist_education = to_bool(data.get('specialist_education', 'no'))
-  # australian_study = to_bool(data.get('australian_study', 'no'))
-  # professional_year = to_bool(data.get('professional_year', 'no'))
-  # community_language = to_bool(data.get('community_language', 'no'))
-  # regional_study = to_bool(data.get('regional_study', 'no'))
   
   # Save to database with username
   visa_points_entry = VisaPoints(
@@ -450,19 +427,22 @@ def calculate_ref_points(course):
 
   return points
 
-def user_course_pref(selected_courses, username):
+def save_user_course_pref(selected_courses, username):  
+  print("Selected Courses:", selected_courses)
+  print("Username:", username)
+  
   # Create a list to store new entries to be added
   saved_courses = []
-
+  
   for course_id in selected_courses:
     # Query the course data by course_id
     course = UniCourse.query.filter_by(id=course_id).first()
 
     if course:
       if course.regional:
-          cost_living_entry = CostOfLiving.query.filter_by(state=course.university.state, area='regional').first()
+        cost_living_entry = CostOfLiving.query.filter_by(state=course.university.state, area='regional').first()
       else:
-          cost_living_entry = CostOfLiving.query.filter_by(state=course.university.state, area='metro').first()
+        cost_living_entry = CostOfLiving.query.filter_by(state=course.university.state, area='metro').first()
 
       # Calculate cost_of_living and cost_of_living_annual
       cost_of_living = (
@@ -479,8 +459,7 @@ def user_course_pref(selected_courses, username):
           username=username,
           course_id=course.id,
           cost_of_living=cost_of_living,
-          cost_of_living_annual=cost_of_living_annual,
-          created_at=datetime.utcnow()  # Automatically add the timestamp
+          cost_of_living_annual=cost_of_living_annual
       )
       # Append to the list of saved courses
       saved_courses.append(saved_course)

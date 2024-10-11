@@ -33,11 +33,10 @@ class User(db.Model):
 	postcode = db.Column(db.String(4), nullable=True)
 	created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
-	# Define relationship with Login model
+	# Define relationship with Other model
 	login = db.relationship('Login', backref='user', uselist=False, lazy=True)
-
-	# Define relationship with UniCourse model
 	courses = db.relationship('UniCourse', backref='provider', lazy=True)
+	user_course_prefs = db.relationship('UserCoursePref', backref='user', lazy=True)
 
 	def __init__(self, email, first_name, last_name, phone, user_role, edu_id=None, abn=None, street_address=None, suburb=None, state=None, postcode=None):
 		self.email = email
@@ -219,6 +218,9 @@ class UniCourse(db.Model):
 	regional = db.Column(db.Boolean, default=False)  # Regional study
 	created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
+	# Define relationship with Other model
+	user_course_prefs = db.relationship('UserCoursePref', backref='course', lazy=True)
+
 	def __init__(self, course_num, course_name, provider_id, univ_id, level, specialist_education, prof_year, duration, tuition_fee, regional):
 		self.course_num = course_num
 		self.course_name = course_name
@@ -241,15 +243,12 @@ class UserCoursePref(db.Model):
 	cost_of_living_annual = db.Column(db.Float, nullable=False)
 	created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
-	# Relationship with users and uni_course
-	user = db.relationship('User', backref=db.backref('saved_courses', lazy=True))
-	course = db.relationship('UniCourse', backref=db.backref('saved_by_users', lazy=True))
-
 	def __init__(self, username, course_id, cost_of_living, cost_of_living_annual):
 		self.username = username
 		self.course_id = course_id
 		self.cost_of_living = cost_of_living
 		self.cost_of_living_annual = cost_of_living_annual
+		self.created_at = datetime.utcnow()
   
 class CostOfLiving(db.Model):
 	__tablename__ = 'cost_of_living'

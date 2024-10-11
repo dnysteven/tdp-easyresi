@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
 from app.models import Data, db, User, UserRole, UserGroup, CourseAdded, UserLogin, UniCourse
-from app.controllers import register_user, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, user_course_pref, get_user_course_preferences, get_chart_admin, get_chart_migrant, get_courses, add_course, edit_course, delete_course
+from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_preferences, get_chart_admin, get_chart_migrant, get_courses, add_course, edit_course, delete_course
 
 main = Blueprint('main', __name__)
 
@@ -8,11 +8,19 @@ main = Blueprint('main', __name__)
 SECRET_KEY = 'tdp_easyresi_session'
 main.secret_key = SECRET_KEY
 
+@main.route('/')
+def index():
+  user_first_name, user_last_name = get_user_name()
+  return render_template('index.html', header=True, footer=True,
+                        user_first_name=user_first_name, user_last_name=user_last_name)
+
 @main.route('/login', methods=['GET', 'POST'])
 def login():
 	# Check if user is already logged in
-	#if 'username' in session:
-		#return redirect(url_for('main.index'))
+	if 'username' in session:
+		return redirect(url_for('main.index'))
+
+	user_first_name, user_last_name = get_user_name()
 
 	if request.method == 'POST':
 		# Get username and password from the form
@@ -32,7 +40,8 @@ def login():
 			flash('Login failed. Incorrect email or password.', 'danger')
 			return redirect(url_for('main.login'))
 
-	return render_template('login.html', header=True, footer=True)
+	return render_template('login.html', header=True, footer=True,
+                        user_first_name=user_first_name, user_last_name=user_last_name)
 
 @main.route('/logout')
 def logout():
@@ -52,8 +61,10 @@ def login_required(f):
 @main.route('/register', methods=['GET', 'POST'])
 def register():
   # Check if user is already logged in
-	# if 'username' in session:
-	# 	return redirect(url_for('main.index'))
+	if 'username' in session:
+		return redirect(url_for('main.index'))
+  
+	user_first_name, user_last_name = get_user_name()
   
 	if request.method == 'POST':
 		data = {
@@ -79,11 +90,8 @@ def register():
 
 	# Fetch user roles for the dropdown
 	roles = UserRole.query.all()
-	return render_template('register.html', header=True, footer=True, roles=roles)
-
-@main.route('/')
-def index():
-	return render_template('index.html', header=True, footer=True)
+	return render_template('register.html', header=True, footer=True, roles=roles,
+                        user_first_name=user_first_name, user_last_name=user_last_name)
 
 @main.route('/189', methods=['GET'])
 def visa_189():
@@ -162,6 +170,8 @@ def test():
 @main.route('/questionnaire', methods=['GET', 'POST'])
 @login_required
 def questionnaire():
+  user_first_name, user_last_name = get_user_name()
+  
   if request.method == 'POST':
     username = session.get('username')
     
@@ -187,7 +197,8 @@ def questionnaire():
     
     return redirect(url_for('main.visa_points'))
   
-  return render_template('questionnaire.html', header=True, footer=True)
+  return render_template('questionnaire.html', header=True, footer=True,
+                        user_first_name=user_first_name, user_last_name=user_last_name)
 
 @main.route('/visa_points', methods=['GET'])
 @login_required
@@ -195,6 +206,8 @@ def visa_points():
   # Redirect if questionnaire not completed
   if not session.get('completed_questionnaire'):
     return redirect(url_for('main.questionnaire'))
+  
+  user_first_name, user_last_name = get_user_name()
   
   # Call the visa_points_calculator
   form_data = session.get('form_data')
@@ -207,6 +220,7 @@ def visa_points():
   #   session['eligible_for_path_to_visa'] = True
     
   return render_template('visa_points.html', header=True, footer=True,
+                        user_first_name=user_first_name, user_last_name=user_last_name,
                         points=points, visa_189_eligible=visa_189_eligible,
                         visa_190_eligible=visa_190_eligible, visa_491_eligible=visa_491_eligible,
                         occupation_list=occupation_list)
@@ -214,9 +228,11 @@ def visa_points():
 @main.route('/path_to_visa', methods=['GET', 'POST'])
 @login_required
 def path_to_visa():
-	if request.method == 'POST':
-		# Collect the form data from path_to_visa.html
-		data = {
+  user_first_name, user_last_name = get_user_name()
+  
+  if request.method == 'POST':
+    # Collect the form data from path_to_visa.html
+    data = {
 			'education_level': request.form['education_level'],
 			'specialist_education': request.form['specialist_education'],
 			'professional_year': request.form.get('professional_year', 'off') == 'on',
@@ -225,40 +241,52 @@ def path_to_visa():
 			'tuition_fee': request.form['tuition_fee'],
 			'state': request.form['state']
 		}
-
-		# Save the form data to session for use in the redirected page
-		session['path_to_visa_data'] = data
-
-		# Redirect to the recommendation route
-		return redirect(url_for('main.recommendation'))
-
-	return render_template('path_to_visa.html', header=True, footer=True)
+    
+    # Save the form data to session for use in the redirected page
+    session['path_to_visa_data'] = data
+    
+    # Redirect to the recommendation route
+    return redirect(url_for('main.recommendation'))
+  
+  return render_template('path_to_visa.html', header=True, footer=True,
+                        user_first_name=user_first_name, user_last_name=user_last_name)
 
 @main.route('/recommendation', methods=['GET'])
 @login_required
 def recommendation():
-	# Retrieve the form data from the session
-	data = session.get('path_to_visa_data', None)
-
-	# Check if user has submitted the form in path_to_visa.html
-	if not data:
-		return redirect(url_for('main.path_to_visa'))
-
-	# Pass the form data to the controller to get recommended courses
-	recommended_courses = process_visa_path(data)
+  user_first_name, user_last_name = get_user_name()
   
-	# Clear session flag after accessing the page
-	session.pop('path_to_visa_data', None)
-
-	return render_template('recommendation.html', header=True, footer=True, recommended_courses=recommended_courses)
+  # Retrieve the form data from the session
+  data = session.get('path_to_visa_data', None)
+  
+  # Check if user has submitted the form in path_to_visa.html
+  if not data:
+    return redirect(url_for('main.path_to_visa'))
+  
+  # Pass the form data to the controller to get recommended courses
+  recommended_courses = process_visa_path(data)
+  
+  # Clear session flag after accessing the page
+  session.pop('path_to_visa_data', None)
+  
+  return render_template('recommendation.html', header=True, footer=True,
+                        user_first_name=user_first_name, user_last_name=user_last_name,
+                        recommended_courses=recommended_courses)
 
 @main.route('/user_course_pref', methods=['POST'])
 @login_required
 def user_course_pref():
-	selected_courses = request.form.getlist('user_course_pref')
+	selected_courses = request.form.getlist('user_courses_pref')
 	username = session.get('username')
+
+	selected_courses = [int(course_id) for course_id in selected_courses]
+
+	# print("Selected Courses:", selected_courses)
+	# print("Username:", username)
+	
 	if selected_courses:
-		user_course_pref(selected_courses, username)
+		save_user_course_pref(selected_courses, username)
+	
 	return redirect(url_for('main.index'))
 
 @main.route('/profile', methods=['GET'])
@@ -394,42 +422,3 @@ def agent_profile():
 def courses():
   courses = get_courses()
   return render_template('courses.html', header=True, footer=True, courses=courses)
-
-@main.route('/add_course', methods=['POST'])
-@login_required
-def add_course():
-	data = request.form
-	add_course(data)
-	return redirect(url_for('main.courses'))
-
-@main.route('/edit_course/<int:course_id>', methods=['POST'])
-@login_required
-def edit_course(course_id):
-	data = request.form
-	edit_course(course_id, data)
-	return redirect(url_for('main.courses'))
-
-@main.route('/delete_course/<int:course_id>', methods=['POST'])
-@login_required
-def delete_course(course_id):
-	delete_course(course_id)
-	return redirect(url_for('main.courses'))
-
-@main.route('/get_course/<int:course_id>', methods=['GET'])
-@login_required
-def get_course(course_id):
-	course = UniCourse.query.get(course_id)
-	if course:
-		return {
-			'course_name': course.course_name,
-			'level': course.level,
-			'duration': course.duration,
-			'tuition_fee': course.tuition_fee,
-			'specialist': course.specialist,
-			'prof_year': course.prof_year,
-			'regional': course.regional,
-			'provider_id': course.provider_id,
-			'univ_id': course.univ_id
-		}
-	else:
-		return {"error": "Course not found"}, 404

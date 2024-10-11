@@ -36,7 +36,23 @@
               <a href="#">Events</a>
             </div>
           </li>
-          <li><a href="/login">Login</a></li>
+          {% if session.get('username') %}
+            <li class="dropdown">
+              <a href="#" class="dropbtn">{{ user_first_name }} {{ user_last_name }}</a>
+              <div class="dropdown-content">
+                <a href="{{ url_for('main.profile') }}">Profile</a>
+                <a href="{{ url_for('main.logout') }}">Logout</a>
+              </div>
+            </li>
+          {% else %}
+            <li class="dropdown">
+              <a href="#" class="dropbtn">Guest</a>
+              <div class="dropdown-content">
+                <a href="{{ url_for('main.login') }}">Login</a>
+                <a href="{{ url_for('main.register') }}">Register</a>
+              </div>
+            </li>
+          {% endif %}
         </ul>
       </nav>
     </div>
