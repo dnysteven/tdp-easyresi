@@ -468,9 +468,24 @@ def save_user_course_pref(selected_courses, username):
     db.session.bulk_save_objects(saved_courses)
     db.session.commit()
   
-def get_user_course_preferences(username):
-  # Query the user_course_pref table based on the username
-  return UserCoursePref.query.filter_by(username=username).all()
+def get_user_course_pref(username):
+  if username:
+    user_pref_courses = db.session.query(UserCoursePref, UniCourse, University) \
+                      .join(UniCourse, UserCoursePref.course_id == UniCourse.id) \
+                      .join(University, UniCourse.univ_id == University.id) \
+                      .filter(UserCoursePref.username == username).all()
+    
+    return user_pref_courses
+  
+  return None
+
+def get_user_visa_points(username):
+  if username:
+      visa_points = db.session.query(VisaPoints).filter(VisaPoints.username == username).all()
+      
+      return visa_points
+  
+  return None
 
 def get_chart_admin():
   # Pie Chart Data (Total registered users by group)

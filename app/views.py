@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
 from app.models import Data, db, User, UserRole, UserGroup, CourseAdded, UserLogin, UniCourse
-from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_preferences, get_chart_admin, get_chart_migrant, get_courses, add_course, edit_course, delete_course
+from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_pref, get_user_visa_points, get_chart_admin, get_chart_migrant, get_courses, add_course, edit_course, delete_course
 
 main = Blueprint('main', __name__)
 
@@ -103,6 +103,13 @@ def profile():
 	user_first_name = user.first_name
 	user_last_name = user.last_name
 
+	if user.user_role == 'applicant':
+		user_courses = get_user_course_pref(username)
+		user_visa_points = get_user_visa_points(username)
+	else:
+		user_courses = None
+		user_visa_points = None
+
 	# # Fetch specific data based on user role
 	# if user.user_role == 'admin':
 	# 	# Fetch admin-specific data
@@ -120,10 +127,10 @@ def profile():
 	# 	user_profile = None
 
 	# Fetch the user's saved course preferences
-	user_courses = get_user_course_preferences(username)
 
 	return render_template('profile.html', header=True, footer=True,
-                        user=user, user_first_name=user_first_name, user_last_name=user_last_name)
+                        user=user, user_first_name=user_first_name, user_last_name=user_last_name,
+                        user_courses=user_courses, user_visa_points=user_visa_points)
 
 @main.route('/189', methods=['GET'])
 def visa_189():

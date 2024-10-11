@@ -49,29 +49,72 @@
 
       <!-- Preferences -->
       <section class="profile-section">
-        <h3>Preferences</h3>
+        <h3>Visa Preferences</h3>
         <div class="profile-info">
           <p><strong>Desired PR Pathway:</strong> Skilled Independent Visa</p>
           <p><strong>Preferred Location:</strong> Sydney, Australia</p>
+          {% if user_courses %}
+            <table border="1" cellpadding="5" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Date Recorded</th>
+                  <th>Total Points</th>
+                  <th>Visa 189 Eligible</th>
+                  <th>Visa 190 Eligible</th>
+                  <th>Visa 491 Eligible</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for visa in user_visa_points %}
+                  <tr>
+                    <td>{{ visa.created_at.strftime('%m/%d/%Y %H:%M:%S') }}</td>
+                    <td>{{ visa.points }}</td>
+                    <td>{{ 'Yes' if visa.visa_189_eligible else 'No' }}</td>
+                    <td>{{ 'Yes' if visa.visa_190_eligible else 'No' }}</td>
+                    <td>{{ 'Yes' if visa.visa_491_eligible else 'No' }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <p>No visa points data found.</p>
+          {% endif %}
         </div>
       </section>
 
       <!-- Application Tracking -->
       <section class="profile-section">
-        <h3>Application Tracking</h3>
+        <h3>Study Preferences</h3>
         <div class="profile-info">
           <p><strong>Status:</strong> In Progress</p>
           <p><strong>Saved Options:</strong> Option 1, Option 2</p>
+          {% if user_courses %}
+            <table border="1" cellpadding="5" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Course Name</th>
+                  <th>University</th>
+                  <th>Address</th>
+                  <th>Date Saved</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for course_pref in user_courses %}
+                  <tr>
+                    <td>{{ course_pref.UniCourse.course_name }}</td>
+                    <td>{{ course_pref.University.university }}</td>
+                    <td>{{ course_pref.University.street }}, {{ course_pref.University.suburb }} {{ course_pref.University.state }} {{ course_pref.University.postcode }}</td>
+                    <td>{{ course_pref.UserCoursePref.created_at.strftime('%m/%d/%Y %H:%M:%S') }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <p>No saved courses found.</p>
+          {% endif %}
         </div>
       </section>
 
-      <!-- Financial Overview -->
-      <section class="profile-section">
-        <h3>Financial Overview</h3>
-        <div class="profile-info">
-          <p><strong>Costs of Recommended Pathways:</strong> $5000</p>
-        </div>
-      </section>
     {% elif user.user_role == 'education' %}
       <!-- Menu Buttons -->
       <h2>Services</h2>
@@ -98,5 +141,4 @@
     {% else %}
     {% endif %}
   </main>
-  </div>
 {% endblock %}
