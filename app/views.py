@@ -93,6 +93,38 @@ def register():
 	return render_template('register.html', header=True, footer=True, roles=roles,
                         user_first_name=user_first_name, user_last_name=user_last_name)
 
+@main.route('/profile', methods=['GET'])
+@login_required
+def profile():
+	# Retrieve user data from database
+	username = session.get('username')
+	user = User.query.filter_by(email=username).first()
+
+	user_first_name = user.first_name
+	user_last_name = user.last_name
+
+	# # Fetch specific data based on user role
+	# if user.user_role == 'admin':
+	# 	# Fetch admin-specific data
+	# 	user_profile = fetch_admin_data()
+	# elif user.user_role == 'applicant':
+	# 	# Fetch applicant-specific data
+	# 	user_profile = fetch_applicant_data()
+	# elif user.user_role == 'agency':
+	# 	# Fetch agency-specific data
+	# 	user_profile = fetch_agency_data()
+	# elif user.user_role == 'education':
+	# 	# Fetch education-specific data
+	# 	user_profile = fetch_education_data()
+	# else:
+	# 	user_profile = None
+
+	# Fetch the user's saved course preferences
+	user_courses = get_user_course_preferences(username)
+
+	return render_template('profile.html', header=True, footer=True,
+                        user=user, user_first_name=user_first_name, user_last_name=user_last_name)
+
 @main.route('/189', methods=['GET'])
 def visa_189():
 	return render_template('189.html', header=True, footer=True)
@@ -288,18 +320,6 @@ def user_course_pref():
 		save_user_course_pref(selected_courses, username)
 	
 	return redirect(url_for('main.index'))
-
-@main.route('/profile', methods=['GET'])
-@login_required
-def profile():
-	# Retrieve user data from database
-	username = session.get('username')
-	user = User.query.filter_by(email=username).first()
-
-	# Fetch the user's saved course preferences
-	user_courses = get_user_course_preferences(username)
-
-	return render_template('profile.html', header=True, footer=True, user=user, user_courses=user_courses)
 
 # Route for the charts (admin_statistics)
 @main.route('/admin_statistics')

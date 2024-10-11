@@ -3,44 +3,100 @@
 {% block title %}User Profile{% endblock %}
 
 {% block content %}
-  <h1>User Profile</h1>
-  <p><strong>Welcome, {{ user.first_name }} {{ user.last_name }}!</strong></p>
+  <header>
+    {% if user.user_role == 'applicant' %}
+      <h2>PR Applicant Profile</h2>
+    {% elif user.user_role == 'agency' %}
+      <h2>Migration Agent Profile</h2>
+    {% elif user.user_role == 'education' %}
+      <h2>Educational Provider Profile</h2>
+    {% else %}
+      <h2>Admin Profile</h2>
+    {% endif %}
+  </header>
+  <main class="content-container">
+    <!-- Basic Information -->
+    <section class="profile-section">
 
-  <h2>Visa Points Details</h2>
-  {% if user_courses %}
-    <table border="1" cellpadding="5" cellspacing="0">
-      <thead>
-        <tr>
-          <th>Course Num</th>
-          <th>Course Name</th>
-          <th>Provider Name</th>
-          <th>University Name</th>
-          <th>University Address</th>
-          <th>State</th>
-          <th>Postcode</th>
-          <th>Duration (Years)</th>
-          <th>Tuition Fee (AUD)</th>
-          <th>Date Saved</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for course in user_courses %}
-          <tr>
-            <td>{{ course.course_num }}</td>
-            <td>{{ course.course_name }}</td>
-            <td>{{ course.provider_name }}</td>
-            <td>{{ course.university_name }}</td>
-            <td>{{ course.university_address }}</td>
-            <td>{{ course.state }}</td>
-            <td>{{ course.postcode }}</td>
-            <td>{{ course.duration }}</td>
-            <td>{{ course.tuition_fee }}</td>
-            <td>{{ course.created_at.strftime('%m/%d/%Y %H:%M:%S') }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% else %}
-    <p>No course preferences saved yet.</p>
-  {% endif %}
+      {% if user.user_role == 'agency' %}
+        <h3>Agent Information:</h3>
+      {% elif user.user_role == 'education' %}
+        <h3>Institution Details:</h3>
+      {% else %}
+        <h3>Basic Information</h3>
+      {% endif %}
+
+      <div class="profile-info">
+        <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+        {% if user.user_role == 'agency' %}
+          <p><strong>Institution:</strong> Swinburne University of Technology</p>
+        {% endif %}
+        <p><strong>Contact Details:</strong> {{ user.email }}, {{ user.phone }}</p>
+      </div>
+    </section>
+
+    {% if user.user_role == 'applicant' %}
+      <!-- Professional Background -->
+      <section class="profile-section">
+        <h3>Professional Background</h3>
+        <div class="profile-info">
+          <p><strong>Skills:</strong> Java, Python, Web Development</p>
+          <p><strong>Qualifications:</strong> Bachelor's in Computer Science</p>
+          <p><strong>English Proficiency:</strong> IELTS 7.5</p>
+          <p><strong>Work Experience:</strong> 5 years as a Software Engineer</p>
+        </div>
+      </section>
+
+      <!-- Preferences -->
+      <section class="profile-section">
+        <h3>Preferences</h3>
+        <div class="profile-info">
+          <p><strong>Desired PR Pathway:</strong> Skilled Independent Visa</p>
+          <p><strong>Preferred Location:</strong> Sydney, Australia</p>
+        </div>
+      </section>
+
+      <!-- Application Tracking -->
+      <section class="profile-section">
+        <h3>Application Tracking</h3>
+        <div class="profile-info">
+          <p><strong>Status:</strong> In Progress</p>
+          <p><strong>Saved Options:</strong> Option 1, Option 2</p>
+        </div>
+      </section>
+
+      <!-- Financial Overview -->
+      <section class="profile-section">
+        <h3>Financial Overview</h3>
+        <div class="profile-info">
+          <p><strong>Costs of Recommended Pathways:</strong> $5000</p>
+        </div>
+      </section>
+    {% elif user.user_role == 'education' %}
+      <!-- Menu Buttons -->
+      <h2>Services</h2>
+      <div class="service-cards">
+        <div class="card">
+          <h3><a href="edu_statistics.html" class="btn btn-primary">View Statistics</a></h3>
+          <p>You can see anonymized interest statistics.</p>
+        </div>
+        <div class="card">
+          <h3><a href="manage_courses.html" class="btn btn-primary">Manage Courses</a></h3>
+          <p>Manage the courses provided by your Institution</p>
+        </div>
+      </div>
+    {% elif user.user_role == 'agency' %}
+      <!--Statistics-->
+      <section class="profile-section">
+        <h3>Statistics</h3>
+        <div class="profile-info">
+          <p><strong>Number of Clients:</strong> 10</p>
+          <p><strong>Number of Successful Applications:</strong> 5</p>
+          <p><a href="migra_statistics.html" class="btn btn-primary"><strong>Trending</strong></a></p>
+        </div>
+      </section>
+    {% else %}
+    {% endif %}
+  </main>
+  </div>
 {% endblock %}
