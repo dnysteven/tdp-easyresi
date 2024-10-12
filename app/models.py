@@ -33,11 +33,10 @@ class User(db.Model):
 	postcode = db.Column(db.String(4), nullable=True)
 	created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
-	# Define relationship with Login model
+	# Define relationship with Other model
 	login = db.relationship('Login', backref='user', uselist=False, lazy=True)
-
-	# Define relationship with UniCourse model
 	courses = db.relationship('UniCourse', backref='provider', lazy=True)
+	user_course_prefs = db.relationship('UserCoursePref', backref='user', lazy=True)
 
 	def __init__(self, email, first_name, last_name, phone, user_role, edu_id=None, abn=None, street_address=None, suburb=None, state=None, postcode=None):
 		self.email = email
@@ -118,6 +117,19 @@ class ModelResult(db.Model):
 	def __init__(self, model_type, accuracy):
 		self.model_type = model_type
 		self.accuracy = accuracy
+
+class OccupationList(db.Model):
+	__tablename__ = 'occupation_list'
+
+	id = db.Column(db.Integer, primary_key=True)
+	occupation = db.Column(db.String(255), nullable=False)
+	anzsco = db.Column(db.String(6), nullable=False)
+	type = db.Column(db.String(6), nullable=False)
+
+	def __init__(self, occupation, anzsco, type):
+		self.occupation = occupation
+		self.anzsco = anzsco
+		self.type = type
 
 class VisaPoints(db.Model):
 	__tablename__ = 'visa_points'
@@ -202,9 +214,12 @@ class UniCourse(db.Model):
 	specialist_education = db.Column(db.String(50), nullable=False)  # Specialist options: science, technology, etc.
 	prof_year = db.Column(db.Boolean, default=False)  # Professional year program
 	duration = db.Column(db.Integer, nullable=False)  # Course duration in years
-	tuition_fee = db.Column(db.String(50), nullable=False)  # Fee range (<60k, 60k-100k, >100k)
+	tuition_fee = db.Column(db.Float, nullable=False)  # Fee range (<60k, 60k-100k, >100k)
 	regional = db.Column(db.Boolean, default=False)  # Regional study
-	created_at = db.Column(db.DateTime, default=datetime.utcnow)
+	created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+	# Define relationship with Other model
+	user_course_prefs = db.relationship('UserCoursePref', backref='course', lazy=True)
 
 	def __init__(self, course_num, course_name, provider_id, univ_id, level, specialist_education, prof_year, duration, tuition_fee, regional):
 		self.course_num = course_num
@@ -222,29 +237,39 @@ class UserCoursePref(db.Model):
 	__tablename__ = 'user_course_pref'
 
 	id = db.Column(db.Integer, primary_key=True)
-	username = db.Column(db.String(50), db.ForeignKey('users.username'), nullable=False)
-	course_num = db.Column(db.String(50), nullable=False)
-	course_name = db.Column(db.String(100), nullable=False)
-	provider_name = db.Column(db.String(100), nullable=False)
-	university_name = db.Column(db.String(100), nullable=False)
-	university_address = db.Column(db.String(255), nullable=False)
-	state = db.Column(db.String(3), nullable=False)
-	postcode = db.Column(db.String(4), nullable=False)
-	duration = db.Column(db.Integer, nullable=False)
-	tuition_fee = db.Column(db.Numeric(10, 2), nullable=False)
-	created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+	username = db.Column(db.String(255), db.ForeignKey('users.email', ondelete="CASCADE"), nullable=False)
+	course_id = db.Column(db.Integer, db.ForeignKey('uni_course.id', ondelete="CASCADE"), nullable=False)
+	cost_of_living = db.Column(db.Float, nullable=False)
+	cost_of_living_annual = db.Column(db.Float, nullable=False)
+	created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
-	def __init__(self, username, course_num, course_name, provider_name, university_name, university_address, state, postcode, duration, tuition_fee):
+	def __init__(self, username, course_id, cost_of_living, cost_of_living_annual):
 		self.username = username
-		self.course_num = course_num
-		self.course_name = course_name
-		self.provider_name = provider_name
-		self.university_name = university_name
-		self.university_address = university_address
+		self.course_id = course_id
+		self.cost_of_living = cost_of_living
+		self.cost_of_living_annual = cost_of_living_annual
+		self.created_at = datetime.utcnow()
+  
+class CostOfLiving(db.Model):
+	__tablename__ = 'cost_of_living'
+	
+	id = db.Column(db.Integer, primary_key=True)
+	state = db.Column(db.String(100), nullable=False)
+	area = db.Column(db.String(100), nullable=False)
+	rent = db.Column(db.Float, nullable=False)
+	grocery = db.Column(db.Float, nullable=False)
+	transportation = db.Column(db.Float, nullable=False)
+	utilities = db.Column(db.Float, nullable=False)
+	entertainment = db.Column(db.Float, nullable=False)
+
+	def __init__(self, state, area, rent, grocery, transportation, utilities, entertainment):
 		self.state = state
-		self.postcode = postcode
-		self.duration = duration
-		self.tuition_fee = tuition_fee
+		self.area = area
+		self.rent = rent
+		self.grocery = grocery
+		self.transportation = transportation
+		self.utilities = utilities
+		self.entertainment = entertainment
 
 # ---- Admin Dashboard Charts ----
 class UserGroup(db.Model):

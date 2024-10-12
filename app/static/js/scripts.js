@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  // Register page field manipulation
   const eduIdField = $('#edu_id');
   const abnField = $('#abn');
   const addressField = $('#address');
@@ -48,5 +49,55 @@ $(document).ready(function() {
       addressLabel.hide();
       addressField.prop('required', false); // Make the field not required
     }
+  });
+
+  // Initialize DataTables for the recommendation table
+  $('#recommendationTable').DataTable({
+    "paging": true,        // Enable pagination
+    "searching": true,     // Enable searching
+    "info": true,          // Show table information (e.g., "Showing X of Y entries")
+    "pageLength": 10,      // Set the default page length
+    "order": [[14, "desc"]],  // Use the hidden "points" column (index 14) for sorting in descending order
+    "columnDefs": [
+        {
+          "targets": [14], "visible": false
+        },
+    ]
+  });
+
+  // Initialize DataTables for the courses table
+  $('#coursesTable').DataTable({
+    "paging": true,        // Enable pagination
+    "searching": true,     // Enable searching
+    "ordering": true,      // Enable column-based sorting
+    "info": true,          // Show table information (e.g., "Showing X of Y entries")
+    "pageLength": 10       // Set the default page length
+  });
+
+  // Initialize DataTables for the occupation table
+  $('#occupationTable').DataTable({
+    "paging": true,        // Enable pagination
+    "searching": true,     // Enable searching
+    "ordering": true,      // Enable column-based sorting
+    "info": true,          // Show table information (e.g., "Showing X of Y entries")
+    "pageLength": 10       // Set the default page length
+  });
+
+  // Initialize DataTables for the applicant visa table
+  $('#applicantVisaTable').DataTable({
+    "paging": true,        // Enable pagination
+    "searching": true,     // Enable searching
+    "ordering": true,      // Enable column-based sorting
+    "info": true,          // Show table information (e.g., "Showing X of Y entries")
+    "pageLength": 10       // Set the default page length
+  });
+
+  // Initialize DataTables for the applicant study table
+  $('#applicantStudyTable').DataTable({
+    "paging": true,        // Enable pagination
+    "searching": true,     // Enable searching
+    "ordering": true,      // Enable column-based sorting
+    "info": true,          // Show table information (e.g., "Showing X of Y entries")
+    "pageLength": 10       // Set the default page length
   });
 });

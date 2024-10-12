@@ -1,6 +1,7 @@
 import os
 import joblib
 import pandas as pd
+from flask import session
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -8,7 +9,7 @@ from datetime import datetime, timezone
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import func
 from app import db
-from app.models import Data, ModelResult, VisaPoints, UniCourse, User, Login, University, UserCoursePref, UserSession
+from app.models import Data, ModelResult, VisaPoints, UniCourse, User, Login, University, UserCoursePref, UserSession, CostOfLiving, OccupationList
 
 # Define a path to store the model .pkl files in the ml folder
 MODEL_PATH = os.path.join(os.getcwd(), 'ml')
@@ -24,6 +25,18 @@ def check_login(email, password):
     return True, user.user_role
   
   return False, None
+
+def get_user_name():
+  if 'username' in session:
+    # Get the user from the database
+    user = User.query.filter_by(email=session['username']).first()
+    
+    if user:
+      # Return the first and last name of the user
+      return user.first_name, user.last_name
+  
+  # Return None if the user is not found
+  return None, None
 
 # Register a new user
 def register_user(data):
@@ -152,6 +165,17 @@ def predict_model(features):
   prediction = model.predict([features])
   return prediction[0]
 
+def get_occupation_list(visa_189_eligible, visa_190_eligible, visa_491_eligible):
+  if visa_189_eligible and not visa_190_eligible and not visa_491_eligible:
+    # If eligible for 189 only
+    return OccupationList.query.filter_by(type='MLTSSL').all()
+  elif visa_189_eligible and visa_190_eligible and not visa_491_eligible:
+    # If eligible for both 189 and 190
+    return OccupationList.query.filter(OccupationList.type.in_(['MLTSSL', 'STSOL'])).all()
+  else:
+    # If eligible for all or visa 491
+    return OccupationList.query.all()
+
 def visa_points_calculator(data):
   points = 0
   
@@ -204,30 +228,41 @@ def visa_points_calculator(data):
     points += 10
   elif data['education_level'] == 'other_recognised':
     points += 5
+  
+  # Initialize all optional fields to prevent UnboundLocalError
+  specialist_education = False
+  australian_study = False
+  professional_year = False
+  community_language = False
+  regional_study = False
+  
+  # Convert 'yes'/'no' to boolean
+  def to_bool(value):
+    return value.lower() == 'yes' if value else False
 
   # Specialist education qualification points
-  if 'specialist_education' in data and data['specialist_education'] == 'yes':
+  if to_bool(data.get('specialist_education', 'no')):
     specialist_education = True
     points += 10
 
   # Australian study requirement points
-  if 'australian_study' in data and data['australian_study'] == 'yes':
+  if to_bool(data.get('australian_study', 'no')):
     australian_study = True
     points += 5
 
   # Professional year in Australia points
-  if 'professional_year' in data and data['professional_year'] == 'yes':
+  if to_bool(data.get('professional_year', 'no')):
     professional_year = True
     points += 5
 
   # Community language points
-  if 'community_language' in data and data['community_language'] == 'yes':
-    community_language = True
+  if to_bool(data.get('community_language', 'no')):
+    community_language = community_language
     points += 5
 
   # Regional study points
-  if 'regional_study' in data and data['regional_study'] == 'yes':
-    regional_study = True
+  if to_bool(data.get('regional_study', 'no')):
+    regional_study = regional_study
     points += 5
 
   # Partner skills points
@@ -259,17 +294,8 @@ def visa_points_calculator(data):
       visa_190_eligible = True
     elif data['nomination'] == 'state_regional':
       visa_491_eligible = True
-  
-  # Convert 'yes'/'no' to boolean
-  def to_bool(value):
-    return value.lower() == 'yes'
-  
-  # Convert 'yes'/'no' to boolean for checkbox values
-  specialist_education = to_bool(data.get('specialist_education', 'no'))
-  australian_study = to_bool(data.get('australian_study', 'no'))
-  professional_year = to_bool(data.get('professional_year', 'no'))
-  community_language = to_bool(data.get('community_language', 'no'))
-  regional_study = to_bool(data.get('regional_study', 'no'))
+      
+  occupation_list = get_occupation_list(visa_189_eligible, visa_190_eligible, visa_491_eligible)
   
   # Save to database with username
   visa_points_entry = VisaPoints(
@@ -295,16 +321,7 @@ def visa_points_calculator(data):
   db.session.add(visa_points_entry)
   db.session.commit()
 
-  return points, visa_189_eligible, visa_190_eligible, visa_491_eligible
-
-def calculate_age(request):
-  date_of_birth_str = request.form.get('date_of_birth')
-  date_of_birth = datetime.strptime(date_of_birth_str, '%Y-%m-%d')
-  
-  today = datetime.today()
-  age = today.year - date_of_birth.year - ((today.month, today.day) < (date_of_birth.month, date_of_birth.day))
-  
-  return date_of_birth, age
+  return points, visa_189_eligible, visa_190_eligible, visa_491_eligible, occupation_list
 
 def process_visa_path(data):
   # Extract data from form submission
@@ -315,16 +332,6 @@ def process_visa_path(data):
   regional_study = data.get('regional_study', 'off')  # Default to 'off' if not checked
   tuition_fee = data.get('tuition_fee')
   state = data.get('state')
-  
-  # Print the extracted data to the terminal
-  print("Data extracted from form submission:")
-  print(f"Educational Qualification: {educational_qualification}")
-  print(f"Specialist Education: {specialist_education}")
-  print(f"Professional Year: {prof_year}")
-  print(f"Course Duration: {course_duration}")
-  print(f"Regional Study: {regional_study}")
-  print(f"Tuition Fee: {tuition_fee}")
-  print(f"State: {state}")
 
   # Build the query
   query = UniCourse.query \
@@ -344,9 +351,13 @@ def process_visa_path(data):
   if specialist_education != 'none':
     query = query.filter(func.lower(UniCourse.specialist_education) == specialist_education)
     
-  # Specialist education filter logic
-  if tuition_fee != 'none':
-    query = query.filter(UniCourse.tuition_fee == tuition_fee)
+  # Tuition fee filter logic
+  if tuition_fee == '<60k':
+    query = query.filter(UniCourse.tuition_fee < 60000)
+  elif tuition_fee == '60k-100k':
+    query = query.filter(UniCourse.tuition_fee.between(60000, 100000))
+  elif tuition_fee == '>100k':
+    query = query.filter(UniCourse.tuition_fee > 100000)
 
   # Duration filter logic
   if course_duration == '2':
@@ -366,11 +377,36 @@ def process_visa_path(data):
 
   # Execute the query to get recommended courses
   recommended_courses = query.all()
+  
+  # Add cost of living calculation for each course
+  for course in recommended_courses:
+    if course.regional:
+      # If the course is regional, query the cost_of_living for the corresponding state and area = 'regional'
+      cost_living_entry = CostOfLiving.query.filter_by(state=state, area='regional').first()
+    else:
+      # If the course is metro, query the cost_of_living for the corresponding state and area = 'metro'
+      cost_living_entry = CostOfLiving.query.filter_by(state=state, area='metro').first()
+
+    # Calculate the sum of rent, grocery, transportation, utilities, and entertainment
+    if cost_living_entry:
+      cost_of_living = (
+        cost_living_entry.rent +
+        cost_living_entry.grocery +
+        cost_living_entry.transportation +
+        cost_living_entry.utilities +
+        cost_living_entry.entertainment
+      )
+      # Monthly & Annual cost of living
+      course.cost_of_living = cost_of_living
+      course.cost_of_living_annual = cost_of_living * 12
+    else:
+      course.cost_of_living = None
+      course.cost_of_living_annual = None
 
   # Add points to each course based on the new function
   for course in recommended_courses:
     course.points = calculate_ref_points(course)
-    
+
   sorted_courses = sorted(recommended_courses, key=lambda x: x.points, reverse=True)
 
   return sorted_courses
@@ -391,42 +427,65 @@ def calculate_ref_points(course):
 
   return points
 
-def user_course_preferences(username, selected_courses, form_data):
-  # Loop through selected courses and save the course preferences
-  for course_id in selected_courses:
-    course_num = form_data.get(f'course_num_{course_id}')
-    course_name = form_data.get(f'course_name_{course_id}')
-    provider_name = form_data.get(f'provider_name_{course_id}')
-    university_name = form_data.get(f'university_name_{course_id}')
-    university_address = form_data.get(f'university_address_{course_id}')
-    state = form_data.get(f'state_{course_id}')
-    postcode = form_data.get(f'postcode_{course_id}')
-    duration = form_data.get(f'duration_{course_id}')
-    tuition_fee = form_data.get(f'tuition_fee_{course_id}')
-
-    # Create a new UserCoursePref object
-    user_pref = UserCoursePref(
-      username=username,
-      course_num=course_num,  # Save course_num instead of course_id
-      course_name=course_name,
-      provider_name=provider_name,
-      university_name=university_name,
-      university_address=university_address,
-      state=state,
-      postcode=postcode,
-      duration=int(duration),
-      tuition_fee=float(tuition_fee)
-    )
-    
-    # Add the course to the session
-    db.session.add(user_pref)
-
-  # Commit the changes to the database in one transaction
-  db.session.commit()
+def save_user_course_pref(selected_courses, username):  
+  print("Selected Courses:", selected_courses)
+  print("Username:", username)
   
-def get_user_course_preferences(username):
-  # Query the user_course_pref table based on the username
-  return UserCoursePref.query.filter_by(username=username).all()
+  # Create a list to store new entries to be added
+  saved_courses = []
+  
+  for course_id in selected_courses:
+    # Query the course data by course_id
+    course = UniCourse.query.filter_by(id=course_id).first()
+
+    if course:
+      if course.regional:
+        cost_living_entry = CostOfLiving.query.filter_by(state=course.university.state, area='regional').first()
+      else:
+        cost_living_entry = CostOfLiving.query.filter_by(state=course.university.state, area='metro').first()
+
+      # Calculate cost_of_living and cost_of_living_annual
+      cost_of_living = (
+          cost_living_entry.rent +
+          cost_living_entry.grocery +
+          cost_living_entry.transportation +
+          cost_living_entry.utilities +
+          cost_living_entry.entertainment
+      )
+      cost_of_living_annual = cost_of_living * 12
+
+      # Create a new entry for each selected course
+      saved_course = UserCoursePref(
+          username=username,
+          course_id=course.id,
+          cost_of_living=cost_of_living,
+          cost_of_living_annual=cost_of_living_annual
+      )
+      # Append to the list of saved courses
+      saved_courses.append(saved_course)
+
+  if saved_courses:
+    db.session.bulk_save_objects(saved_courses)
+    db.session.commit()
+  
+def get_user_course_pref(username):
+  if username:
+    user_pref_courses = db.session.query(UserCoursePref, UniCourse, University) \
+                      .join(UniCourse, UserCoursePref.course_id == UniCourse.id) \
+                      .join(University, UniCourse.univ_id == University.id) \
+                      .filter(UserCoursePref.username == username).all()
+    
+    return user_pref_courses
+  
+  return None
+
+def get_user_visa_points(username):
+  if username:
+      visa_points = db.session.query(VisaPoints).filter(VisaPoints.username == username).all()
+      
+      return visa_points
+  
+  return None
 
 def get_chart_admin():
   # Pie Chart Data (Total registered users by group)
@@ -463,7 +522,7 @@ def get_chart_migrant():
   professional_year_labels = ['yes', 'no']
   professional_year_values = [100, 100]
   
-   # Pie Chart Data (Applicants Who Can Speak Community Language)
+  # Pie Chart Data (Applicants Who Can Speak Community Language)
   community_language_labels = ['yes', 'no']
   community_language_values = [100, 200]
   
@@ -487,8 +546,54 @@ def get_chart_migrant():
   australian_employment_labels = ['0-1', '1-2', '3-4', '5-7', '>=8']
   australian_employment_values = [90, 80, 70, 60, 50]
   
-   # Bar Chart Data (Highest Level of Education)
+  # Bar Chart Data (Highest Level of Education)
   education_level_labels = ['doctorate', 'bachelor', 'diploma_or_trade', 'other_recognised']
   education_level_values = [100, 80, 60, 40]
   
   return specialist_education_labels, specialist_education_values, australian_study_labels, australian_study_values, professional_year_labels, professional_year_values, community_language_labels, community_language_values, regional_study_labels, regional_study_values, age_group_labels, age_group_values, english_level_labels, english_level_values, overseas_employment_labels, overseas_employment_values, australian_employment_labels, australian_employment_values, education_level_labels, education_level_values
+
+# Get all courses
+def get_courses():
+  courses = db.session.query(UniCourse, User.first_name, User.last_name, University) \
+            .join(User, UniCourse.provider_id == User.email) \
+            .join(University, UniCourse.univ_id == University.id) \
+            .all()
+  return courses
+
+# Add new course
+def add_course(data):
+  new_course = UniCourse(
+    course_name=data['course_name'],
+    level=data['level'],
+    duration=data['duration'],
+    tuition_fee=data['tuition_fee'],
+    specialist=data.get('specialist') == 'on',
+    prof_year=data.get('prof_year') == 'on',
+    regional=data.get('regional') == 'on',
+    provider_id=data['provider_id'],
+    univ_id=data['univ_id']
+  )
+  db.session.add(new_course)
+  db.session.commit()
+
+# Edit existing course
+def edit_course(course_id, data):
+  course = UniCourse.query.get(course_id)
+  if course:
+    course.course_name = data['course_name']
+    course.level = data['level']
+    course.duration = data['duration']
+    course.tuition_fee = data['tuition_fee']
+    course.specialist = data.get('specialist') == 'on'
+    course.prof_year = data.get('prof_year') == 'on'
+    course.regional = data.get('regional') == 'on'
+    course.provider_id = data['provider_id']
+    course.univ_id = data['univ_id']
+    db.session.commit()
+
+# Delete course
+def delete_course(course_id):
+  course = UniCourse.query.get(course_id)
+  if course:
+    db.session.delete(course)
+    db.session.commit()

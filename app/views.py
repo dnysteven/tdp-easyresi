@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
-from app.models import Data, db, User, UserRole, UserGroup, CourseAdded, UserLogin
-from app.controllers import register_user, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, user_course_preferences, get_user_course_preferences, get_chart_admin, get_chart_migrant
+from app.models import Data, db, User, UserRole, UserGroup, CourseAdded, UserLogin, UniCourse
+from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_pref, get_user_visa_points, get_chart_admin, get_chart_migrant, get_courses, add_course, edit_course, delete_course
 
 main = Blueprint('main', __name__)
 
@@ -8,11 +8,19 @@ main = Blueprint('main', __name__)
 SECRET_KEY = 'tdp_easyresi_session'
 main.secret_key = SECRET_KEY
 
+@main.route('/')
+def index():
+  user_first_name, user_last_name = get_user_name()
+  return render_template('index.html', header=True, footer=True,
+                        user_first_name=user_first_name, user_last_name=user_last_name)
+
 @main.route('/login', methods=['GET', 'POST'])
 def login():
 	# Check if user is already logged in
-	#if 'username' in session:
-		#return redirect(url_for('main.index'))
+	if 'username' in session:
+		return redirect(url_for('main.index'))
+
+	user_first_name, user_last_name = get_user_name()
 
 	if request.method == 'POST':
 		# Get username and password from the form
@@ -32,7 +40,8 @@ def login():
 			flash('Login failed. Incorrect email or password.', 'danger')
 			return redirect(url_for('main.login'))
 
-	return render_template('login.html', header=True, footer=True)
+	return render_template('login.html', header=True, footer=True,
+                        user_first_name=user_first_name, user_last_name=user_last_name)
 
 @main.route('/logout')
 def logout():
@@ -52,8 +61,10 @@ def login_required(f):
 @main.route('/register', methods=['GET', 'POST'])
 def register():
   # Check if user is already logged in
-	# if 'username' in session:
-	# 	return redirect(url_for('main.index'))
+	if 'username' in session:
+		return redirect(url_for('main.index'))
+  
+	user_first_name, user_last_name = get_user_name()
   
 	if request.method == 'POST':
 		data = {
@@ -79,11 +90,47 @@ def register():
 
 	# Fetch user roles for the dropdown
 	roles = UserRole.query.all()
-	return render_template('register.html', header=True, footer=True, roles=roles)
+	return render_template('register.html', header=True, footer=True, roles=roles,
+                        user_first_name=user_first_name, user_last_name=user_last_name)
 
-@main.route('/')
-def index():
-	return render_template('index.html', header=True, footer=True)
+@main.route('/profile', methods=['GET'])
+@login_required
+def profile():
+	# Retrieve user data from database
+	username = session.get('username')
+	user = User.query.filter_by(email=username).first()
+
+	user_first_name = user.first_name
+	user_last_name = user.last_name
+
+	if user.user_role == 'applicant':
+		user_courses = get_user_course_pref(username)
+		user_visa_points = get_user_visa_points(username)
+	else:
+		user_courses = None
+		user_visa_points = None
+
+	# # Fetch specific data based on user role
+	# if user.user_role == 'admin':
+	# 	# Fetch admin-specific data
+	# 	user_profile = fetch_admin_data()
+	# elif user.user_role == 'applicant':
+	# 	# Fetch applicant-specific data
+	# 	user_profile = fetch_applicant_data()
+	# elif user.user_role == 'agency':
+	# 	# Fetch agency-specific data
+	# 	user_profile = fetch_agency_data()
+	# elif user.user_role == 'education':
+	# 	# Fetch education-specific data
+	# 	user_profile = fetch_education_data()
+	# else:
+	# 	user_profile = None
+
+	# Fetch the user's saved course preferences
+
+	return render_template('profile.html', header=True, footer=True,
+                        user=user, user_first_name=user_first_name, user_last_name=user_last_name,
+                        user_courses=user_courses, user_visa_points=user_visa_points)
 
 @main.route('/189', methods=['GET'])
 def visa_189():
@@ -160,73 +207,71 @@ def test():
 	return render_template('test.html', header=True, footer=True,)
 
 @main.route('/questionnaire', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def questionnaire():
-  if current_app.config['ENV'] == 'development':
-    session['username'] = '104685155@student.swin.edu.au'
-    
-  username = session.get('username')
-  if not username:
-    return redirect(url_for('main.login'))
+  user_first_name, user_last_name = get_user_name()
   
   if request.method == 'POST':
-    data = request.form.to_dict()
-    data['username'] = session['username']
+    username = session.get('username')
     
-    # Calculate points and eligibility
-    points, visa_189_eligible, visa_190_eligible, visa_491_eligible = visa_points_calculator(data)
+    # Save the form data to the session
+    form_data = {
+      'username': username,
+			'age': request.form.get('age'),
+			'english_level': request.form.get('english_level'),
+			'overseas_employment': request.form.get('overseas_employment'),
+			'australian_employment': request.form.get('australian_employment'),
+			'education_level': request.form.get('education_level'),
+			'specialist_education': request.form.get('specialist_education'),
+			'australian_study': request.form.get('australian_study'),
+			'professional_year': request.form.get('professional_year'),
+			'community_language': request.form.get('community_language'),
+			'regional_study': request.form.get('regional_study'),
+			'partner_skills': request.form.get('partner_skills'),
+			'nomination': request.form.get('nomination'),
+		}
     
-    session['points'] = points
-    session['visa_189_eligible'] = visa_189_eligible
-    session['visa_190_eligible'] = visa_190_eligible
-    session['visa_491_eligible'] = visa_491_eligible
+    session['form_data'] = form_data
     session['completed_questionnaire'] = True
     
     return redirect(url_for('main.visa_points'))
   
-  return render_template('questionnaire.html', header=True, footer=True)
+  return render_template('questionnaire.html', header=True, footer=True,
+                        user_first_name=user_first_name, user_last_name=user_last_name)
 
 @main.route('/visa_points', methods=['GET'])
-#@login_required
+@login_required
 def visa_points():
+  # Redirect if questionnaire not completed
   if not session.get('completed_questionnaire'):
-    return redirect(url_for('main.questionnaire'))  # Redirect if questionnaire not completed
+    return redirect(url_for('main.questionnaire'))
   
-  points = session.get('points')
-  visa_189_eligible = session.get('visa_189_eligible', False)
-  visa_190_eligible = session.get('visa_190_eligible', False)
-  visa_491_eligible = session.get('visa_491_eligible', False)
+  user_first_name, user_last_name = get_user_name()
   
+  # Call the visa_points_calculator
+  form_data = session.get('form_data')
+  points, visa_189_eligible, visa_190_eligible, visa_491_eligible, occupation_list = visa_points_calculator(form_data)
+  
+  session.pop('form_data', None)
   session.pop('completed_questionnaire', None)
   
-  if not visa_189_eligible and not visa_190_eligible and not visa_491_eligible:
-    session['eligible_for_path_to_visa'] = True
+  # if not visa_189_eligible and not visa_190_eligible and not visa_491_eligible:
+  #   session['eligible_for_path_to_visa'] = True
     
   return render_template('visa_points.html', header=True, footer=True,
+                        user_first_name=user_first_name, user_last_name=user_last_name,
                         points=points, visa_189_eligible=visa_189_eligible,
-                        visa_190_eligible=visa_190_eligible, visa_491_eligible=visa_491_eligible)
+                        visa_190_eligible=visa_190_eligible, visa_491_eligible=visa_491_eligible,
+                        occupation_list=occupation_list)
 
 @main.route('/path_to_visa', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def path_to_visa():
-	# Check if the user has accessed visa_points and is eligible for the Path to Visa page
-	#if not session.get('eligible_for_path_to_visa'):
-		#return redirect(url_for('main.index'))
-
-	# Remove session flag after accessing the page to prevent further direct access
-
-	if current_app.config['ENV'] == 'development':
-		session['username'] = '104685155@student.swin.edu.au'
-
-	username = session.get('username')
-	if not username:
-		return redirect(url_for('main.login'))
+  user_first_name, user_last_name = get_user_name()
   
-	#session.pop('eligible_for_path_to_visa', None)
-
-	if request.method == 'POST':
-		# Collect the form data from path_to_visa.html
-		data = {
+  if request.method == 'POST':
+    # Collect the form data from path_to_visa.html
+    data = {
 			'education_level': request.form['education_level'],
 			'specialist_education': request.form['specialist_education'],
 			'professional_year': request.form.get('professional_year', 'off') == 'on',
@@ -235,83 +280,53 @@ def path_to_visa():
 			'tuition_fee': request.form['tuition_fee'],
 			'state': request.form['state']
 		}
-
-		# Save the form data to session for use in the redirected page
-		session['path_to_visa_data'] = data
-
-		# Redirect to the recommendation route
-		return redirect(url_for('main.recommendation'))
-
-	return render_template('path_to_visa.html', header=True, footer=True)
+    
+    # Save the form data to session for use in the redirected page
+    session['path_to_visa_data'] = data
+    
+    # Redirect to the recommendation route
+    return redirect(url_for('main.recommendation'))
+  
+  return render_template('path_to_visa.html', header=True, footer=True,
+                        user_first_name=user_first_name, user_last_name=user_last_name)
 
 @main.route('/recommendation', methods=['GET'])
-#@login_required
+@login_required
 def recommendation():
-	# Check if user has submitted the form in path_to_visa.html
-	if current_app.config['ENV'] == 'development':
-		session['username'] = '104685155@student.swin.edu.au'
-
-	username = session.get('username')
-	if not username:
-		return redirect(url_for('main.login'))
-
-	# Retrieve the form data from the session
-	data = session.get('path_to_visa_data', None)
-
-	if not data:
-		# If there's no form data in session, redirect back to path_to_visa
-		return redirect(url_for('main.path_to_visa'))
-
-	# Pass the form data to the controller to get recommended courses
-	recommended_courses = process_visa_path(data)
+  user_first_name, user_last_name = get_user_name()
   
-	# Clear session flag after accessing the page
-	session.pop('path_to_visa_data', None)
+  # Retrieve the form data from the session
+  data = session.get('path_to_visa_data', None)
+  
+  # Check if user has submitted the form in path_to_visa.html
+  if not data:
+    return redirect(url_for('main.path_to_visa'))
+  
+  # Pass the form data to the controller to get recommended courses
+  recommended_courses = process_visa_path(data)
+  
+  # Clear session flag after accessing the page
+  session.pop('path_to_visa_data', None)
+  
+  return render_template('recommendation.html', header=True, footer=True,
+                        user_first_name=user_first_name, user_last_name=user_last_name,
+                        recommended_courses=recommended_courses)
 
-	return render_template('recommendation.html', header=True, footer=True, recommended_courses=recommended_courses)
-
-@main.route('/save_courses', methods=['POST'])
-#@login_required
-def save_courses():
-	if current_app.config['ENV'] == 'development':
-		session['username'] = '104685155@student.swin.edu.au'
-
+@main.route('/user_course_pref', methods=['POST'])
+@login_required
+def user_course_pref():
+	selected_courses = request.form.getlist('user_courses_pref')
 	username = session.get('username')
-	if not username:
-		return redirect(url_for('main.login'))  
 
-	username = session['username']
-	selected_courses = request.form.getlist('save_courses')
+	selected_courses = [int(course_id) for course_id in selected_courses]
 
+	# print("Selected Courses:", selected_courses)
+	# print("Username:", username)
+	
 	if selected_courses:
-		# Call the function to save multiple courses at once
-		user_course_preferences(username, selected_courses, request.form)
-		flash(f"Successfully saved {len(selected_courses)} course(s).")
-  
-		return redirect(url_for('main.profile'))
-	else:
-		flash("No courses were selected.")
-
-	return redirect(url_for('main.recommendation'))
-
-@main.route('/profile', methods=['GET'])
-#@login_required
-def profile():
-	if current_app.config['ENV'] == 'development':
-		session['username'] = '104685155@student.swin.edu.au'
-
-	username = session.get('username')
-	if not username:
-		return redirect(url_for('main.login'))
-  
-	# Retrieve user data from database
-	username = session['username']
-	user = User.query.filter_by(username=username).first()
-
-	# Fetch the user's saved course preferences
-	user_courses = get_user_course_preferences(username)
-
-	return render_template('profile.html', header=True, footer=True, user=user, user_courses=user_courses)
+		save_user_course_pref(selected_courses, username)
+	
+	return redirect(url_for('main.index'))
 
 # Route for the charts (admin_statistics)
 @main.route('/admin_statistics')
@@ -349,18 +364,18 @@ def admin_statistics():
     bar_values_others = [course.total_courses for course in courses_others]
 
     return render_template('admin_statistics.html',
-                           pie_labels=pie_labels, pie_values=pie_values,
-                           line_labels=line_labels,
-                           line_values_applicants=line_values_applicants,
-                           line_values_institutions=line_values_institutions,
-                           line_values_agencies=line_values_agencies,
-                           bar_labels=bar_labels, 
-                           bar_values_science=bar_values_science,
-                           bar_values_technology=bar_values_technology,
-                           bar_values_engineering=bar_values_engineering,
-                           bar_values_math=bar_values_math,
-                           bar_values_ict=bar_values_ict,
-                           bar_values_others=bar_values_others)
+													pie_labels=pie_labels, pie_values=pie_values,
+													line_labels=line_labels,
+													line_values_applicants=line_values_applicants,
+													line_values_institutions=line_values_institutions,
+													line_values_agencies=line_values_agencies,
+													bar_labels=bar_labels, 
+													bar_values_science=bar_values_science,
+													bar_values_technology=bar_values_technology,
+													bar_values_engineering=bar_values_engineering,
+													bar_values_math=bar_values_math,
+													bar_values_ict=bar_values_ict,
+													bar_values_others=bar_values_others)
     
 @main.route('/edu_statistics')
 def edu_statistics():
@@ -396,10 +411,10 @@ def migra_statistics():
 	return render_template(
         'migra_statistics.html', header=True, footer=True,
 							specialist_education_labels=specialist_education_labels,
-    						specialist_education_values=specialist_education_values,
-                			australian_study_labels=australian_study_labels,
-    						australian_study_values=australian_study_values,
-    						professional_year_labels=professional_year_labels,
+							specialist_education_values=specialist_education_values,
+							australian_study_labels=australian_study_labels,
+							australian_study_values=australian_study_values,
+							professional_year_labels=professional_year_labels,
 							professional_year_values=professional_year_values,
 							community_language_labels=community_language_labels,
 							community_language_values=community_language_values,
@@ -416,7 +431,7 @@ def migra_statistics():
 							education_level_labels=education_level_labels,
 							education_level_values=education_level_values
 )
- 
+
 @main.route('/applicant_profile')
 def applicant_profile():
 	return render_template('applicant_profile.html', header=True, footer=True)
@@ -429,6 +444,8 @@ def edu_profile():
 def agent_profile():
 	return render_template('agent_profile.html', header=True, footer=True)
 
-@main.route('/manage_course')
-def manage_course():
-	return render_template('manage_course.html', header=True, footer=True)
+@main.route('/courses')
+@login_required
+def courses():
+  courses = get_courses()
+  return render_template('courses.html', header=True, footer=True, courses=courses)
