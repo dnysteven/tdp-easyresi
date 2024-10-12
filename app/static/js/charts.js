@@ -2,34 +2,25 @@
 function sePieChart(specialistEducationLabels, specialistEducationValues) {
 	const ctx = document.getElementById('specialistEducationChart').getContext('2d');
 	new Chart(ctx, {
-	  type: 'pie',
-	  data: {
-		labels: specialistEducationLabels, 
-		datasets: [{
-		  data: specialistEducationValues,
-		  backgroundColor: ['#3498db'],
-		  hoverBackgroundColor: ['#2980b9']
-		}]
-	  },
-	  options: {
-		responsive: true,
-		maintainAspectRatio: false,
-		plugins: {
-		  legend: {
-			position: 'bottom',
-			labels: {
-						color: '#333' // Legend text color
-					}
-				},
-				tooltip: {
-					backgroundColor: 'rgba(0, 0, 0, 0.7)', // Tooltip background color
-					bodyColor: '#fff', // Tooltip text color
-					borderColor: '#fff', // Tooltip border color
-					borderWidth: 1 // Tooltip border width
-		  }
-		}
-	  }
-	});
+		type: 'pie',
+    data: {
+      labels: specialistEducationLabels, 
+      datasets: [{
+        data: specialistEducationValues,
+        backgroundColor: ['#48AAAD', '#3A43BA'], // Using the specified colors
+		hoverOffset: 4
+	}]
+
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+        },
+      }
+    }
+  });
 }
 
 // Function to create Pie Charts
@@ -41,8 +32,8 @@ function asrPieChart(australianStudyRequirementLabels, australianStudyRequiremen
 		labels: australianStudyRequirementLabels,  
 		datasets: [{
 		  data: australianStudyRequirementValues,  
-		  backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-		  hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+		  backgroundColor: ['#48AAAD', '#3A43BA'], // Using the specified colors
+		  hoverOffset: 4
 		}]
 	  },
 	  options: {
@@ -66,8 +57,8 @@ function pyPieChart(professionalYearLabels, professionalYearValues) {
 		labels: professionalYearLabels,  
 		datasets: [{
 		  data: professionalYearValues,  
-		  backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-		  hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+		  backgroundColor: ['#48AAAD', '#3A43BA'], // Using the specified colors
+		  hoverOffset: 4
 		}]
 	  },
 	  options: {
@@ -91,8 +82,8 @@ function clPieChart(communityLanguageLabels, communityLanguageValues) {
 		labels: communityLanguageLabels,  
 		datasets: [{
 		  data: communityLanguageValues,  
-		  backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-		  hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+		  backgroundColor: ['#48AAAD', '#3A43BA'], // Using the specified colors
+		  hoverOffset: 4
 		}]
 	  },
 	  options: {
@@ -106,7 +97,6 @@ function clPieChart(communityLanguageLabels, communityLanguageValues) {
 	  }
 	});
 }
-
 // Function to create Pie Charts
 function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 	const ctx = document.getElementById('regionalStudyChart').getContext('2d');
@@ -116,8 +106,8 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 		labels: regionalStudyLabels,  
 		datasets: [{
 		  data: regionalStudyValues,  
-		  backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-		  hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+		  backgroundColor: ['#48AAAD', '#3A43BA'], // Using the specified colors
+		  hoverOffset: 4
 		}]
 	  },
 	  options: {
@@ -141,9 +131,7 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 		labels: ageGroupLabels,
 		datasets: [{
 		  data: ageGroupValues,
-		  backgroundColor: '#36A2EB',
-		  borderColor: '#36A2EB',
-		  borderWidth: 1
+		  backgroundColor: ['#48AAAD', '#3A43BA', '#6693FA', '#3B8132', '#95C8D8']
 		}]
 	  },
 	  options: {
@@ -175,9 +163,7 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 			labels: englishLevelLabels,
 			datasets: [{
 			  data: englishLevelValues,
-			  backgroundColor: '#36A2EB',
-			  borderColor: '#36A2EB',
-			  borderWidth: 1
+			  backgroundColor: ['#48AAAD', '#3B8132', '#95C8D8']
 			}]
 		  },
 		  options: {
@@ -209,9 +195,7 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 			labels: overseasEmploymentLabels,
 			datasets: [{
 			  data: overseasEmploymentValues,
-			  backgroundColor: '#36A2EB',
-			  borderColor: '#36A2EB',
-			  borderWidth: 1
+			  backgroundColor: ['#48AAAD', '#3A43BA', '#6693FA', '#3B8132', '#95C8D8']
 			}]
 		  },
 		  options: {
@@ -243,9 +227,7 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 			labels: australianEmploymentLabels,
 			datasets: [{
 			  data: australianEmploymentValues,
-			  backgroundColor: '#36A2EB',
-			  borderColor: '#36A2EB',
-			  borderWidth: 1
+			  backgroundColor: ['#48AAAD', '#3A43BA', '#6693FA', '#3B8132', '#95C8D8']
 			}]
 		  },
 		  options: {
@@ -277,9 +259,7 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 			labels: educationLevelLabels,
 			datasets: [{
 			  data: ducationLevelValues,
-			  backgroundColor: '#36A2EB',
-			  borderColor: '#36A2EB',
-			  borderWidth: 1
+			  backgroundColor: ['#48AAAD', '#3A43BA','#3B8132', '#95C8D8']
 			}]
 		  },
 		  options: {

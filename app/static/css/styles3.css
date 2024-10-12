@@ -3,37 +3,57 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4; /* Light background for contrast */
     margin: 0;
-    padding: 20px;
+    padding: 10px;
 }
 
 /* Dashboard title */
 h1 {
     text-align: center;
+    font-size: 30px;
     color: #333;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
-
-/* Chart container styles */
-.chart-container {
-    background-color: #fff; /* White background for charts */
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    margin: 20px 0; /* Space between chart containers */
-    padding: 20px; /* Padding around content */
-}
-
-/* Chart headings */
-.chart-container h3 {
+h3 {
     text-align: center;
-    color: #444; /* Darker color for better readability */
-    margin-bottom: 15px; /* Space below headings */
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* The main container for each pie chart and its labels */
+.chart-container {
+    width: 18%; /* Adjusted width to fit five charts in a row */
+    padding: 5px;
+    display: inline-block; margin-right: 20;
+    vertical-align: top;
+}
+
+/* The labels section should take the remaining space */
+.chart-labels {
+    width: 18%;
+    padding-left: 5px; /* Add some space between the chart and the labels */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Styling for individual labels */
+.label-yes, .label-no {
+    font-size: 1 em;
+    font-weight: bold;
+}
+
+.label-yes {
+    color: #48AAAD; /* Same as pie chart "Yes" color */
+}
+
+.label-no {
+    color: #3A43BA; /* Same as pie chart "No" color */
 }
 
 /* Responsive design for canvas elements */
 canvas {
-    max-width: 100%; /* Responsive canvas */
+    max-width: 90%; /* Responsive canvas */
     height: auto; /* Maintain aspect ratio */
-    display: block; /* Block display for proper sizing */
 }
 
 /* Specific styles for different charts */
@@ -53,7 +73,8 @@ canvas {
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
     .chart-container {
-        padding: 15px; /* Reduced padding */
+        width: 45%; /* Two charts per row on smaller screens */
+        padding: 10px; /* Reduced padding */
     }
 
     h1 {
@@ -61,6 +82,6 @@ canvas {
     }
 
     .chart-container h3 {
-        font-size: 18px; /* Smaller headings on mobile */
+        font-size: 15px; /* Smaller headings on mobile */
     }
-} 
+}

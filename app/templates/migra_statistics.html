@@ -9,57 +9,59 @@
 {% block content %}
   <h1>Migration Agent Dashboard</h1>
 
-  <!-- Pie Charts for Various Applicant Qualifications -->
-  <div class="chart-container">
-    <h3>Applicants Completed Specialist Education Qualification</h3>
-    <canvas id="specialistEducationChart"></canvas>
-  </div>
+    <div class="chart-container">
+        <h3>Applicants Completed Specialist Education</h3>
+        <canvas id="specialistEducationChart"></canvas>
+    </div>
   
-  <div class="chart-container">
-    <h3>Applicants Met Australian Study Requirement</h3>
-    <canvas id="australianStudyRequirementChart"></canvas>
-  </div>
+    <div class="chart-container">
+        <h3>Applicants Met Australian Study Requirement</h3>
+        <canvas id="australianStudyRequirementChart"></canvas>
+    </div>
 
-  <div class="chart-container">
-    <h3>Applicants Completed Professional Year in Australia</h3>
-    <canvas id="professionalYearChart"></canvas>
-  </div>
+    <div class="chart-container">
+        <h3>Applicants Completed Professional Year in Australia</h3>
+        <canvas id="professionalYearChart"></canvas>
+    </div>
+</div>
 
-  <div class="chart-container">
-    <h3>Applicants Who Can Speak Community Language</h3>
-    <canvas id="communityLanguageChart"></canvas>
-  </div>
+    <div class="chart-container">
+        <h3>Applicants Who Can Speak Community Language</h3>
+        <canvas id="communityLanguageChart"></canvas>
+    </div>
 
-  <div class="chart-container">
-    <h3>Applicants Completed Regional Study</h3>
-    <canvas id="regionalStudyChart"></canvas>
-  </div>
+    <div class="chart-container">
+        <h3>Applicants Completed Regional Study in Australia</h3>
+        <canvas id="regionalStudyChart"></canvas>
+    </div>
+  
+    <div class="chart-container">
+        <h3>Applicants by Age Group</h3>
+        <canvas id="ageGroupChart"></canvas>
+    </div>
+</div>
 
-  <!-- Bar Charts for Age, English Language Level, Skilled Employment, and Education Level -->
-  <div class="chart-container">
-    <h3>Applicants by Age Group</h3>
-    <canvas id="ageGroupChart"></canvas>
-  </div>
+    <div class="chart-container">
+        <h3>Applicants by English Language Level</h3>
+        <canvas id="englishLevelChart"></canvas>
+    </div>
 
-  <div class="chart-container">
-    <h3>Applicants by English Language Level</h3>
-    <canvas id="englishLevelChart"></canvas>
-  </div>
+    <div class="chart-container">
+        <h3>Overseas Skilled Employment</h3>
+        <canvas id="overseasEmploymentChart"></canvas>
+    </div>
 
-  <div class="chart-container">
-    <h3>Overseas Skilled Employment</h3>
-    <canvas id="overseasEmploymentChart"></canvas>
-  </div>
+    <div class="chart-container">
+        <h3>Australian Skilled Employment</h3>
+        <canvas id="australianEmploymentChart"></canvas>
+    </div>
+</div>
 
-  <div class="chart-container">
-    <h3>Australian Skilled Employment</h3>
-    <canvas id="australianEmploymentChart"></canvas>
-  </div>
-
-  <div class="chart-container">
-    <h3>Highest Level of Education</h3>
-    <canvas id="educationLevelChart"></canvas>
-  </div>
+    <div class="chart-container">
+        <h3>Highest Level of Education</h3>
+        <canvas id="educationLevelChart"></canvas>
+    </div>
+</div>
 
   <!-- Pass processed chart data from Flask to JS via the window object -->
   <script>
