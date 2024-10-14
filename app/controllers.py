@@ -587,10 +587,6 @@ def get_chart_edu():
   
   return specialist_education_labels, specialist_education_values, australian_study_labels, australian_study_values, professional_year_labels, professional_year_values, community_language_labels, community_language_values, regional_study_labels, regional_study_values, english_level_labels, english_level_values, overseas_employment_labels, overseas_employment_values, australian_employment_labels, australian_employment_values, education_level_labels, education_level_values
 
-# Function to get all universities
-def get_universities():
-  return University.query.all()
-
 # Get all courses
 def get_courses(username, user_role):
   if user_role == 'admin':
@@ -675,4 +671,42 @@ def delete_course(course_id):
   
   if course:
     db.session.delete(course)
+    db.session.commit()
+
+# Function to get all universities
+def get_universities():
+  return University.query.all()
+
+def get_university_by_id(university_id):
+  return University.query.filter_by(id=university_id).first()
+
+def add_new_university(data):
+  university = University(
+    university=data['university'],
+    street=data.get('street'),
+    suburb=data.get('suburb'),
+    state=data['state'],
+    postcode=data['postcode'],
+    phone=data.get('phone'),
+    email=data['email']
+  )
+  db.session.add(university)
+  db.session.commit()
+
+def update_university(data, university_id):
+  university = University.query.filter_by(id=university_id).first()
+  if university:
+    university.university = data['university']
+    university.street = data.get('street')
+    university.suburb = data.get('suburb')
+    university.state = data['state']
+    university.postcode = data['postcode']
+    university.phone = data.get('phone')
+    university.email = data['email']
+    db.session.commit()
+
+def delete_university_by_id(university_id):
+  university = University.query.filter_by(id=university_id).first()
+  if university:
+    db.session.delete(university)
     db.session.commit()

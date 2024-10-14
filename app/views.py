@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
 from app.models import Data, db, User, UserRole, UserGroup, CourseAdded, UserLogin, UniCourse
-from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_pref, get_user_visa_points, get_chart_admin, get_chart_migrant, get_courses, get_course_by_id, add_new_course, update_course, delete_course, get_universities
+from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_pref, get_user_visa_points, get_chart_migrant, get_courses, get_course_by_id, add_new_course, update_course, delete_course, get_universities, add_new_university, update_university, get_university_by_id, delete_university_by_id
 
 main = Blueprint('main', __name__)
 
@@ -529,3 +529,42 @@ def delete_course(course_id):
 	delete_course(course_id)
 
 	return redirect(url_for('main.courses'))
+
+@main.route('/universities')
+@login_required
+def universities():
+  username = session.get('username')
+  role = session.get('user_role')
+  user_first_name, user_last_name = get_user_name()
+  universities = get_universities()
+  
+  return render_template('university.html', user_first_name=user_first_name, user_last_name=user_last_name, header=True, footer=True, universities=universities)
+
+@main.route('/manage_university', methods=['GET', 'POST'])
+@login_required
+def manage_university():
+	username = session.get('username')
+	role = session.get('user_role')
+	user_first_name, user_last_name = get_user_name()
+
+	university_id = request.args.get('university_id')
+	university = None
+
+	if request.method == 'POST':
+		data = request.form
+		if university_id:
+			update_university(data, university_id)
+		else:
+			add_new_university(data)
+		return redirect(url_for('main.universities'))
+
+	if university_id:
+		university = get_university_by_id(university_id)
+
+	return render_template('manage_university.html',  user_first_name=user_first_name, user_last_name=user_last_name, header=True, footer=True, university=university)
+
+@main.route('/delete_university/<int:university_id>', methods=['POST'])
+@login_required
+def delete_university(university_id):
+	delete_university_by_id(university_id)
+	return redirect(url_for('main.universities'))
