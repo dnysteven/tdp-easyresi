@@ -19,8 +19,7 @@
             <th>Course Name</th>
             <th>Course Provider</th>
             <th>University</th>
-            <th>State</th>
-            <th>Postcode</th>
+            <th>Address</th>
             <th>Education Level</th>
             <th>Specialist Education</th>
             <th>Professional Year</th>
@@ -28,8 +27,8 @@
             <th>Tuition Fee</th>
             <th>Regional Study</th>
             <th>Contact Info</th>
-            <th>Monthly Cost of Living</th>
-            <th>Annual Cost of Living</th>
+            <th>Monthly Living Cost</th>
+            <th>Annual Living Cost</th>
             <th>Save Option</th>
             <th class="hidden">Points</th>
           </tr>
@@ -40,18 +39,17 @@
               <td>{{ course.course_num }}</td>
               <td>{{ course.course_name }}</td>
               <td>{{ course.provider.first_name }} {{ course.provider.last_name }}</td>
-              <td>{{ course.university.university }}, {{ course.university.suburb }}</td>
-              <td>{{ course.university.state }}</td>
-              <td>{{ course.university.postcode }}</td>
+              <td>{{ course.university.university }}</td>
+              <td>{{ course.university.suburb }} {{ course.university.state }} {{ course.university.postcode }}</td>
               <td>{{ course.level.capitalize() }}</td>
               <td>{{ course.specialist_education.capitalize() }}</td>
               <td>{{ 'Yes' if course.prof_year else 'No' }}</td>
               <td>{{ course.duration }}</td>
-              <td>{{ course.tuition_fee }}</td>
+              <td>${{ course.tuition_fee }}</td>
               <td>{{ 'Yes' if course.regional else 'No' }}</td>
               <td>{{ course.university.email }}</td>
-              <td>{{ course.cost_of_living or 'N/A' }}</td>
-              <td>{{ course.cost_of_living_annual or 'N/A' }}</td>
+              <td>${{ course.cost_of_living or 'N/A' }}</td>
+              <td>${{ course.cost_of_living_annual or 'N/A' }}</td>
               <td>
                 <input type="checkbox" name="user_courses_pref" value="{{ course.id }}">
               </td>
