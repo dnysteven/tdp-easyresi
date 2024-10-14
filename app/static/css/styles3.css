@@ -1,7 +1,7 @@
 /* General body styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4; /* Light background for contrast */
+    background-color: #ffffff; /* Light background for contrast */
     margin: 0;
     padding: 10px;
 }
@@ -16,29 +16,86 @@ h1 {
 h3 {
     text-align: center;
     font-size: 15px;
-    color: #333;
+    color: hwb(262 5% 3%)3;
     margin-bottom: 20px;
 }
+.main {
+    position: absolute;
+    top: 300px;
+    left: 20px; 
+    width: 97%;
+    min-height: calc(100vh - 60px);
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-/* The main container for each pie chart and its labels */
+.cards {
+    width: 98%;
+    padding: 35px 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 20px;
+}
+
+.cards .card {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #3A43BA;
+    border-radius: 10px;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+}
+
+.number {
+    font-size: 35px;
+    font-weight: 500;
+
+    color: hwb(0 100% 0%);
+}
+
+.card-name {
+    color: #ffffff;
+    font-weight: 800;
+}
+
+.icon-box i {
+    font-size: 45px;
+    color: #299b63;
+}
+
+/* Main container for the charts */
+.chart-wrapper {
+    display: flex;
+    justify-content: space-between; /* Spread the charts evenly */
+    flex-wrap: wrap; /* Allow wrapping if necessary on small screens */
+    padding: 10px;
+}
 .chart-container {
-    width: 18%; /* Adjusted width to fit five charts in a row */
-    padding: 5px;
-    display: inline-block; margin-right: 20;
-    vertical-align: top;
+    background-color: #ffffff;
+    width: 16%; /* Adjusted width to fit five charts in a row */
+    display: flex; 
+    padding: 10px;
+    justify-content: space-between;
+    border-radius: 10px;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    flex-direction: column;
 }
 
 /* The labels section should take the remaining space */
 .chart-labels {
+    color: white
     width: 18%;
-    padding-left: 5px; /* Add some space between the chart and the labels */
-    display: flex;
-    flex-direction: column;
+    padding-left: 10px; /* Add some space between the chart and the labels */
+    display: grid; 
+    grid-template-columns: auto-fit;
+    grid-gap: 20px;
 }
 
 /* Styling for individual labels */
 .label-yes, .label-no {
-    font-size: 1 em;
+    color: white
+    font-size: 2em; /* Fixed font-size */
     font-weight: bold;
 }
 
@@ -52,6 +109,9 @@ h3 {
 
 /* Responsive design for canvas elements */
 canvas {
+    color: #48AAAD; 
+    width: 100% !important; /* Full width for canvas */
+    height: 300px !important; /* Fixed height for charts */
     max-width: 90%; /* Responsive canvas */
     height: auto; /* Maintain aspect ratio */
 }
@@ -62,12 +122,6 @@ canvas {
     width: 90%; /* Use a larger percentage for the charts */
     max-width: 800px; /* Limit maximum width */
     height: auto; /* Maintain aspect ratio */
-}
-
-/* Fixed height for charts */
-canvas {
-    width: 100% !important; /* Full width for canvas */
-    height: 300px !important; /* Fixed height for charts */
 }
 
 /* Responsive design for smaller screens */

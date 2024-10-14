@@ -273,26 +273,39 @@ class CostOfLiving(db.Model):
 
 # ---- Admin Dashboard Charts ----
 class UserGroup(db.Model):
-    __tablename__ = 'user_groups'
+	__tablename__ = 'user_groups'
 
-    id = db.Column(db.Integer, primary_key=True)
-    group_name = db.Column(db.String(255), nullable=False)
-    total_users = db.Column(db.String(255), nullable=False)
+	id = db.Column(db.Integer, primary_key=True)
+	group_name = db.Column(db.String(255), nullable=False)
+	total_users = db.Column(db.String(255), nullable=False)
 
+	def __init__(self, group_name, total_users):
+		self.group_name = group_name
+		self.total_users = total_users
 
 class UserLogin(db.Model):
-    __tablename__ = 'user_logins'
+	__tablename__ = 'user_logins'
 
     id = db.Column(db.Integer, primary_key=True)
     group_name = db.Column(db.String(255), nullable=False)
     login_month = db.Column(db.String(255), nullable=False)
     total_logins = db.Column(db.Integer, nullable=False)
 
+	def __init__(self, group_name, login_month, total_logins):
+		self.group_name = group_name
+		self.login_month = login_month
+		self.total_logins = total_logins
+
 
 class CourseAdded(db.Model):
-    __tablename__ = 'courses_added'
+	__tablename__ = 'courses_added'
 
     id = db.Column(db.Integer, primary_key=True)
     category_name = db.Column(db.String(255), nullable=False)
     added_month = db.Column(db.String(255), nullable=False)
     total_courses = db.Column(db.Integer, nullable=False)
+
+	def __init__(self, category_name, added_month, total_courses):
+		self.category_name = category_name
+		self.added_month = added_month
+		self.total_courses = total_courses

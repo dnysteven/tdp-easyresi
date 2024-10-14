@@ -1,7 +1,7 @@
 import os
 import joblib
 import pandas as pd
-from flask import session
+from flask import request, session
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -552,48 +552,92 @@ def get_chart_migrant():
   
   return specialist_education_labels, specialist_education_values, australian_study_labels, australian_study_values, professional_year_labels, professional_year_values, community_language_labels, community_language_values, regional_study_labels, regional_study_values, age_group_labels, age_group_values, english_level_labels, english_level_values, overseas_employment_labels, overseas_employment_values, australian_employment_labels, australian_employment_values, education_level_labels, education_level_values
 
+# Function to get all universities
+def get_universities():
+  return University.query.all()
+
 # Get all courses
-def get_courses():
-  courses = db.session.query(UniCourse, User.first_name, User.last_name, University) \
+def get_courses(username, user_role):
+  if user_role == 'admin':
+    courses = db.session.query(UniCourse, User.first_name, User.last_name, University) \
             .join(User, UniCourse.provider_id == User.email) \
             .join(University, UniCourse.univ_id == University.id) \
             .all()
+  elif user_role == 'education':
+    courses = db.session.query(UniCourse, User.first_name, User.last_name, University) \
+            .join(User, UniCourse.provider_id == User.email) \
+            .join(University, UniCourse.univ_id == University.id) \
+            .filter(User.email == username) \
+            .all()
+  else:
+    courses = []
   return courses
 
-# Add new course
-def add_course(data):
-  new_course = UniCourse(
-    course_name=data['course_name'],
-    level=data['level'],
-    duration=data['duration'],
-    tuition_fee=data['tuition_fee'],
-    specialist=data.get('specialist') == 'on',
-    prof_year=data.get('prof_year') == 'on',
-    regional=data.get('regional') == 'on',
-    provider_id=data['provider_id'],
-    univ_id=data['univ_id']
-  )
-  db.session.add(new_course)
-  db.session.commit()
+# Function to get a course by its ID
+def get_course_by_id(course_id):
+  return UniCourse.query.filter_by(id=course_id).first()
 
-# Edit existing course
-def edit_course(course_id, data):
-  course = UniCourse.query.get(course_id)
+# Add new course to the database
+def add_new_course(data):
+  # Get and process the specialist education field
+  specialist_education = data.get('specialist_education')
+
+  # Capitalize first letter, except for "ICT" which is fully capitalized
+  if specialist_education == 'ict':
+    specialist_education = 'ICT'
+  else:
+    specialist_education = specialist_education.capitalize()
+  
+  # Ensure the data is cleaned and prepared before adding to the database
+  course = UniCourse(
+    course_num=data['course_num'],
+    course_name=data['course_name'],
+    univ_id=data['univ_id'],
+    provider_id=data['username'],
+    level=data['level'].capitalize(),  # Capitalize first letter
+    specialist_education=specialist_education,
+    prof_year=bool(data.get('prof_year')),
+    duration=int(data['duration']),
+    tuition_fee=float(data['tuition_fee']),
+    regional=bool(data.get('regional'))
+  )
+  db.session.add(course)
+  db.session.commit()
+  
+def update_course(data, course_id):
+  # Find the course by ID
+  course = UniCourse.query.filter_by(id=course_id).first()
+  
+  # Get and process the specialist education field
+  specialist_education = data.get('specialist_education')
+
+  # Capitalize first letter, except for "ICT" which is fully capitalized
+  if specialist_education == 'ict':
+    specialist_education = 'ICT'
+  else:
+    specialist_education = specialist_education.capitalize()
+
+  # If the course is found, update its values
   if course:
+    course.course_num = data['course_num']
     course.course_name = data['course_name']
-    course.level = data['level']
-    course.duration = data['duration']
-    course.tuition_fee = data['tuition_fee']
-    course.specialist = data.get('specialist') == 'on'
-    course.prof_year = data.get('prof_year') == 'on'
-    course.regional = data.get('regional') == 'on'
-    course.provider_id = data['provider_id']
     course.univ_id = data['univ_id']
+    course.provider_id = data['username']
+    course.level = data['level'].capitalize()  # Capitalize first letter
+    course.specialist_education = specialist_education
+    course.prof_year = bool(data.get('prof_year'))
+    course.duration = int(data['duration'])
+    course.tuition_fee = float(data['tuition_fee'])
+    course.regional = bool(data.get('regional'))
+
     db.session.commit()
 
 # Delete course
 def delete_course(course_id):
-  course = UniCourse.query.get(course_id)
+  course = UniCourse.query.filter_by(id=course_id).first()
+  # Log the course data for debugging
+  print(f"Attempting to delete course with ID: {course_id}")
+  
   if course:
     db.session.delete(course)
     db.session.commit()

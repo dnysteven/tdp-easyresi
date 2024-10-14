@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
 from app.models import Data, db, User, UserRole, UserGroup, CourseAdded, UserLogin, UniCourse
-from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_pref, get_user_visa_points, get_chart_admin, get_chart_migrant, get_courses, add_course, edit_course, delete_course
+from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_pref, get_user_visa_points, get_chart_admin, get_chart_migrant, get_courses, get_course_by_id, add_new_course, update_course, delete_course, get_universities
 
 main = Blueprint('main', __name__)
 
@@ -98,12 +98,12 @@ def register():
 def profile():
 	# Retrieve user data from database
 	username = session.get('username')
+	user_role = session.get('user_role')
 	user = User.query.filter_by(email=username).first()
 
-	user_first_name = user.first_name
-	user_last_name = user.last_name
+	user_first_name, user_last_name = get_user_name()
 
-	if user.user_role == 'applicant':
+	if user_role == 'applicant':
 		user_courses = get_user_course_pref(username)
 		user_visa_points = get_user_visa_points(username)
 	else:
@@ -447,5 +447,45 @@ def agent_profile():
 @main.route('/courses')
 @login_required
 def courses():
-  courses = get_courses()
-  return render_template('courses.html', header=True, footer=True, courses=courses)
+  username = session.get('username')
+  role = session.get('user_role')
+  user_first_name, user_last_name = get_user_name()
+  
+  courses = get_courses(username, role)
+  return render_template('courses.html', user_first_name=user_first_name, user_last_name=user_last_name, header=True, footer=True, courses=courses)
+
+# Route for adding/editing courses via manage_courses.html
+@main.route('/manage_course', methods=['GET', 'POST'])
+@login_required
+def manage_course():
+  username = session.get('username')
+  user_first_name, user_last_name = get_user_name()
+  
+  course_id = request.args.get('course_id')
+  course = None
+  universities = get_universities()
+  
+  if request.method == 'POST':
+    data = request.form
+    
+    data = dict(data)
+    data['username'] = username
+    
+    if course_id:
+      update_course(data, course_id)
+    else:
+      add_new_course(data)
+    
+    return redirect(url_for('main.courses'))
+  
+  if course_id:
+    course = get_course_by_id(course_id)
+  
+  return render_template('manage_courses.html', header=True, footer=True, user_first_name=user_first_name, user_last_name=user_last_name, course=course, universities=universities)
+
+@main.route('/delete_course/<int:course_id>', methods=['POST'])
+@login_required
+def delete_course(course_id):
+	delete_course(course_id)
+
+	return redirect(url_for('main.courses'))

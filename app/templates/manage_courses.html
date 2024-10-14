@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Course{% endblock %}
+
+{% block content %}
+  <h1>{% if course %}Edit Course{% else %}Add New Course{% endif %}</h1>
+
+  <form class="questionnaire-form" method="POST" action="{{ url_for('main.manage_course', course_id=course.id if course else None) }}">
+    <!-- Course Number -->
+    <div class="form-group">
+      <label for="course_num">Course Number</label>
+      <input type="text" id="course_num" name="course_num" class="form-control" value="{% if course %}{{ course.course_num }}{% endif %}" required>
+    </div>
+
+    <!-- Course Name -->
+    <div class="form-group">
+      <label for="course_name">Course Name</label>
+      <input type="text" id="course_name" name="course_name" class="form-control" value="{% if course %}{{ course.course_name }}{% endif %}" required>
+    </div>
+
+    <!-- University Name -->
+    <div class="form-group">
+      <label for="univ_id">University</label>
+      <select class="input-register" id="univ_id" name="univ_id" class="form-control" required>
+        <option value="" selected disabled>Select</option>
+        {% for university in universities %}
+          <option value="{{ university.id }}" {% if course and course.univ_id == university.id %}selected{% endif %}>{{ university.university }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Course Level -->
+    <div class="form-group">
+      <label for="level">Course Level</label>
+      <select class="input-register" id="level" name="level" class="form-control" required>
+        <option value="" selected disabled>Select</option>
+        <option value="Bachelor" {% if course and course.level == 'Bachelor' %}selected{% endif %}>Bachelor</option>
+        <option value="Master" {% if course and course.level == 'Master' %}selected{% endif %}>Master</option>
+        <option value="Doctorate" {% if course and course.level == 'Doctorate' %}selected{% endif %}>Doctorate</option>
+      </select>
+    </div>
+
+    <!-- Specialist -->
+    <label for="specialist_education">Specialist Education Qualification</label>
+    <select name="specialist_education" id="specialist_education" required>
+      <option value="" selected disabled>Select</option>
+      <option value="science" {% if course and course.specialist_education == 'Science' %}selected{% endif %}>Science</option>
+      <option value="technology" {% if course and course.specialist_education == 'Technology' %}selected{% endif %}>Technology</option>
+      <option value="engineering" {% if course and course.specialist_education == 'Engineering' %}selected{% endif %}>Engineering</option>
+      <option value="mathematics" {% if course and course.specialist_education == 'Mathematics' %}selected{% endif %}>Mathematics</option>
+      <option value="ict" {% if course and course.specialist_education == 'ICT' %}selected{% endif %}>Specified Information and Communication Technology (ICT)</option>
+      <option value="none" {% if course and course.specialist_education == 'None' %}selected{% endif %}>No Specific Interest</option>
+    </select>
+
+    <!-- Professional Year -->
+    <div class="form-group">
+      <label for="prof_year">Professional Year</label>
+      <input type="checkbox" id="prof_year" name="prof_year" {% if course and course.prof_year %}checked{% endif %}>
+    </div>
+
+    <!-- Duration -->
+    <div class="form-group">
+      <label for="duration">Duration (Years)</label>
+      <input type="number" id="duration" name="duration" class="form-control" value="{% if course %}{{ course.duration }}{% endif %}" required>
+    </div>
+
+    <!-- Tuition Fee -->
+    <div class="form-group">
+      <label for="tuition_fee">Tuition Fee</label>
+      <input type="number" step="0.01" id="tuition_fee" name="tuition_fee" class="form-control" value="{% if course %}{{ course.tuition_fee }}{% endif %}" required>
+    </div>
+
+    <!-- Regional Study -->
+    <div class="form-group">
+      <label for="regional">Regional Study</label>
+      <input type="checkbox" id="regional" name="regional" {% if course and course.regional %}checked{% endif %}>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">{% if course %}Update Course{% else %}Add Course{% endif %}</button>
+      <a href="{{ url_for('main.courses') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+{% endblock %}

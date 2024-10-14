@@ -3,12 +3,62 @@
 {% block title %}Migration Agent Dashboard{% endblock %}
 
 {% block css %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles2.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles3.css') }}">
 {% endblock %}
 
 {% block content %}
   <h1>Migration Agent Dashboard</h1>
 
+  <div class="main">
+    <div class="cards">
+        <div class="card">
+            <div class="card-content">
+                <div class="number">1217</div>
+                <div class="card-name">18-24 Years old</div>
+            </div>
+            <div class="icon-box">
+                <i class="fas fa-user-graduate"></i>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="number">42</div>
+                <div class="card-name">28-32 Years old</div>
+            </div>
+            <div class="icon-box">
+                <i class="fas fa-chalkboard-teacher"></i>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="number">68</div>
+                <div class="card-name">33-39 Years old</div>
+            </div>
+            <div class="icon-box">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="number">$4500</div>
+                <div class="card-name">40-45 Years old</div>
+            </div>
+            <div class="icon-box">
+                <i class="fas fa-dollar-sign"></i>
+            </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+              <div class="number">$4500</div>
+              <div class="card-name">Above 45 Years old</div>
+          </div>
+          <div class="icon-box">
+              <i class="fas fa-dollar-sign"></i>
+          </div>
+      </div>
+    </div>
+  <div class="chart-wrapper">
     <div class="chart-container">
         <h3>Applicants Completed Specialist Education</h3>
         <canvas id="specialistEducationChart"></canvas>
@@ -20,10 +70,9 @@
     </div>
 
     <div class="chart-container">
-        <h3>Applicants Completed Professional Year in Australia</h3>
+        <h3>Completed Professional Year in Australia</h3>
         <canvas id="professionalYearChart"></canvas>
     </div>
-</div>
 
     <div class="chart-container">
         <h3>Applicants Who Can Speak Community Language</h3>
@@ -34,12 +83,12 @@
         <h3>Applicants Completed Regional Study in Australia</h3>
         <canvas id="regionalStudyChart"></canvas>
     </div>
-  
+  </div>
+  <div class="chart-wrapper">
     <div class="chart-container">
         <h3>Applicants by Age Group</h3>
         <canvas id="ageGroupChart"></canvas>
     </div>
-</div>
 
     <div class="chart-container">
         <h3>Applicants by English Language Level</h3>
@@ -55,7 +104,6 @@
         <h3>Australian Skilled Employment</h3>
         <canvas id="australianEmploymentChart"></canvas>
     </div>
-</div>
 
     <div class="chart-container">
         <h3>Highest Level of Education</h3>
