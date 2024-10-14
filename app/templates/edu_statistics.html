@@ -3,12 +3,62 @@
 {% block title %}Education Provider Dashboard{% endblock %}
 
 {% block css %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles2.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles3.css') }}">
 {% endblock %}
 
 {% block content %}
   <h1>Education Provider Dashboard</h1>
 
+  <div class="main">
+    <div class="cards">
+        <div class="card">
+            <div class="card-content">
+                <div class="number">50</div>
+                <div class="card-name">18-24 Years old</div>
+            </div>
+            <div class="icon-box">
+                <i class="fas fa-user-graduate"></i>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="number">35</div>
+                <div class="card-name">28-32 Years old</div>
+            </div>
+            <div class="icon-box">
+                <i class="fas fa-chalkboard-teacher"></i>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="number">70</div>
+                <div class="card-name">33-39 Years old</div>
+            </div>
+            <div class="icon-box">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <div class="number">15</div>
+                <div class="card-name">40-45 Years old</div>
+            </div>
+            <div class="icon-box">
+                <i class="fas fa-dollar-sign"></i>
+            </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+              <div class="number">5</div>
+              <div class="card-name">Above 45 Years old</div>
+          </div>
+          <div class="icon-box">
+              <i class="fas fa-dollar-sign"></i>
+          </div>
+      </div>
+    </div>
+  <div class="chart-wrapper">
     <div class="chart-container">
         <h3>Applicants Completed Specialist Education</h3>
         <canvas id="specialistEducationChart"></canvas>
@@ -20,10 +70,9 @@
     </div>
 
     <div class="chart-container">
-        <h3>Applicants Completed Professional Year in Australia</h3>
+        <h3>Completed Professional Year in Australia</h3>
         <canvas id="professionalYearChart"></canvas>
     </div>
-</div>
 
     <div class="chart-container">
         <h3>Applicants Who Can Speak Community Language</h3>
@@ -34,16 +83,27 @@
         <h3>Applicants Completed Regional Study in Australia</h3>
         <canvas id="regionalStudyChart"></canvas>
     </div>
-  
-    <div class="chart-container">
-        <h3>Applicants by Age Group</h3>
-        <canvas id="ageGroupChart"></canvas>
-    </div>
-</div>
+  </div>
 
-    <div class="chart-container">
+  <div class="chart-wrapper">
+  <div class="chart-cont">
+      <h3>Highest Level of Education</h3>
+      <canvas id="educationLevelChart"></canvas>
+  </div>
+
+    <div class="chart-cont">
         <h3>Applicants by English Language Level</h3>
         <canvas id="englishLevelChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <h3>Overseas Skilled Employment</h3>
+        <canvas id="overseasEmploymentChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+        <h3>Australian Skilled Employment</h3>
+        <canvas id="australianEmploymentChart"></canvas>
     </div>
 
 </div>
@@ -67,12 +127,17 @@
     window.regionalStudyValues = {{ regional_study_values|tojson }};
 
     // Bar Chart Data
-    window.ageGroupLabels = {{ age_group_labels|tojson }};
-    window.ageGroupValues = {{ age_group_values|tojson }};
-
     window.englishLevelLabels = {{ english_level_labels|tojson }};
     window.englishLevelValues = {{ english_level_values|tojson }};
 
+    window.overseasEmploymentLabels = {{ overseas_employment_labels|tojson }};
+    window.overseasEmploymentValues = {{ overseas_employment_values|tojson }};
+
+    window.australianEmploymentLabels = {{ australian_employment_labels|tojson }};
+    window.australianEmploymentValues = {{ australian_employment_values|tojson }};
+
+    window.educationLevelLabels = {{ education_level_labels|tojson }};
+    window.educationLevelValues = {{ education_level_values|tojson }};
   </script>
 
   <!-- Link to external JavaScript files -->
