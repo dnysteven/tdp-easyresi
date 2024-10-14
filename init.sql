@@ -152,21 +152,21 @@ CREATE TABLE IF NOT EXISTS cost_of_living (
 
 -- Tables for Admin Dashboard Page
 CREATE TABLE user_groups (
-    id SERIAL PRIMARY KEY,
-    group_name VARCHAR(255) NOT NULL,
-    total_users INT NOT NULL
+	id SERIAL PRIMARY KEY,
+	group_name VARCHAR(255) NOT NULL,
+	total_users INT NOT NULL
 );
 
 CREATE TABLE user_logins (
-    id SERIAL PRIMARY KEY,
-    group_name VARCHAR(255) NOT NULL,
-    login_month DATE NOT NULL,
-    total_logins INT NOT NULL
+	id SERIAL PRIMARY KEY,
+	group_name VARCHAR(255) NOT NULL,
+	login_month DATE NOT NULL,
+	total_logins INT NOT NULL
 );
 
 CREATE TABLE courses_added (
-    id SERIAL PRIMARY KEY,
-    category_name VARCHAR(255) NOT NULL,
-    added_month DATE NOT NULL,
-    total_courses INT NOT NULL
+	id SERIAL PRIMARY KEY,
+	category_name VARCHAR(255) NOT NULL,
+	added_month DATE NOT NULL,
+	total_courses INT NOT NULL
 );
