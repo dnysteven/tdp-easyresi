@@ -341,7 +341,7 @@ def admin_statistics():
     logins_applicants = UserLogin.query.filter_by(group_name='Applicants').all()
     logins_institutions = UserLogin.query.filter_by(group_name='Educational Institution').all()
     logins_agencies = UserLogin.query.filter_by(group_name='Migration Agencies').all()
-
+    
     # Extract data for each group (for the last 6 months)
     line_values_applicants = [login.total_logins for login in logins_applicants]
     line_values_institutions = [login.total_logins for login in logins_institutions]
@@ -384,7 +384,7 @@ def edu_statistics():
 @main.route('/migra_statistics')
 def migra_statistics():
 	# Get chart data from the controller
-	specialist_education_labels, specialist_education_values, australian_study_labels, australian_study_values, professional_year_labels, professional_year_values, community_language_labels, community_language_values, regional_study_labels, regional_study_values, age_group_labels, age_group_values, english_level_labels, english_level_values, overseas_employment_labels, overseas_employment_values, australian_employment_labels, australian_employment_values, education_level_labels, education_level_values = get_chart_migrant()
+	specialist_education_labels, specialist_education_values, australian_study_labels, australian_study_values, professional_year_labels, professional_year_values, community_language_labels, community_language_values, regional_study_labels, regional_study_values, english_level_labels, english_level_values, overseas_employment_labels, overseas_employment_values, australian_employment_labels, australian_employment_values, education_level_labels, education_level_values = get_chart_migrant()
 
 	# Ensure that none of the variables are undefined or None
 	specialist_education_labels = specialist_education_labels or []
@@ -397,8 +397,6 @@ def migra_statistics():
 	community_language_values = community_language_values or []
 	regional_study_labels = regional_study_labels or []
 	regional_study_values = regional_study_values or []
-	age_group_labels = age_group_labels or []
-	age_group_values = age_group_values or []
 	english_level_labels = english_level_labels or []
 	english_level_values = english_level_values or []
 	overseas_employment_labels = overseas_employment_labels or []
@@ -420,8 +418,6 @@ def migra_statistics():
 							community_language_values=community_language_values,
 							regional_study_labels=regional_study_labels,
 							regional_study_values=regional_study_values,
-							age_group_labels=age_group_labels,
-							age_group_values=age_group_values,
 							english_level_labels=english_level_labels,
 							english_level_values=english_level_values,
 							overseas_employment_labels=overseas_employment_labels,

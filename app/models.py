@@ -277,7 +277,7 @@ class UserGroup(db.Model):
 
 	id = db.Column(db.Integer, primary_key=True)
 	group_name = db.Column(db.String(255), nullable=False)
-	total_users = db.Column(db.Integer, nullable=False)
+	total_users = db.Column(db.String(255), nullable=False)
 
 	def __init__(self, group_name, total_users):
 		self.group_name = group_name
