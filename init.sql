@@ -160,13 +160,13 @@ CREATE TABLE user_groups (
 CREATE TABLE user_logins (
 	id SERIAL PRIMARY KEY,
 	group_name VARCHAR(255) NOT NULL,
-	login_month DATE NOT NULL,
+	login_month VARCHAR(255) NOT NULL,
 	total_logins INT NOT NULL
 );
 
 CREATE TABLE courses_added (
 	id SERIAL PRIMARY KEY,
 	category_name VARCHAR(255) NOT NULL,
-	added_month DATE NOT NULL,
+	added_month VARCHAR(255) NOT NULL,
 	total_courses INT NOT NULL
 );

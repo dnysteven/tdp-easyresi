@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
 from app.models import Data, db, User, UserRole, UserGroup, CourseAdded, UserLogin, UniCourse
-from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_pref, get_user_visa_points, get_chart_admin, get_chart_migrant, get_courses, get_course_by_id, add_new_course, update_course, delete_course, get_universities
+from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_pref, get_user_visa_points, get_chart_migrant, get_courses, get_course_by_id, add_new_course, update_course, delete_course, get_universities
 
 main = Blueprint('main', __name__)
 
