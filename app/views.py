@@ -341,7 +341,7 @@ def admin_statistics():
     logins_applicants = UserLogin.query.filter_by(group_name='Applicants').all()
     logins_institutions = UserLogin.query.filter_by(group_name='Educational Institution').all()
     logins_agencies = UserLogin.query.filter_by(group_name='Migration Agencies').all()
-
+    
     # Extract data for each group (for the last 6 months)
     line_values_applicants = [login.total_logins for login in logins_applicants]
     line_values_institutions = [login.total_logins for login in logins_institutions]

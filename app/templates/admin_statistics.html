@@ -10,14 +10,16 @@
 <aside class="sidebar">
   <h2>Admin Dashboard</h2>
   <ul>
-    <li><a href="#">Agencies Statistics</a></li>
+    <li>
+      <a href="{{ url_for('main.migra_statistics') }}">Agencies Statistics</a>
+    </li>
     <li><a href="#">Agencies Management</a></li>
     <li>
       <a href="{{ url_for('main.edu_statistics') }}"
         >Educational Institutions Statistics</a
       >
     </li>
-    <li><a href="#">Course Management</a></li>
+    <li><a href="{{ url_for('main.courses') }}">Course Management</a></li>
     <li><a href="{{ url_for('main.index') }}">Home Page</a></li>
   </ul>
 </aside>

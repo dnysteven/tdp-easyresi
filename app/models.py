@@ -277,7 +277,7 @@ class UserGroup(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     group_name = db.Column(db.String(255), nullable=False)
-    total_users = db.Column(db.Integer, nullable=False)
+    total_users = db.Column(db.String(255), nullable=False)
 
 
 class UserLogin(db.Model):
@@ -285,7 +285,7 @@ class UserLogin(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     group_name = db.Column(db.String(255), nullable=False)
-    login_month = db.Column(db.Date, nullable=False)
+    login_month = db.Column(db.String(255), nullable=False)
     total_logins = db.Column(db.Integer, nullable=False)
 
 
@@ -294,5 +294,5 @@ class CourseAdded(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     category_name = db.Column(db.String(255), nullable=False)
-    added_month = db.Column(db.Date, nullable=False)
+    added_month = db.Column(db.String(255), nullable=False)
     total_courses = db.Column(db.Integer, nullable=False)
