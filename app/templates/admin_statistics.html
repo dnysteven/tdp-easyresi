@@ -1,10 +1,10 @@
-{% extends "base.html" %} 
-
-{% block title %}Visa Points Form - My Application {%endblock %}
-
-{% block css %} <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_dashboard.css') }}"> {% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}Visa Points Form - My Application
+{%endblock %} {% block css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/admin_dashboard.css') }}"
+/>
+{% endblock %} {% block content %}
 
 <!-- Sidebar -->
 <aside class="sidebar">
@@ -18,9 +18,7 @@
       >
     </li>
     <li><a href="#">Course Management</a></li>
-    <li><a href="#">Algorithm</a></li>
-    <li><a href="#">Visa Requirements Management</a></li>
-    <li><a href="{{ url_for('main.index') }}">Exit</a></li>
+    <li><a href="{{ url_for('main.index') }}">Home Page</a></li>
   </ul>
 </aside>
 
