@@ -121,38 +121,6 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 	  }
 	});
 }
-
-  // Function to create Bar Charts
-  function agBarChart(ageGroupLabels, ageGroupValues) {
-	const ctx = document.getElementById('ageGroupChart').getContext('2d');
-	new Chart(ctx, {
-	  type: 'bar',
-	  data: {
-		labels: ageGroupLabels,
-		datasets: [{
-		  data: ageGroupValues,
-		  backgroundColor: ['#48AAAD', '#3A43BA', '#6693FA', '#3B8132', '#95C8D8']
-		}]
-	  },
-	  options: {
-		responsive: true,
-		maintainAspectRatio: false,
-		scales: {
-		  x: {
-			beginAtZero: true
-		  },
-		  y: {
-			beginAtZero: true
-		  }
-		},
-		plugins: {
-		  legend: {
-			display: false
-		  }
-		}
-	  }
-	});
-  }
   
     // Function to create Bar Charts
 	function elBarChart(englishLevelLabels, englishLevelValues) {
@@ -251,36 +219,25 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 	  }
 
 	  // Function to create Bar Charts
-	function elBarChart(educationLevelLabels, ducationLevelValues) {
+	function elBarChart(educationLevelLabels, educationLevelValues) {
 		const ctx = document.getElementById('educationLevelChart').getContext('2d');
 		new Chart(ctx, {
 		  type: 'bar',
 		  data: {
 			labels: educationLevelLabels,
 			datasets: [{
-			  data: ducationLevelValues,
+			  data: educationLevelValues,
 			  backgroundColor: ['#48AAAD', '#3A43BA','#3B8132', '#95C8D8']
 			}]
 		  },
 		  options: {
-			responsive: true,
-			maintainAspectRatio: false,
 			scales: {
-			  x: {
-				beginAtZero: true
-			  },
-			  y: {
-				beginAtZero: true
-			  }
-			},
-			plugins: {
-			  legend: {
-				display: false
-			  }
+				y: {
+					beginAtZero: true // Ensure bars start at zero
+				}
 			}
-		  }
-		});
-	  }
+		}
+	});
   // Function to render the Pie Chart for registered users by groups
   function renderPieChart(pieLabels, pieValues) {
 	const ctxPie = document.getElementById('myPieChart').getContext('2d');
