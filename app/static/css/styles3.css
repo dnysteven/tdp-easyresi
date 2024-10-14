@@ -83,7 +83,7 @@ h3 {
 
 /* The labels section should take the remaining space */
 .chart-labels {
-    color: white
+    color: white;
     width: 18%;
     padding-left: 10px; /* Add some space between the chart and the labels */
     display: grid; 
@@ -93,7 +93,7 @@ h3 {
 
 /* Styling for individual labels */
 .label-yes, .label-no {
-    color: white
+    color: white;
     font-size: 2em; /* Fixed font-size */
     font-weight: bold;
 }

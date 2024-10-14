@@ -1,73 +1,77 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Visa Points Form - My Application
+{%endblock %} {% block css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/admin_dashboard.css') }}"
+/>
+{% endblock %} {% block content %}
 
-{% block title %}Visa Points Form - My Application {%endblock %}
+<!-- Sidebar -->
+<aside class="sidebar">
+  <h2>Admin Dashboard</h2>
+  <ul>
+    <li>
+      <a href="{{ url_for('main.migra_statistics') }}">Agencies Statistics</a>
+    </li>
+    <li><a href="#">Agencies Management</a></li>
+    <li>
+      <a href="{{ url_for('main.edu_statistics') }}"
+        >Educational Institutions Statistics</a
+      >
+    </li>
+    <li><a href="{{ url_for('main.courses') }}">Course Management</a></li>
+    <li><a href="{{ url_for('main.index') }}">Home Page</a></li>
+  </ul>
+</aside>
 
-{% block css %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_dashboard.css') }}">
-{% endblock %}
+<!-- Main Content -->
+<div class="main-content">
+  <!-- Header -->
+  <header>
+    <h1>Website Statistics</h1>
+  </header>
 
-{% block content %}
+  <!-- Dashboard Grid -->
+  <section class="dashboard-grid">
+    <!-- Pie Chart -->
+    <div class="chart-card">
+      <h3>Total Registered Users by User Groups</h3>
+      <canvas id="myPieChart"></canvas>
+    </div>
 
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <h2>Admin Dashboard</h2>
-    <ul>
-      <li><a href="#">Agencies Statistics</a></li>
-      <li><a href="#">Agencies Management</a></li>
-      <li><a href="{{ url_for('main.edu_statistics') }}">Educational Institutions Statistics</a></li>
-      <li><a href="{{ url_for('main.courses') }}">Course Management</a></li>
-      <li><a href="{{ url_for('main.index') }}">Home Page</a></li>
-    </ul>
-  </aside>
+    <!-- Line Chart -->
+    <div class="chart-card">
+      <h3>Monthly User Logins by User Groups</h3>
+      <canvas id="myLineChart"></canvas>
+    </div>
 
-  <!-- Main Content -->
-  <div class="main-content">
-    <!-- Header -->
-    <header>
-      <h1>Website Statistics</h1>
-    </header>
+    <!-- Stacked Bar Chart -->
+    <div class="chart-card full-width">
+      <h3>Total Courses Added in the Last 6 Months</h3>
+      <canvas id="myBarChart"></canvas>
+    </div>
+  </section>
+</div>
 
-    <!-- Dashboard Grid -->
-    <section class="dashboard-grid">
-      <!-- Pie Chart -->
-      <div class="chart-card">
-        <h3>Total Registered Users by User Groups</h3>
-        <canvas id="myPieChart"></canvas>
-      </div>
+<!-- Pass processed chart data from Flask to JS via the window object -->
+<script>
+  window.pieLabels = {{ pie_labels | tojson }};
+  window.pieValues = {{ pie_values | tojson }};
+  window.lineLabels = {{ line_labels | tojson }};
+  window.lineValuesApplicants = {{ line_values_applicants | tojson }};
+  window.lineValuesInstitutions = {{ line_values_institutions | tojson }};
+  window.lineValuesAgencies = {{ line_values_agencies | tojson }};
+  window.barLabels = {{ bar_labels | tojson }};
+  window.barValuesScience = {{ bar_values_science | tojson }};
+  window.barValuesTechnology = {{ bar_values_technology | tojson }};
+  window.barValuesEngineering = {{ bar_values_engineering | tojson }};
+  window.barValuesMath = {{ bar_values_math | tojson }};
+  window.barValuesICT = {{ bar_values_ict | tojson }};
+  window.barValuesOthers = {{ bar_values_others | tojson }};
+</script>
 
-      <!-- Line Chart -->
-      <div class="chart-card">
-        <h3>Monthly User Logins by User Groups</h3>
-        <canvas id="myLineChart"></canvas>
-      </div>
-
-      <!-- Stacked Bar Chart -->
-      <div class="chart-card full-width">
-        <h3>Total Courses Added in the Last 6 Months</h3>
-        <canvas id="myBarChart"></canvas>
-      </div>
-    </section>
-  </div>
-
-  <!-- Pass processed chart data from Flask to JS via the window object -->
-  <script>
-    window.pieLabels = {{ pie_labels | tojson }};
-    window.pieValues = {{ pie_values | tojson }};
-    window.lineLabels = {{ line_labels | tojson }};
-    window.lineValuesApplicants = {{ line_values_applicants | tojson }};
-    window.lineValuesInstitutions = {{ line_values_institutions | tojson }};
-    window.lineValuesAgencies = {{ line_values_agencies | tojson }};
-    window.barLabels = {{ bar_labels | tojson }};
-    window.barValuesScience = {{ bar_values_science | tojson }};
-    window.barValuesTechnology = {{ bar_values_technology | tojson }};
-    window.barValuesEngineering = {{ bar_values_engineering | tojson }};
-    window.barValuesMath = {{ bar_values_math | tojson }};
-    window.barValuesICT = {{ bar_values_ict | tojson }};
-    window.barValuesOthers = {{ bar_values_others | tojson }};
-  </script>
-
-  <!-- Link to external JavaScript file -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+<!-- Link to external JavaScript file -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
 
 {% endblock %}

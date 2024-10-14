@@ -277,7 +277,7 @@ class UserGroup(db.Model):
 
 	id = db.Column(db.Integer, primary_key=True)
 	group_name = db.Column(db.String(255), nullable=False)
-	total_users = db.Column(db.Integer, nullable=False)
+	total_users = db.Column(db.String(255), nullable=False)
 
 	def __init__(self, group_name, total_users):
 		self.group_name = group_name
@@ -286,10 +286,10 @@ class UserGroup(db.Model):
 class UserLogin(db.Model):
 	__tablename__ = 'user_logins'
 
-	id = db.Column(db.Integer, primary_key=True)
-	group_name = db.Column(db.String(255), nullable=False)
-	login_month = db.Column(db.Date, nullable=False)
-	total_logins = db.Column(db.Integer, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    group_name = db.Column(db.String(255), nullable=False)
+    login_month = db.Column(db.String(255), nullable=False)
+    total_logins = db.Column(db.Integer, nullable=False)
 
 	def __init__(self, group_name, login_month, total_logins):
 		self.group_name = group_name
@@ -300,10 +300,10 @@ class UserLogin(db.Model):
 class CourseAdded(db.Model):
 	__tablename__ = 'courses_added'
 
-	id = db.Column(db.Integer, primary_key=True)
-	category_name = db.Column(db.String(255), nullable=False)
-	added_month = db.Column(db.Date, nullable=False)
-	total_courses = db.Column(db.Integer, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    category_name = db.Column(db.String(255), nullable=False)
+    added_month = db.Column(db.String(255), nullable=False)
+    total_courses = db.Column(db.Integer, nullable=False)
 
 	def __init__(self, category_name, added_month, total_courses):
 		self.category_name = category_name
