@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Manage University{% endblock %}
+
+{% block content %}
+  <h1>{% if university %}Edit{% else %}Add New{% endif %} University</h1>
+  
+  <form method="POST" action="{{ url_for('main.manage_university', university_id=university.id if university else None) }}">
+    <label for="university">University Name:</label>
+    <input type="text" id="university" name="university" value="{{ university.university if university else '' }}" required><br><br>
+
+    <label for="street">Street:</label>
+    <input type="text" id="street" name="street" value="{{ university.street if university else '' }}"><br><br>
+
+    <label for="suburb">Suburb:</label>
+    <input type="text" id="suburb" name="suburb" value="{{ university.suburb if university else '' }}"><br><br>
+
+    <label for="state">State:</label>
+    <input type="text" id="state" name="state" value="{{ university.state if university else '' }}" required><br><br>
+
+    <label for="postcode">Postcode:</label>
+    <input type="text" id="postcode" name="postcode" value="{{ university.postcode if university else '' }}" required><br><br>
+
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" name="phone" value="{{ university.phone if university else '' }}"><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="{{ university.email if university else '' }}" required><br><br>
+
+    <input type="submit" value="{{ 'Update' if university else 'Add' }}">
+  </form>
+{% endblock %}
