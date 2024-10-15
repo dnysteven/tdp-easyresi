@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
 from app.models import Data, db, User, UserRole, UserGroup, CourseAdded, UserLogin, UniCourse
-from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_pref, get_user_visa_points, get_chart_migrant, get_courses, get_course_by_id, add_new_course, update_course, delete_course, get_universities, add_new_university, update_university, get_university_by_id, delete_university_by_id, get_occupations, get_occupation_by_id, add_new_occupation, update_occupation, delete_occupation_by_id, get_living_costs, get_living_cost_by_id, add_new_living_cost, update_living_cost, delete_living_cost_by_id
+from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_pref, get_user_visa_points, get_chart_migrant, get_chart_edu, get_courses, get_course_by_id, add_new_course, update_course, delete_course, get_universities, add_new_university, update_university, get_university_by_id, delete_university_by_id, get_occupations, get_occupation_by_id, add_new_occupation, update_occupation, delete_occupation_by_id, get_living_costs, get_living_cost_by_id, add_new_living_cost, update_living_cost, delete_living_cost_by_id
 
 main = Blueprint('main', __name__)
 
