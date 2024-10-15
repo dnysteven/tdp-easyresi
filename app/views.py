@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
 from app.models import Data, db, User, UserRole, UserGroup, CourseAdded, UserLogin, UniCourse
-from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_pref, get_user_visa_points, get_chart_migrant, get_chart_education, get_courses, get_course_by_id, add_new_course, update_course, delete_course, get_universities, add_new_university, update_university, get_university_by_id, delete_university_by_id
+from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_pref, get_user_visa_points, get_chart_migrant, get_chart_edu, get_courses, get_course_by_id, add_new_course, update_course, delete_course, get_universities, add_new_university, update_university, get_university_by_id, delete_university_by_id, get_occupations, get_occupation_by_id, add_new_occupation, update_occupation, delete_occupation_by_id, get_living_costs, get_living_cost_by_id, add_new_living_cost, update_living_cost, delete_living_cost_by_id
 
 main = Blueprint('main', __name__)
 
@@ -565,3 +565,85 @@ def manage_university():
 def delete_university(university_id):
 	delete_university_by_id(university_id)
 	return redirect(url_for('main.universities'))
+
+# Occupation
+@main.route('/occupations')
+@login_required
+def occupations():
+	username = session.get('username')
+	role = session.get('user_role')
+	user_first_name, user_last_name = get_user_name()
+	occupations = get_occupations()
+
+	return render_template('occupation.html', user_first_name=user_first_name, user_last_name=user_last_name, header=True, footer=True, occupations=occupations)
+
+@main.route('/manage_occupation', methods=['GET', 'POST'])
+@login_required
+def manage_occupation():
+	username = session.get('username')
+	role = session.get('user_role')
+	user_first_name, user_last_name = get_user_name()
+
+	occupation_id = request.args.get('occupation_id')
+	occupation = None
+
+	if request.method == 'POST':
+		data = request.form
+		if occupation_id:
+			update_occupation(data, occupation_id)
+		else:
+			add_new_occupation(data)
+		return redirect(url_for('main.occupations'))
+
+	if occupation_id:
+		occupation = get_occupation_by_id(occupation_id)
+
+	return render_template('manage_occupation.html', user_first_name=user_first_name, user_last_name=user_last_name, header=True, footer=True, occupation=occupation)
+
+@main.route('/delete_occupation/<int:occupation_id>', methods=['POST'])
+@login_required
+def delete_occupation(occupation_id):
+	delete_occupation_by_id(occupation_id)
+	return redirect(url_for('main.occupations'))
+
+# View for living_cost.html
+@main.route('/living_cost')
+@login_required
+def living_cost():
+	username = session.get('username')
+	role = session.get('user_role')
+	user_first_name, user_last_name = get_user_name()
+	costs = get_living_costs()
+
+	return render_template('living_cost.html', header=True, footer=True, user_first_name=user_first_name, user_last_name=user_last_name, costs=costs)
+
+@main.route('/manage_living_cost', methods=['GET', 'POST'])
+@login_required
+def manage_living_cost():
+	username = session.get('username')
+	role = session.get('user_role')
+	user_first_name, user_last_name = get_user_name()
+  
+	living_cost_id = request.args.get('living_cost_id')
+	cost = None
+
+	if request.method == 'POST':
+		data = request.form
+		if living_cost_id:
+			update_living_cost(data, living_cost_id)
+		else:
+			add_new_living_cost(data)
+		
+		return redirect(url_for('main.living_cost'))
+
+	if living_cost_id:
+		cost = get_living_cost_by_id(living_cost_id)
+	
+	return render_template('manage_living_cost.html', header=True, footer=True, user_first_name=user_first_name, user_last_name=user_last_name, cost=cost)
+
+@main.route('/delete_living_cost/<int:living_cost_id>', methods=['POST'])
+@login_required
+def delete_living_cost(living_cost_id):
+	delete_living_cost_by_id(living_cost_id)
+
+	return redirect(url_for('main.living_cost'))

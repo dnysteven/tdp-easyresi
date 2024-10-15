@@ -100,6 +100,7 @@
                   <th>Course Name</th>
                   <th>University</th>
                   <th>Address</th>
+                  <th>Tuition Fee</th>
                   <th>Date Saved</th>
                 </tr>
               </thead>
@@ -109,6 +110,7 @@
                     <td>{{ course_pref.UniCourse.course_name }}</td>
                     <td>{{ course_pref.University.university }}</td>
                     <td>{{ course_pref.University.street }}, {{ course_pref.University.suburb }} {{ course_pref.University.state }} {{ course_pref.University.postcode }}</td>
+                    <td>${{ course_pref.UniCourse.tuition_fee }}</td>
                     <td>{{ course_pref.UserCoursePref.created_at.strftime('%m/%d/%Y %H:%M:%S') }}</td>
                   </tr>
                 {% endfor %}

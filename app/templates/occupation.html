@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Skilled Occupation List Management{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles2.css') }}">
+{% endblock %}
+
+{% block content %}
+  <h2>Occupation List</h2>  
+  <a href="{{ url_for('main.manage_occupation') }}" class="btn btn-primary">Add New Occupation</a>  
+  <table id="occupationManageTable">
+    <thead>
+      <tr>
+        <th>ANZSCO Code</th>
+        <th>Occupation</th>
+        <th>Type</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for occupation in occupations %}
+        <tr>
+          <td>{{ occupation.anzsco }}</td>
+          <td>{{ occupation.occupation }}</td>
+          <td>{{ occupation.type }}</td>
+          <td>
+            <button class="btn btn-warning" onclick="window.location.href='{{ url_for('main.manage_occupation', occupation_id=occupation.id) }}'">Edit</button>
+            <form method="POST" action="{{ url_for('main.delete_occupation', occupation_id=occupation.id) }}">
+              <input type="submit" value="Delete">
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- jQuery and DataTables JS -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+{% endblock %}
