@@ -549,44 +549,49 @@ def get_chart_migrant():
   
   return specialist_education_labels, specialist_education_values, australian_study_labels, australian_study_values, professional_year_labels, professional_year_values, community_language_labels, community_language_values, regional_study_labels, regional_study_values, english_level_labels, english_level_values, overseas_employment_labels, overseas_employment_values, australian_employment_labels, australian_employment_values, education_level_labels, education_level_values
 
-def get_chart_edu():
-  # Pie Chart Data (Applicants Completed Specialist Education Qualification)
-  specialist_education_labels = ['yes', 'no']
-  specialist_education_values = [300, 100]
-  
-  # Pie Chart Data (Applicants Met Australian Study Requirement)
-  australian_study_labels = ['yes', 'no']
-  australian_study_values = [200, 100]
-  
-  # Pie Chart Data (Applicants Completed Professional Year in Australia)
-  professional_year_labels = ['yes', 'no']
-  professional_year_values = [100, 100]
-  
-  # Pie Chart Data (Applicants Who Can Speak Community Language)
-  community_language_labels = ['yes', 'no']
-  community_language_values = [100, 200]
-  
-  # Pie Chart Data (Applicants Completed Regional Study)
-  regional_study_labels = ['yes', 'no']
-  regional_study_values = [100, 300]
-  
-  # Bar Chart Data (Applicants by English Language Level)
-  english_level_labels = ['competent', 'proficient', 'superior']
-  english_level_values = [50, 100, 120]
-  
-  # Bar Chart Data (Overseas Skilled Employment)
-  overseas_employment_labels = ['0-1', '1-2', '3-4', '5-7', '>=8']
-  overseas_employment_values = [50, 60, 70, 80, 90]
-  
-  # Bar Chart Data (Australian Skilled Employment)
-  australian_employment_labels = ['0-1', '1-2', '3-4', '5-7', '>=8']
-  australian_employment_values = [90, 80, 70, 60, 50]
-  
-  # Bar Chart Data (Highest Level of Education)
-  education_level_labels = ['doctorate', 'bachelor', 'diploma_or_trade', 'other_recognised']
-  education_level_values = [90, 80, 60, 40]
-  
-  return specialist_education_labels, specialist_education_values, australian_study_labels, australian_study_values, professional_year_labels, professional_year_values, community_language_labels, community_language_values, regional_study_labels, regional_study_values, english_level_labels, english_level_values, overseas_employment_labels, overseas_employment_values, australian_employment_labels, australian_employment_values, education_level_labels, education_level_values
+def get_chart_education():
+    # Pie Chart Data (Applicants Completed Professional Year in Australia)
+    professional_year_labels = ['Yes', 'No']
+    professional_year_values = [100, 100]
+    
+    # Pie Chart Data (Applicants Completed Regional Study)
+    regional_study_labels = ['Yes', 'No']
+    regional_study_values = [100, 300]
+    
+    # Pie Chart Data (Interested State to Study)
+    state_labels = ['NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'ACT', 'NT']
+    state_values = [50, 40, 30, 20, 10, 5, 3, 2]
+    
+    # Bar Chart Data (Applicants Completed Specialist Education Qualification)
+    specialist_education_labels = ['science', 'technology', 'engineering', 'mathematics', 'ict']
+    specialist_education_values = [300, 200, 50, 40, 100]
+    
+    # Bar Chart Data (Interested Course Duration)
+    course_duration_labels = ['Above 2 year', 'Above 4 years', 'Above 6 years']
+    course_duration_values = [60, 100, 80]
+    
+    # Bar Chart Data (Expected Maximum Course Fee)
+    tuition_fee_labels = ['Below 60k', '60k-100k', 'Above 100k']
+    tuition_fee_values = [50, 70, 30]
+    
+    # Bar Chart Data (Highest Level of Education)
+    education_level_labels = ['Doctorate', 'Bachelor', 'Diploma or Trade', 'Other Recognised']
+    education_level_values = [90, 80, 60, 40]
+    
+    # Bar Chart Data (Applicants by English Language Level)
+    english_level_labels = ['Competent', 'Proficient', 'Superior']
+    english_level_values = [50, 100, 120]
+    
+    return (
+        professional_year_labels, professional_year_values,
+        regional_study_labels, regional_study_values,
+        state_labels, state_values,
+        specialist_education_labels, specialist_education_values,
+        course_duration_labels, course_duration_values,
+        tuition_fee_labels, tuition_fee_values,
+        education_level_labels, education_level_values,
+        english_level_labels, english_level_values
+    )
 
 # Get all courses
 def get_courses(username, user_role):

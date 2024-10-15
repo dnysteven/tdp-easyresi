@@ -4,7 +4,7 @@
 
 {% block css %}
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles2.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles3.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles4.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -60,84 +60,81 @@
     </div>
   <div class="chart-wrapper">
     <div class="chart-container">
-        <h3>Applicants Completed Specialist Education</h3>
-        <canvas id="specialistEducationChart"></canvas>
+        <h3>Willing to complete Professional Year Program</h3>
+        <canvas id="willingtocompleteprofessionalYearProgram"></canvas>
     </div>
   
     <div class="chart-container">
-        <h3>Applicants Met Australian Study Requirement</h3>
-        <canvas id="australianStudyRequirementChart"></canvas>
+        <h3>Willing to study in Regional Area</h3>
+        <canvas id="willingtostudyinRegionalArea"></canvas>
     </div>
 
     <div class="chart-container">
-        <h3>Completed Professional Year in Australia</h3>
-        <canvas id="professionalYearChart"></canvas>
-    </div>
-
-    <div class="chart-container">
-        <h3>Applicants Who Can Speak Community Language</h3>
-        <canvas id="communityLanguageChart"></canvas>
-    </div>
-
-    <div class="chart-container">
-        <h3>Applicants Completed Regional Study in Australia</h3>
-        <canvas id="regionalStudyChart"></canvas>
-    </div>
-  </div>
-
-  <div class="chart-wrapper">
-  <div class="chart-cont">
-      <h3>Highest Level of Education</h3>
-      <canvas id="educationLevelChart"></canvas>
+      <h3>Interested State to Study</h3>
+      <canvas id="interestedstatetoStudy"></canvas>
   </div>
 
     <div class="chart-cont">
-        <h3>Applicants by English Language Level</h3>
-        <canvas id="englishLevelChart"></canvas>
+       <h3>Applicants by English Language Level</h3>
+       <canvas id="englishLevelChart"></canvas>
     </div>
 
-    <div class="chart-container">
-        <h3>Overseas Skilled Employment</h3>
-        <canvas id="overseasEmploymentChart"></canvas>
-    </div>
+  </div>
 
-    <div class="chart-container">
-        <h3>Australian Skilled Employment</h3>
-        <canvas id="australianEmploymentChart"></canvas>
-    </div>
+  <div class="chart-wrapper">
+  <div class="chart-bar">
+    <h3>Interested Study Categories</h3>
+    <canvas id="interestedStudyCategories"></canvas>
+  </div>
+
+  <div class="chart-bar">
+    <h3>Interested Course Duration</h3>
+    <canvas id="interestedCourseDuration"></canvas>
+  </div>
+
+  <div class="chart-bar">
+    <h3>Expected Maximum Course Fee</h3>
+    <canvas id="expectedMaximumCourseFee"></canvas>
+  </div>
+
+  <div class="chart-cont">
+      <h3>Highest Level of Education Willing to Achieve</h3>
+      <canvas id="educationLevelChart"></canvas>
+  </div>
+
 
 </div>
 
   <!-- Pass processed chart data from Flask to JS via the window object -->
   <script>
     // Pie Chart Data
-    window.specialistEducationLabels = {{ specialist_education_labels|tojson }};
-    window.specialistEducationValues = {{ specialist_education_values|tojson }};
+    window.willingtocompleteprofessionalYearProgramLabels = {{ professional_year_labels|tojson }};
+    window.willingtocompleteprofessionalYearProgramValues = {{ professional_year_values|tojson }};
 
-    window.australianStudyRequirementLabels = {{ australian_study_labels|tojson }};
-    window.australianStudyRequirementValues = {{ australian_study_values|tojson }};
+    window.willingtostudyinRegionalAreaLabels = {{ regional_study_labels|tojson }};
+    window.willingtostudyinRegionalAreaValues = {{ regional_study_values|tojson }};
 
-    window.professionalYearLabels = {{ professional_year_labels|tojson }};
-    window.professionalYearValues = {{ professional_year_values|tojson }};
+    window.interestedstatetoStudyLabels = {{ state_labels|tojson }};
+    window.interestedstatetoStudyValues = {{ state_values|tojson }};
 
-    window.communityLanguageLabels = {{ community_language_labels|tojson }};
-    window.communityLanguageValues = {{ community_language_values|tojson }};
+     // Bar Chart Data
 
-    window.regionalStudyLabels = {{ regional_study_labels|tojson }};
-    window.regionalStudyValues = {{ regional_study_values|tojson }};
+    window.interestedStudyCategoriesLabels = {{ specialist_education_labels|tojson }};
+    window.interestedStudyCategoriesValues = {{ specialist_education_values|tojson }};
 
-    // Bar Chart Data
+    window.interestedCourseDurationLabels = {{ course_duration_labels|tojson }};
+    window.interestedCourseDurationValues = {{ course_duration_values|tojson }};
+
+    window.expectedMaximumCourseFeeLabels = {{ tuition_fee_labels|tojson }};
+    window.expectedMaximumCourseFeeValues = {{ tuition_fee_values|tojson }};
+
+    window.educationLevelChartLabels = {{ education_level_labels|tojson }};
+    window.educationLevelChartValues = {{ education_level_values|tojson }};
+
     window.englishLevelLabels = {{ english_level_labels|tojson }};
     window.englishLevelValues = {{ english_level_values|tojson }};
 
-    window.overseasEmploymentLabels = {{ overseas_employment_labels|tojson }};
-    window.overseasEmploymentValues = {{ overseas_employment_values|tojson }};
 
-    window.australianEmploymentLabels = {{ australian_employment_labels|tojson }};
-    window.australianEmploymentValues = {{ australian_employment_values|tojson }};
-
-    window.educationLevelLabels = {{ education_level_labels|tojson }};
-    window.educationLevelValues = {{ education_level_values|tojson }};
   </script>
 
   <!-- Link to external JavaScript files -->

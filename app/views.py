@@ -2,7 +2,7 @@
 from functools import wraps
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
 from app.models import Data, db, User, UserRole, UserGroup, CourseAdded, UserLogin, UniCourse
-from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_pref, get_user_visa_points, get_chart_migrant, get_chart_edu, get_courses, get_course_by_id, add_new_course, update_course, delete_course_by_id, get_universities, add_new_university, update_university, get_university_by_id, delete_university_by_id, get_occupations, get_occupation_by_id, add_new_occupation, update_occupation, delete_occupation_by_id, get_living_costs, get_living_cost_by_id, add_new_living_cost, update_living_cost, delete_living_cost_by_id
+from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_pref, get_user_visa_points, get_chart_migrant, get_chart_education, get_courses, get_course_by_id, add_new_course, update_course, delete_course_by_id, get_universities, add_new_university, update_university, get_university_by_id, delete_university_by_id, get_occupations, get_occupation_by_id, add_new_occupation, update_occupation, delete_occupation_by_id, get_living_costs, get_living_cost_by_id, add_new_living_cost, update_living_cost, delete_living_cost_by_id
 
 main = Blueprint('main', __name__)
 
@@ -397,53 +397,50 @@ def admin_statistics():
 													bar_values_ict=bar_values_ict,
 													bar_values_others=bar_values_others)
     
+
 @main.route('/edu_statistics')
 def edu_statistics():
-    # Get chart data from the controller
-	specialist_education_labels, specialist_education_values, australian_study_labels, australian_study_values, professional_year_labels, professional_year_values, community_language_labels, community_language_values, regional_study_labels, regional_study_values, english_level_labels, english_level_values, overseas_employment_labels, overseas_employment_values, australian_employment_labels, australian_employment_values, education_level_labels, education_level_values = get_chart_edu()
+    # Fetch chart data using a function in your controller (or model)
+    professional_year_labels, professional_year_values, regional_study_labels, regional_study_values, state_labels, state_values,specialist_education_labels, specialist_education_values, course_duration_labels, course_duration_values, tuition_fee_labels, tuition_fee_values, education_level_labels, education_level_values, english_level_labels, english_level_values,  = get_chart_education()
 
-	# Ensure that none of the variables are undefined or None
-	specialist_education_labels = specialist_education_labels or []
-	specialist_education_values = specialist_education_values or []
-	australian_study_labels = australian_study_labels or []
-	australian_study_values = australian_study_values or []
-	professional_year_labels = professional_year_labels or []
-	professional_year_values = professional_year_values or []
-	community_language_labels = community_language_labels or []
-	community_language_values = community_language_values or []
-	regional_study_labels = regional_study_labels or []
-	regional_study_values = regional_study_values or []
-	english_level_labels = english_level_labels or []
-	english_level_values = english_level_values or []
-	overseas_employment_labels = overseas_employment_labels or []
-	overseas_employment_values = overseas_employment_values or []
-	australian_employment_labels = australian_employment_labels or []
-	australian_employment_values = australian_employment_values or []
-	education_level_labels = education_level_labels or []
-	education_level_values = education_level_values or []
+     # Ensure variables are not None, using empty lists as fallback
+    professional_year_labels = professional_year_labels or []
+    professional_year_values = professional_year_values or []
+    regional_study_labels = regional_study_labels or []
+    regional_study_values = regional_study_values or []
+    state_labels = state_labels or []
+    state_values = state_values or []
+    specialist_education_labels = specialist_education_labels or []
+    specialist_education_values = specialist_education_values or []
+    course_duration_labels = course_duration_labels or []
+    course_duration_values = course_duration_values or []
+    tuition_fee_labels = tuition_fee_labels or []
+    tuition_fee_values = tuition_fee_values or []
+    education_level_labels = education_level_labels or []
+    education_level_values = education_level_values or []
+    english_level_labels = english_level_labels or []
+    english_level_values = english_level_values or []
 
-	return render_template(
+    # Render the template and pass all necessary data for the charts
+    return render_template( 
         'edu_statistics.html', header=True, footer=True,
-							specialist_education_labels=specialist_education_labels,
-							specialist_education_values=specialist_education_values,
-							australian_study_labels=australian_study_labels,
-							australian_study_values=australian_study_values,
-							professional_year_labels=professional_year_labels,
-							professional_year_values=professional_year_values,
-							community_language_labels=community_language_labels,
-							community_language_values=community_language_values,
-							regional_study_labels=regional_study_labels,
-							regional_study_values=regional_study_values,
-							english_level_labels=english_level_labels,
-							english_level_values=english_level_values,
-							overseas_employment_labels=overseas_employment_labels,
-							overseas_employment_values=overseas_employment_values,
-							australian_employment_labels=australian_employment_labels, 
-							australian_employment_values=australian_employment_values,
-							education_level_labels=education_level_labels,
-							education_level_values=education_level_values
-
-	)
+        professional_year_labels=professional_year_labels,
+        professional_year_values=professional_year_values,
+        regional_study_labels=regional_study_labels,
+        regional_study_values=regional_study_values,
+        state_labels=state_labels,
+        state_values=state_values,
+        specialist_education_labels=specialist_education_labels,
+        specialist_education_values=specialist_education_values,
+        course_duration_labels=course_duration_labels,
+        course_duration_values=course_duration_values,
+        tuition_fee_labels=tuition_fee_labels,
+        tuition_fee_values=tuition_fee_values,
+        education_level_labels=education_level_labels,
+        education_level_values=education_level_values,
+        english_level_labels=english_level_labels,
+        english_level_values=english_level_values
+    )
 
 @main.route('/migra_statistics')
 def migra_statistics():

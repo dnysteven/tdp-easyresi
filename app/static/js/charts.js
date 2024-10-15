@@ -1,4 +1,4 @@
-// Function to create Pie Charts
+// Pie chart for Migration Statistics
 function sePieChart(specialistEducationLabels, specialistEducationValues) {
 	const ctx = document.getElementById('specialistEducationChart').getContext('2d');
 	new Chart(ctx, {
@@ -23,7 +23,7 @@ function sePieChart(specialistEducationLabels, specialistEducationValues) {
   });
 }
 
-// Function to create Pie Charts
+// Pie chart for Migration Statistics
 function asrPieChart(australianStudyRequirementLabels, australianStudyRequirementValues) {
 	const ctx = document.getElementById('australianStudyRequirementChart').getContext('2d');
 	new Chart(ctx, {
@@ -48,7 +48,7 @@ function asrPieChart(australianStudyRequirementLabels, australianStudyRequiremen
 	});
 }
   
-// Function to create Pie Charts
+// Pie chart for Migration Statistics
 function pyPieChart(professionalYearLabels, professionalYearValues) {
 	const ctx = document.getElementById('professionalYearChart').getContext('2d');
 	new Chart(ctx, {
@@ -73,7 +73,7 @@ function pyPieChart(professionalYearLabels, professionalYearValues) {
 	});
 }
 
-// Function to create Pie Charts
+// Pie chart for Migration Statistics
 function clPieChart(communityLanguageLabels, communityLanguageValues) {
 	const ctx = document.getElementById('communityLanguageChart').getContext('2d');
 	new Chart(ctx, {
@@ -97,7 +97,7 @@ function clPieChart(communityLanguageLabels, communityLanguageValues) {
 	  }
 	});
 }
-// Function to create Pie Charts
+// Pie chart for Migration Statistics
 function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 	const ctx = document.getElementById('regionalStudyChart').getContext('2d');
 	new Chart(ctx, {
@@ -122,7 +122,7 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 	});
 }
   
-    // Function to create Bar Charts
+    // Bar chart for Migration Statistics
 	function elBarChart(englishLevelLabels, englishLevelValues) {
 		const ctx = document.getElementById('englishLevelChart').getContext('2d');
 		new Chart(ctx, {
@@ -163,7 +163,7 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 		});
 	}	
 
-	  // Function to create Bar Charts
+	  // Bar chart for Migration Statistics
 	function oeBarChart(overseasEmploymentLabels, overseasEmploymentValues) {
 		const ctx = document.getElementById('overseasEmploymentChart').getContext('2d');
 		new Chart(ctx, {
@@ -195,7 +195,7 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 		});
 	  }
 
-	  // Function to create Bar Charts
+	  // Bar chart for Migration Statistics
 	function aeBarChart(australianEmploymentLabels, australianEmploymentValues) {
 		const ctx = document.getElementById('australianEmploymentChart').getContext('2d');
 		new Chart(ctx, {
@@ -227,7 +227,7 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 		});
 	  }
 
-	  // Function to create Bar Charts
+	  // Bar chart for Migration Statistics
 	  function edBarChart(educationLevelLabels, educationLevelValues) {
 		const ctx = document.getElementById('educationLevelChart').getContext('2d');
 		new Chart(ctx, {
@@ -265,6 +265,241 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 		});
 	}	
 	
+// Pie chart for Education Provider Statistics
+function wtcpypPieChart(willingtocompleteprofessionalYearProgramLabels, willingtocompleteprofessionalYearProgramValues) {
+	const ctx = document.getElementById('willingtocompleteprofessionalYearProgram').getContext('2d');
+	new Chart(ctx, {
+		type: 'pie',
+    data: {
+      labels: willingtocompleteprofessionalYearProgramLabels, 
+      datasets: [{
+        data: willingtocompleteprofessionalYearProgramValues,
+        backgroundColor: ['#48AAAD', '#3A43BA'], // Using the specified colors
+		hoverOffset: 4
+	}]
+
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+        },
+      }
+    }
+  });
+}
+
+// Pie chart for Education Provider Statistics
+function wtsralPieChart(willingtostudyinRegionalAreaLabels, willingtostudyinRegionalAreaValues) {
+	const ctx = document.getElementById('willingtostudyinRegionalArea').getContext('2d');
+	new Chart(ctx, {
+		type: 'pie',
+    data: {
+      labels: willingtostudyinRegionalAreaLabels, 
+      datasets: [{
+        data: willingtostudyinRegionalAreaValues,
+        backgroundColor: ['#48AAAD', '#3A43BA'], // Using the specified colors
+		hoverOffset: 4
+	}]
+
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+        },
+      }
+    }
+  });
+}
+
+// Pie chart for Education Provider Statistics
+function istsPieChart(interestedstatetoStudyLabels, interestedstatetoStudyValues) {
+	const ctx = document.getElementById('interestedstatetoStudy').getContext('2d');
+	new Chart(ctx, {
+		type: 'pie',
+    data: {
+      labels: interestedstatetoStudyLabels, 
+      datasets: [{
+        data: interestedstatetoStudyValues,
+        backgroundColor: ['#48AAAD', '#3A43BA', '#6693FA', '#3B8132', '#95C8D8', '#C7EA46, #4A521E', '#9DC183'], // Using the specified colors
+		hoverOffset: 4
+	}]
+
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+        },
+      }
+    }
+  });
+}
+
+// Bar chart for Education Provider Statistics
+function iscBarChart(interestedStudyCategoriesLabels, interestedStudyCategoriesValues) {
+	const ctx = document.getElementById('interestedStudyCategories').getContext('2d');
+	new Chart(ctx, {
+	  type: 'bar',
+	  data: {
+		labels: interestedStudyCategoriesLabels,
+		datasets: [{
+		  data: interestedStudyCategoriesValues,
+		  backgroundColor: ['#48AAAD', '#3A43BA', '#6693FA', '#3B8132', '#95C8D8']
+		}]
+	  },
+	  options: {
+		responsive: true,
+		maintainAspectRatio: false,
+		scales: {
+		  x: {
+			beginAtZero: true
+		  },
+		  y: {
+			beginAtZero: true
+		  }
+		},
+		plugins: {
+		  legend: {
+			display: false
+		  }
+		}
+	  }
+	});
+  }
+
+  // Bar chart for Education Provider Statistics
+function icdBarChart(interestedCourseDurationLabels, interestedCourseDurationValues) {
+	const ctx = document.getElementById('interestedCourseDuration').getContext('2d');
+	new Chart(ctx, {
+	  type: 'bar',
+	  data: {
+		labels: interestedCourseDurationLabels,
+		datasets: [{
+		  data: interestedCourseDurationValues,
+		  backgroundColor: ['#48AAAD', '#3A43BA', '#6693FA', '#3B8132', '#95C8D8']
+		}]
+	  },
+	  options: {
+		responsive: true,
+		maintainAspectRatio: false,
+		scales: {
+		  x: {
+			beginAtZero: true
+		  },
+		  y: {
+			beginAtZero: true
+		  }
+		},
+		plugins: {
+		  legend: {
+			display: false
+		  }
+		}
+	  }
+	});
+  }
+
+  // Bar chart for Education Provider Statistics
+function emcfvBarChart(expectedMaximumCourseFeeLabels, expectedMaximumCourseFeeValues) {
+	const ctx = document.getElementById('expectedMaximumCourseFee').getContext('2d');
+	new Chart(ctx, {
+	  type: 'bar',
+	  data: {
+		labels: expectedMaximumCourseFeeLabels,
+		datasets: [{
+		  data: expectedMaximumCourseFeeValues,
+		  backgroundColor: ['#48AAAD', '#3A43BA', '#6693FA', '#3B8132', '#95C8D8']
+		}]
+	  },
+	  options: {
+		responsive: true,
+		maintainAspectRatio: false,
+		scales: {
+		  x: {
+			beginAtZero: true
+		  },
+		  y: {
+			beginAtZero: true
+		  }
+		},
+		plugins: {
+		  legend: {
+			display: false
+		  }
+		}
+	  }
+	});
+  }
+
+    // Bar chart for Education Provider Statistics
+function elchBarChart(educationLevelChartLabels, educationLevelChartValues) {
+	const ctx = document.getElementById('educationLevelChart').getContext('2d');
+	new Chart(ctx, {
+	  type: 'bar',
+	  data: {
+		labels: educationLevelChartLabels,
+		datasets: [{
+		  data: educationLevelChartValues,
+		  backgroundColor: ['#48AAAD', '#3A43BA', '#6693FA', '#3B8132', '#95C8D8']
+		}]
+	  },
+	  options: {
+		responsive: true,
+		maintainAspectRatio: false,
+		scales: {
+		  x: {
+			beginAtZero: true
+		  },
+		  y: {
+			beginAtZero: true
+		  }
+		},
+		plugins: {
+		  legend: {
+			display: false
+		  }
+		}
+	  }
+	});
+  }
+
+      // Bar chart for Education Provider Statistics
+function elcharBarChart(englishLevelLabels, englishLevelValues) {
+	const ctx = document.getElementById('englishLevelChart').getContext('2d');
+	new Chart(ctx, {
+	  type: 'bar',
+	  data: {
+		labels: englishLevelLabels,
+		datasets: [{
+		  data: englishLevelValues,
+		  backgroundColor: ['#48AAAD', '#3A43BA', '#6693FA', '#3B8132', '#95C8D8']
+		}]
+	  },
+	  options: {
+		responsive: true,
+		maintainAspectRatio: false,
+		scales: {
+		  x: {
+			beginAtZero: true
+		  },
+		  y: {
+			beginAtZero: true
+		  }
+		},
+		plugins: {
+		  legend: {
+			display: false
+		  }
+		}
+	  }
+	});
+  }
+
   // Function to render the Pie Chart for registered users by groups
   function renderPieChart(pieLabels, pieValues) {
 	const ctxPie = document.getElementById('myPieChart').getContext('2d');
@@ -527,4 +762,37 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 	if (window.educationLevelLabels && window.educationLevelValues) {
 		edBarChart(window.educationLevelLabels, window.educationLevelValues);
 	}	
+
+	// Chart for Education Statistics
+if (window.willingtocompleteprofessionalYearProgramLabels && window.willingtocompleteprofessionalYearProgramValues) {
+    wtcpypPieChart(window.willingtocompleteprofessionalYearProgramLabels, window.willingtocompleteprofessionalYearProgramValues);
+}
+
+if (window.willingtostudyinRegionalAreaLabels && window.willingtostudyinRegionalAreaValues) {
+    wtsralPieChart(window.willingtostudyinRegionalAreaLabels, window.willingtostudyinRegionalAreaValues);
+}
+
+if (window.interestedstatetoStudyLabels && window.interestedstatetoStudyValues) {
+    istsPieChart(window.interestedstatetoStudyLabels, window.interestedstatetoStudyValues);
+}
+
+if (window.interestedStudyCategoriesLabels && window.interestedStudyCategoriesValues) {
+    iscBarChart(window.interestedStudyCategoriesLabels, window.interestedStudyCategoriesValues);
+}
+
+if (window.interestedCourseDurationLabels && window.interestedCourseDurationValues) {
+    icdBarChart(window.interestedCourseDurationLabels, window.interestedCourseDurationValues);
+}
+
+if (window.expectedMaximumCourseFeeLabels && window.expectedMaximumCourseFeeValues) {
+    emcfvBarChart(window.expectedMaximumCourseFeeLabels, window.expectedMaximumCourseFeeValues);
+}
+
+if (window.educationLevelChartLabels && window.educationLevelChartValues) {
+    elchBarChart(window.educationLevelChartLabels, window.educationLevelChartValues);
+}
+
+if (window.englishLevelLabels && window.englishLevelValues) {
+    elcharChart(window.englishLevelLabels, window.englishLevelValues);
+}
 });
