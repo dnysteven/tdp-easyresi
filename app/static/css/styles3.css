@@ -80,6 +80,15 @@ h3 {
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
     flex-direction: column;
 }
+.chart-cont {
+    background-color: #ffffff;
+    width: 25%; /* Adjusted width to fit five charts in a row */
+    display: flex; 
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    flex-direction: column;
+}
 
 /* The labels section should take the remaining space */
 .chart-labels {
@@ -118,9 +127,13 @@ canvas {
 /* Specific styles for different charts */
 .PieChart,
 .BarChart {
-    width: 90%; /* Use a larger percentage for the charts */
-    max-width: 800px; /* Limit maximum width */
-    height: auto; /* Maintain aspect ratio */
+    background-color: #ffffff;
+    width: 18%; /* Adjusted width to fit five charts in a row */
+    display: flex; 
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    flex-direction: column;
 }
 
 /* Responsive design for smaller screens */

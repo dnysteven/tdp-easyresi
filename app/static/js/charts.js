@@ -126,33 +126,42 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 	function elBarChart(englishLevelLabels, englishLevelValues) {
 		const ctx = document.getElementById('englishLevelChart').getContext('2d');
 		new Chart(ctx, {
-		  type: 'bar',
-		  data: {
-			labels: englishLevelLabels,
-			datasets: [{
-			  data: englishLevelValues,
-			  backgroundColor: ['#48AAAD', '#3B8132', '#95C8D8']
-			}]
-		  },
-		  options: {
-			responsive: true,
-			maintainAspectRatio: false,
-			scales: {
-			  x: {
-				beginAtZero: true
-			  },
-			  y: {
-				beginAtZero: true
-			  }
+			type: 'bar', // Bar chart type
+			data: {
+				labels: englishLevelLabels, // Y-axis labels (English language levels)
+				datasets: [{
+					label: 'Number of Applicants',
+					data: englishLevelValues, // X-axis values (number of applicants)
+					backgroundColor: ['#48AAAD', '#3B8132', '#95C8D8'] // Colors for the bars
+				}]
 			},
-			plugins: {
-			  legend: {
-				display: false
-			  }
+			options: {
+				indexAxis: 'y', // This makes the chart horizontal by swapping the axes
+				responsive: true,
+				maintainAspectRatio: false,
+				scales: {
+					x: {
+						beginAtZero: true, // X-axis starts at zero (now horizontal)
+						title: {
+							display: true,
+							text: 'Number of Applicants' // Label for the X-axis (now horizontal)
+						}
+					},
+					y: {
+						title: {
+							display: true,
+							text: 'English Language Level' // Label for the Y-axis (now vertical)
+						}
+					}
+				},
+				plugins: {
+					legend: {
+						display: false // Hide the legend
+					}
+				}
 			}
-		  }
 		});
-	  }
+	}	
 
 	  // Function to create Bar Charts
 	function oeBarChart(overseasEmploymentLabels, overseasEmploymentValues) {
@@ -219,25 +228,43 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 	  }
 
 	  // Function to create Bar Charts
-	function elBarChart(educationLevelLabels, educationLevelValues) {
+	  function edBarChart(educationLevelLabels, educationLevelValues) {
 		const ctx = document.getElementById('educationLevelChart').getContext('2d');
 		new Chart(ctx, {
-		  type: 'bar',
-		  data: {
-			labels: educationLevelLabels,
-			datasets: [{
-			  data: educationLevelValues,
-			  backgroundColor: ['#48AAAD', '#3A43BA','#3B8132', '#95C8D8']
-			}]
-		  },
-		  options: {
-			scales: {
-				y: {
-					beginAtZero: true // Ensure bars start at zero
+			type: 'bar', // Bar chart type
+			data: {
+				labels: educationLevelLabels, // Y-axis labels (education levels)
+				datasets: [{
+					label: 'Number of Applicants',
+					data: educationLevelValues, // X-axis values (number of applicants)
+					backgroundColor: ['#48AAAD', '#3A43BA', '#3B8132', '#95C8D8']
+				}]
+			},
+			options: {
+				indexAxis: 'y', // This makes the chart horizontal by swapping the axes
+				scales: {
+					x: {
+						beginAtZero: true, // X-axis starts at zero (now horizontal)
+						title: {
+							display: true,
+							text: 'Number of Applicants' // Label for the X-axis (now horizontal)
+						},
+						ticks: {
+							stepSize: 10, // X-axis increments by 10
+							max: 100 // Max X-axis value
+						}
+					},
+					y: {
+						title: {
+							display: true,
+							text: 'Highest Level of Education' // Label for the Y-axis (now vertical)
+						}
+					}
 				}
 			}
-		}
-	});
+		});
+	}	
+	
   // Function to render the Pie Chart for registered users by groups
   function renderPieChart(pieLabels, pieValues) {
 	const ctxPie = document.getElementById('myPieChart').getContext('2d');
@@ -481,12 +508,7 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
     rsPieChart(window.regionalStudyLabels, window.regionalStudyValues);
 	}
 
-		// Bar Chart for Age Groups
-	if (window.ageGroupLabels && window.ageGroupValues) {
-		agBarChart(window.ageGroupLabels, window.ageGroupValues);
-	}
-
-	// Bar Chart for English Levels
+		// Bar Chart for English Levels
 	if (window.englishLevelLabels && window.englishLevelValues) {
 		elBarChart(window.englishLevelLabels, window.englishLevelValues);
 	}
@@ -503,6 +525,6 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 
 	// Bar Chart for Education Levels
 	if (window.educationLevelLabels && window.educationLevelValues) {
-		elBarChart(window.educationLevelLabels, window.educationLevelValues);
+		edBarChart(window.educationLevelLabels, window.educationLevelValues);
 	}	
 });

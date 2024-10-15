@@ -379,7 +379,51 @@ def admin_statistics():
     
 @main.route('/edu_statistics')
 def edu_statistics():
-	return render_template('edu_statistics.html')
+    # Get chart data from the controller
+	specialist_education_labels, specialist_education_values, australian_study_labels, australian_study_values, professional_year_labels, professional_year_values, community_language_labels, community_language_values, regional_study_labels, regional_study_values, english_level_labels, english_level_values, overseas_employment_labels, overseas_employment_values, australian_employment_labels, australian_employment_values, education_level_labels, education_level_values = get_chart_edu()
+
+	# Ensure that none of the variables are undefined or None
+	specialist_education_labels = specialist_education_labels or []
+	specialist_education_values = specialist_education_values or []
+	australian_study_labels = australian_study_labels or []
+	australian_study_values = australian_study_values or []
+	professional_year_labels = professional_year_labels or []
+	professional_year_values = professional_year_values or []
+	community_language_labels = community_language_labels or []
+	community_language_values = community_language_values or []
+	regional_study_labels = regional_study_labels or []
+	regional_study_values = regional_study_values or []
+	english_level_labels = english_level_labels or []
+	english_level_values = english_level_values or []
+	overseas_employment_labels = overseas_employment_labels or []
+	overseas_employment_values = overseas_employment_values or []
+	australian_employment_labels = australian_employment_labels or []
+	australian_employment_values = australian_employment_values or []
+	education_level_labels = education_level_labels or []
+	education_level_values = education_level_values or []
+
+	return render_template(
+        'edu_statistics.html', header=True, footer=True,
+							specialist_education_labels=specialist_education_labels,
+							specialist_education_values=specialist_education_values,
+							australian_study_labels=australian_study_labels,
+							australian_study_values=australian_study_values,
+							professional_year_labels=professional_year_labels,
+							professional_year_values=professional_year_values,
+							community_language_labels=community_language_labels,
+							community_language_values=community_language_values,
+							regional_study_labels=regional_study_labels,
+							regional_study_values=regional_study_values,
+							english_level_labels=english_level_labels,
+							english_level_values=english_level_values,
+							overseas_employment_labels=overseas_employment_labels,
+							overseas_employment_values=overseas_employment_values,
+							australian_employment_labels=australian_employment_labels, 
+							australian_employment_values=australian_employment_values,
+							education_level_labels=education_level_labels,
+							education_level_values=education_level_values
+
+	)
 
 @main.route('/migra_statistics')
 def migra_statistics():
