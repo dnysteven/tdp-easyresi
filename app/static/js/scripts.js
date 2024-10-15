@@ -92,6 +92,24 @@ $(document).ready(function() {
     "pageLength": 10       // Set the default page length
   });
 
+  // Initialize DataTables for the occupation manage table
+  $('#occupationManageTable').DataTable({
+    "paging": true,        // Enable pagination
+    "searching": true,     // Enable searching
+    "ordering": true,      // Enable column-based sorting
+    "info": true,          // Show table information (e.g., "Showing X of Y entries")
+    "pageLength": 10       // Set the default page length
+  });
+
+  // Initialize DataTables for the living cost table
+  $('#livingCostTable').DataTable({
+    "paging": true,        // Enable pagination
+    "searching": true,     // Enable searching
+    "ordering": true,      // Enable column-based sorting
+    "info": true,          // Show table information (e.g., "Showing X of Y entries")
+    "pageLength": 10       // Set the default page length
+  });
+
   // Initialize DataTables for the applicant visa table
   $('#applicantVisaTable').DataTable({
     "paging": true,        // Enable pagination

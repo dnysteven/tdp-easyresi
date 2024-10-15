@@ -675,3 +675,71 @@ def delete_university_by_id(university_id):
   if university:
     db.session.delete(university)
     db.session.commit()
+    
+# Controller for occupation list management
+def get_occupations():
+  return OccupationList.query.all()
+
+def get_occupation_by_id(occupation_id):
+  return OccupationList.query.filter_by(id=occupation_id).first()
+
+def add_new_occupation(data):
+  occupation = OccupationList(
+    occupation=data['occupation'],
+    anzsco=data['anzsco'],
+    type=data['type'].upper()  # Ensure type is in uppercase
+  )
+  db.session.add(occupation)
+  db.session.commit()
+
+def update_occupation(data, occupation_id):
+  occupation = OccupationList.query.filter_by(id=occupation_id).first()
+  if occupation:
+    occupation.occupation = data['occupation']
+    occupation.anzsco = data['anzsco']
+    occupation.type = data['type'].upper()  # Ensure type is in uppercase
+    db.session.commit()
+
+def delete_occupation_by_id(occupation_id):
+  occupation = OccupationList.query.filter_by(id=occupation_id).first()
+  if occupation:
+    db.session.delete(occupation)
+    db.session.commit()
+
+# Controller for living cost management
+def get_living_costs():
+  return CostOfLiving.query.all()
+
+def get_living_cost_by_id(living_cost_id):
+  return CostOfLiving.query.filter_by(id=living_cost_id).first()
+
+def add_new_living_cost(data):
+  living_cost = CostOfLiving(
+    state=data['state'],
+    area=data['area'],
+    rent=float(data['rent']),
+    grocery=float(data['grocery']),
+    transportation=float(data['transportation']),
+    utilities=float(data['utilities']),
+    entertainment=float(data['entertainment'])
+  )
+  db.session.add(living_cost)
+  db.session.commit()
+
+def update_living_cost(data, living_cost_id):
+  living_cost = CostOfLiving.query.filter_by(id=living_cost_id).first()
+  if living_cost:
+    living_cost.state = data['state']
+    living_cost.area = data['area']
+    living_cost.rent = float(data['rent'])
+    living_cost.grocery = float(data['grocery'])
+    living_cost.transportation = float(data['transportation'])
+    living_cost.utilities = float(data['utilities'])
+    living_cost.entertainment = float(data['entertainment'])
+    db.session.commit()
+
+def delete_living_cost_by_id(living_cost_id):
+  living_cost = CostOfLiving.query.filter_by(id=living_cost_id).first()
+  if living_cost:
+    db.session.delete(living_cost)
+    db.session.commit()

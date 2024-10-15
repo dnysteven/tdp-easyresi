@@ -8,11 +8,9 @@
 {% endblock %}
 
 {% block content %}
-  <h2>University List</h2>
-  
-  <a href="{{ url_for('main.manage_university') }}" class="btn btn-primary">Add New University</a>
-  
-  <table id="universityTable" border="1" cellpadding="5" cellspacing="0">
+  <h2>University List</h2>  
+  <a href="{{ url_for('main.manage_university') }}" class="btn btn-primary">Add New University</a>  
+  <table id="universityTable">
     <thead>
       <tr>
         <th>ID</th>
