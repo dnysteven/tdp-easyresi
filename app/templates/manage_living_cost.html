@@ -1,32 +1,35 @@
 {% extends "base.html" %}
 
+{% block title %}Manage Living Cost{% endblock %}
+
 {% block content %}
   <h1>{{ 'Edit' if cost else 'Add New' }} Cost of Living</h1>  
-  <form method="POST" action="{{ url_for('main.manage_living_cost', cost_id=cost.id if cost else None) }}">
+  <form class="questionnaire-form" method="POST" action="{{ url_for('main.manage_living_cost', cost_id=cost.id if cost else None) }}">
     <label for="state">State:</label>
-    <input type="text" id="state" name="state" value="{{ cost.state if cost else '' }}" required><br><br>
+    <input type="text" class="input-register" id="state" name="state" value="{% if cost %}{{ cost.state }}{% endif %}" required><br><br>
 
     <label for="area">Area:</label>
-    <select id="area" name="area" required>
+    <select class="input-register" id="area" name="area" required>
       <option value="metro" {% if cost and cost.area == 'metro' %}selected{% endif %}>Metro</option>
       <option value="regional" {% if cost and cost.area == 'regional' %}selected{% endif %}>Regional</option>
     </select><br><br>
 
     <label for="rent">Rent:</label>
-    <input type="number" id="rent" name="rent" value="{{ cost.rent if cost else '' }}" step="0.01" required><br><br>
+    <input type="number" class="input-register" id="rent" name="rent" value="{% if cost %}{{ cost.rent }}{% endif %}" step="0.01" required><br><br>
 
     <label for="grocery">Grocery:</label>
-    <input type="number" id="grocery" name="grocery" value="{{ cost.grocery if cost else '' }}" step="0.01" required><br><br>
+    <input type="number" class="input-register" id="grocery" name="grocery" value="{% if cost %}{{ cost.grocery }}{% endif %}" step="0.01" required><br><br>
 
     <label for="transportation">Transportation:</label>
-    <input type="number" id="transportation" name="transportation" value="{{ cost.transportation if cost else '' }}" step="0.01" required><br><br>
+    <input type="number" class="input-register" id="transportation" name="transportation" value="{% if cost %}{{ cost.transportation }}{% endif %}" step="0.01" required><br><br>
 
     <label for="utilities">Utilities:</label>
-    <input type="number" id="utilities" name="utilities" value="{{ cost.utilities if cost else '' }}" step="0.01" required><br><br>
+    <input type="number" class="input-register" id="utilities" name="utilities" value="{% if cost %}{{ cost.utilities }}{% endif %}" step="0.01" required><br><br>
 
     <label for="entertainment">Entertainment:</label>
-    <input type="number" id="entertainment" name="entertainment" value="{{ cost.entertainment if cost else '' }}" step="0.01" required><br><br>
+    <input type="number" class="input-register" id="entertainment" name="entertainment" value="{% if cost %}{{ cost.entertainment }}{% endif %}" step="0.01" required><br><br>
 
-    <input type="submit" value="{{ 'Update' if cost else 'Add' }}">
+    <button type="submit" class="btn btn-success">{% if cost %}Update{% else %}Add New{% endif %} living Cost</button>
+    <a href="{{ url_for('main.living_cost') }}" class="btn btn-secondary">Cancel</a>
   </form>
 {% endblock %}

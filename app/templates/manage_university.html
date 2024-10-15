@@ -3,29 +3,28 @@
 {% block title %}Manage University{% endblock %}
 
 {% block content %}
-  <h1>{% if university %}Edit{% else %}Add New{% endif %} University</h1>
-  
-  <form method="POST" action="{{ url_for('main.manage_university', university_id=university.id if university else None) }}">
+  <h1>{% if university %}Edit{% else %}Add New{% endif %} University</h1>  
+  <form class="questionnaire-form" method="POST" action="{{ url_for('main.manage_university', university_id=university.id if university else None) }}">
     <label for="university">University Name:</label>
-    <input type="text" id="university" name="university" value="{% if university %}{{ university.university }}{% endif %}" required><br><br>
+    <input type="text" class="input-register" id="university" name="university" value="{% if university %}{{ university.university }}{% endif %}" required><br><br>
 
     <label for="street">Street:</label>
-    <input type="text" id="street" name="street" value="{% if university %}{{ university.street }}{% endif %}" required><br><br>
+    <input type="text" class="input-register" id="street" name="street" value="{% if university %}{{ university.street }}{% endif %}" required><br><br>
 
     <label for="suburb">Suburb:</label>
-    <input type="text" id="suburb" name="suburb" value="{% if university %}{{ university.suburb }}{% endif %}" required><br><br>
+    <input type="text" class="input-register" id="suburb" name="suburb" value="{% if university %}{{ university.suburb }}{% endif %}" required><br><br>
 
     <label for="state">State:</label>
-    <input type="text" id="state" name="state" value="{% if university %}{{ university.state }}{% endif %}" required><br><br>
+    <input type="text" class="input-register" id="state" name="state" value="{% if university %}{{ university.state }}{% endif %}" required><br><br>
 
     <label for="postcode">Postcode:</label>
-    <input type="text" id="postcode" name="postcode" value="{% if university %}{{ university.postcode }}{% endif %}" required><br><br>
+    <input type="text" class="input-register" id="postcode" name="postcode" value="{% if university %}{{ university.postcode }}{% endif %}" required><br><br>
 
     <label for="phone">Phone:</label>
-    <input type="text" id="phone" name="phone" value="{% if university %}{{ university.phone }}{% endif %}"><br><br>
+    <input type="text" class="input-register" id="phone" name="phone" value="{% if university %}{{ university.phone }}{% endif %}"><br><br>
 
     <label for="email">Email:</label>
-    <input type="email" id="email" name="email" value="{% if university %}{{ university.email }}{% endif %}" required><br><br>
+    <input type="email" class="input-register" id="email" name="email" value="{% if university %}{{ university.email }}{% endif %}" required><br><br>
 
     <button type="submit" class="btn btn-success">{% if university %}Update{% else %}Add New{% endif %} University</button>
     <a href="{{ url_for('main.universities') }}" class="btn btn-secondary">Cancel</a>
