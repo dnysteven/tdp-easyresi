@@ -1,7 +1,7 @@
 import os
 import joblib
 import pandas as pd
-from flask import request, session
+from flask import session
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -26,6 +26,7 @@ def check_login(email, password):
   
   return False, None
 
+# Get a user first name and last name
 def get_user_name():
   if 'username' in session:
     # Get the user from the database
@@ -664,7 +665,7 @@ def update_course(data, course_id):
     db.session.commit()
 
 # Delete course
-def delete_course(course_id):
+def delete_course_by_id(course_id):
   course = UniCourse.query.filter_by(id=course_id).first()
   # Log the course data for debugging
   print(f"Attempting to delete course with ID: {course_id}")
