@@ -402,6 +402,7 @@ def admin_statistics():
 @main.route('/edu_statistics')
 def edu_statistics():
 	user_role = session.get('user_role')
+	user_first_name, user_last_name = get_user_name()
 	
 	# Fetch chart data using a function in your controller (or model)
 	professional_year_labels, professional_year_values, regional_study_labels, regional_study_values, state_labels, state_values,specialist_education_labels, specialist_education_values, course_duration_labels, course_duration_values, tuition_fee_labels, tuition_fee_values, education_level_labels, education_level_values, english_level_labels, english_level_values,  = get_chart_education()
@@ -426,7 +427,8 @@ def edu_statistics():
 
 	# Render the template and pass all necessary data for the charts
 	return render_template( 
-		'edu_statistics.html', header=True, footer=True, user_role=user_role,
+		'edu_statistics.html', header=True, user_role=user_role,
+		user_first_name=user_first_name, user_last_name=user_last_name,
 		professional_year_labels=professional_year_labels,
 		professional_year_values=professional_year_values,
 		regional_study_labels=regional_study_labels,
@@ -448,6 +450,7 @@ def edu_statistics():
 @main.route('/migra_statistics')
 def migra_statistics():
 	user_role = session.get('user_role')
+	user_first_name, user_last_name = get_user_name()
 
 	# Get chart data from the controller
 	specialist_education_labels, specialist_education_values, australian_study_labels, australian_study_values, professional_year_labels, professional_year_values, community_language_labels, community_language_values, regional_study_labels, regional_study_values, english_level_labels, english_level_values, overseas_employment_labels, overseas_employment_values, australian_employment_labels, australian_employment_values, education_level_labels, education_level_values = get_chart_migrant()
@@ -473,7 +476,8 @@ def migra_statistics():
 	education_level_values = education_level_values or []
 
 	return render_template(
-			'migra_statistics.html', header=True, footer=True, user_role=user_role,
+			'migra_statistics.html', header=True, user_role=user_role,
+			user_first_name=user_first_name, user_last_name=user_last_name,
 			specialist_education_labels=specialist_education_labels,
 			specialist_education_values=specialist_education_values,
 			australian_study_labels=australian_study_labels,
