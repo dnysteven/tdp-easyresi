@@ -12,8 +12,9 @@ main.secret_key = SECRET_KEY
 
 @main.route('/')
 def index():
+  user_role = session.get('user_role')
   user_first_name, user_last_name = get_user_name()
-  return render_template('index.html', header=True, footer=True,
+  return render_template('index.html', header=True, footer=True, user_role=user_role,
                         user_first_name=user_first_name, user_last_name=user_last_name)
 
 @main.route('/login', methods=['GET', 'POST'])
@@ -22,6 +23,7 @@ def login():
 	if 'username' in session:
 		return redirect(url_for('main.index'))
 
+	user_role = session.get('user_role')
 	user_first_name, user_last_name = get_user_name()
 
 	if request.method == 'POST':
@@ -42,7 +44,7 @@ def login():
 			flash('Login failed. Incorrect email or password.', 'danger')
 			return redirect(url_for('main.login'))
 
-	return render_template('login.html', header=True, footer=True,
+	return render_template('login.html', header=True, footer=True, user_role=user_role,
                         user_first_name=user_first_name, user_last_name=user_last_name)
 
 @main.route('/logout')
@@ -80,7 +82,8 @@ def register():
   # Check if user is already logged in
 	if 'username' in session:
 		return redirect(url_for('main.index'))
-  
+
+	user_role = session.get('user_role')  
 	user_first_name, user_last_name = get_user_name()
   
 	if request.method == 'POST':
@@ -107,7 +110,7 @@ def register():
 
 	# Fetch user roles for the dropdown
 	roles = UserRole.query.all()
-	return render_template('register.html', header=True, footer=True, roles=roles,
+	return render_template('register.html', header=True, footer=True, roles=roles, user_role=user_role,
                         user_first_name=user_first_name, user_last_name=user_last_name)
 
 @main.route('/profile', methods=['GET'])
@@ -145,7 +148,7 @@ def profile():
 
 	# Fetch the user's saved course preferences
 
-	return render_template('profile.html', header=True, footer=True,
+	return render_template('profile.html', header=True, footer=True, user_role=user_role,
                         user=user, user_first_name=user_first_name, user_last_name=user_last_name,
                         user_courses=user_courses, user_visa_points=user_visa_points)
 
@@ -227,6 +230,7 @@ def test():
 @login_required
 @role_required('applicant')
 def questionnaire():
+  user_role = session.get('user_role')
   user_first_name, user_last_name = get_user_name()
   
   if request.method == 'POST':
@@ -254,7 +258,7 @@ def questionnaire():
     
     return redirect(url_for('main.visa_points'))
   
-  return render_template('questionnaire.html', header=True, footer=True,
+  return render_template('questionnaire.html', header=True, footer=True, user_role=user_role,
                         user_first_name=user_first_name, user_last_name=user_last_name)
 
 @main.route('/visa_points', methods=['GET'])
@@ -264,6 +268,7 @@ def visa_points():
   if not session.get('completed_questionnaire'):
     return redirect(url_for('main.questionnaire'))
   
+  user_role = session.get('user_role')
   user_first_name, user_last_name = get_user_name()
   
   # Call the visa_points_calculator
@@ -273,10 +278,7 @@ def visa_points():
   session.pop('form_data', None)
   session.pop('completed_questionnaire', None)
   
-  # if not visa_189_eligible and not visa_190_eligible and not visa_491_eligible:
-  #   session['eligible_for_path_to_visa'] = True
-    
-  return render_template('visa_points.html', header=True, footer=True,
+  return render_template('visa_points.html', header=True, footer=True, user_role=user_role,
                         user_first_name=user_first_name, user_last_name=user_last_name,
                         points=points, visa_189_eligible=visa_189_eligible,
                         visa_190_eligible=visa_190_eligible, visa_491_eligible=visa_491_eligible,
@@ -286,6 +288,7 @@ def visa_points():
 @login_required
 @role_required('applicant')
 def path_to_visa():
+  user_role = session.get('user_role')
   user_first_name, user_last_name = get_user_name()
   
   if request.method == 'POST':
@@ -306,13 +309,14 @@ def path_to_visa():
     # Redirect to the recommendation route
     return redirect(url_for('main.recommendation'))
   
-  return render_template('path_to_visa.html', header=True, footer=True,
+  return render_template('path_to_visa.html', header=True, footer=True, user_role=user_role,
                         user_first_name=user_first_name, user_last_name=user_last_name)
 
 @main.route('/recommendation', methods=['GET'])
 @login_required
 @role_required('applicant')
 def recommendation():
+  user_role = session.get('user_role')
   user_first_name, user_last_name = get_user_name()
   
   # Retrieve the form data from the session
@@ -328,7 +332,7 @@ def recommendation():
   # Clear session flag after accessing the page
   session.pop('path_to_visa_data', None)
   
-  return render_template('recommendation.html', header=True, footer=True,
+  return render_template('recommendation.html', header=True, footer=True, user_role=user_role,
                         user_first_name=user_first_name, user_last_name=user_last_name,
                         recommended_courses=recommended_courses)
 
@@ -339,9 +343,6 @@ def user_course_pref():
 	username = session.get('username')
 
 	selected_courses = [int(course_id) for course_id in selected_courses]
-
-	# print("Selected Courses:", selected_courses)
-	# print("Username:", username)
 	
 	if selected_courses:
 		save_user_course_pref(selected_courses, username)
@@ -400,50 +401,54 @@ def admin_statistics():
 
 @main.route('/edu_statistics')
 def edu_statistics():
-    # Fetch chart data using a function in your controller (or model)
-    professional_year_labels, professional_year_values, regional_study_labels, regional_study_values, state_labels, state_values,specialist_education_labels, specialist_education_values, course_duration_labels, course_duration_values, tuition_fee_labels, tuition_fee_values, education_level_labels, education_level_values, english_level_labels, english_level_values,  = get_chart_education()
+	user_role = session.get('user_role')
+	
+	# Fetch chart data using a function in your controller (or model)
+	professional_year_labels, professional_year_values, regional_study_labels, regional_study_values, state_labels, state_values,specialist_education_labels, specialist_education_values, course_duration_labels, course_duration_values, tuition_fee_labels, tuition_fee_values, education_level_labels, education_level_values, english_level_labels, english_level_values,  = get_chart_education()
 
-     # Ensure variables are not None, using empty lists as fallback
-    professional_year_labels = professional_year_labels or []
-    professional_year_values = professional_year_values or []
-    regional_study_labels = regional_study_labels or []
-    regional_study_values = regional_study_values or []
-    state_labels = state_labels or []
-    state_values = state_values or []
-    specialist_education_labels = specialist_education_labels or []
-    specialist_education_values = specialist_education_values or []
-    course_duration_labels = course_duration_labels or []
-    course_duration_values = course_duration_values or []
-    tuition_fee_labels = tuition_fee_labels or []
-    tuition_fee_values = tuition_fee_values or []
-    education_level_labels = education_level_labels or []
-    education_level_values = education_level_values or []
-    english_level_labels = english_level_labels or []
-    english_level_values = english_level_values or []
+	# Ensure variables are not None, using empty lists as fallback
+	professional_year_labels = professional_year_labels or []
+	professional_year_values = professional_year_values or []
+	regional_study_labels = regional_study_labels or []
+	regional_study_values = regional_study_values or []
+	state_labels = state_labels or []
+	state_values = state_values or []
+	specialist_education_labels = specialist_education_labels or []
+	specialist_education_values = specialist_education_values or []
+	course_duration_labels = course_duration_labels or []
+	course_duration_values = course_duration_values or []
+	tuition_fee_labels = tuition_fee_labels or []
+	tuition_fee_values = tuition_fee_values or []
+	education_level_labels = education_level_labels or []
+	education_level_values = education_level_values or []
+	english_level_labels = english_level_labels or []
+	english_level_values = english_level_values or []
 
-    # Render the template and pass all necessary data for the charts
-    return render_template( 
-        'edu_statistics.html', header=True, footer=True,
-        professional_year_labels=professional_year_labels,
-        professional_year_values=professional_year_values,
-        regional_study_labels=regional_study_labels,
-        regional_study_values=regional_study_values,
-        state_labels=state_labels,
-        state_values=state_values,
-        specialist_education_labels=specialist_education_labels,
-        specialist_education_values=specialist_education_values,
-        course_duration_labels=course_duration_labels,
-        course_duration_values=course_duration_values,
-        tuition_fee_labels=tuition_fee_labels,
-        tuition_fee_values=tuition_fee_values,
-        education_level_labels=education_level_labels,
-        education_level_values=education_level_values,
-        english_level_labels=english_level_labels,
-        english_level_values=english_level_values
-    )
+	# Render the template and pass all necessary data for the charts
+	return render_template( 
+		'edu_statistics.html', header=True, footer=True, user_role=user_role,
+		professional_year_labels=professional_year_labels,
+		professional_year_values=professional_year_values,
+		regional_study_labels=regional_study_labels,
+		regional_study_values=regional_study_values,
+		state_labels=state_labels,
+		state_values=state_values,
+		specialist_education_labels=specialist_education_labels,
+		specialist_education_values=specialist_education_values,
+		course_duration_labels=course_duration_labels,
+		course_duration_values=course_duration_values,
+		tuition_fee_labels=tuition_fee_labels,
+		tuition_fee_values=tuition_fee_values,
+		education_level_labels=education_level_labels,
+		education_level_values=education_level_values,
+		english_level_labels=english_level_labels,
+		english_level_values=english_level_values
+	)
 
 @main.route('/migra_statistics')
 def migra_statistics():
+	user_role = session.get('user_role')
+
 	# Get chart data from the controller
 	specialist_education_labels, specialist_education_values, australian_study_labels, australian_study_values, professional_year_labels, professional_year_values, community_language_labels, community_language_values, regional_study_labels, regional_study_values, english_level_labels, english_level_values, overseas_employment_labels, overseas_employment_values, australian_employment_labels, australian_employment_values, education_level_labels, education_level_values = get_chart_migrant()
 
@@ -468,26 +473,26 @@ def migra_statistics():
 	education_level_values = education_level_values or []
 
 	return render_template(
-        'migra_statistics.html', header=True, footer=True,
-							specialist_education_labels=specialist_education_labels,
-							specialist_education_values=specialist_education_values,
-							australian_study_labels=australian_study_labels,
-							australian_study_values=australian_study_values,
-							professional_year_labels=professional_year_labels,
-							professional_year_values=professional_year_values,
-							community_language_labels=community_language_labels,
-							community_language_values=community_language_values,
-							regional_study_labels=regional_study_labels,
-							regional_study_values=regional_study_values,
-							english_level_labels=english_level_labels,
-							english_level_values=english_level_values,
-							overseas_employment_labels=overseas_employment_labels,
-							overseas_employment_values=overseas_employment_values,
-							australian_employment_labels=australian_employment_labels, 
-							australian_employment_values=australian_employment_values,
-							education_level_labels=education_level_labels,
-							education_level_values=education_level_values
-)
+			'migra_statistics.html', header=True, footer=True, user_role=user_role,
+			specialist_education_labels=specialist_education_labels,
+			specialist_education_values=specialist_education_values,
+			australian_study_labels=australian_study_labels,
+			australian_study_values=australian_study_values,
+			professional_year_labels=professional_year_labels,
+			professional_year_values=professional_year_values,
+			community_language_labels=community_language_labels,
+			community_language_values=community_language_values,
+			regional_study_labels=regional_study_labels,
+			regional_study_values=regional_study_values,
+			english_level_labels=english_level_labels,
+			english_level_values=english_level_values,
+			overseas_employment_labels=overseas_employment_labels,
+			overseas_employment_values=overseas_employment_values,
+			australian_employment_labels=australian_employment_labels, 
+			australian_employment_values=australian_employment_values,
+			education_level_labels=education_level_labels,
+			education_level_values=education_level_values
+	)
 
 @main.route('/applicant_profile')
 def applicant_profile():
@@ -509,13 +514,15 @@ def courses():
   user_first_name, user_last_name = get_user_name()
   
   courses = get_courses(username, role)
-  return render_template('courses.html', user_first_name=user_first_name, user_last_name=user_last_name, header=True, footer=True, courses=courses)
+  return render_template('courses.html', header=True, footer=True, user_role=role,
+                        user_first_name=user_first_name, user_last_name=user_last_name, courses=courses)
 
 # Route for adding/editing courses via manage_courses.html
 @main.route('/manage_course', methods=['GET', 'POST'])
 @login_required
 def manage_course():
   username = session.get('username')
+  user_role = session.get('user_role')
   user_first_name, user_last_name = get_user_name()
   
   course_id = request.args.get('course_id')
@@ -538,7 +545,8 @@ def manage_course():
   if course_id:
     course = get_course_by_id(course_id)
   
-  return render_template('manage_courses.html', header=True, footer=True, user_first_name=user_first_name, user_last_name=user_last_name, course=course, universities=universities)
+  return render_template('manage_courses.html', header=True, footer=True, user_role=user_role,
+                        user_first_name=user_first_name, user_last_name=user_last_name, course=course, universities=universities)
 
 @main.route('/delete_course/<int:course_id>', methods=['POST'])
 @login_required
@@ -551,17 +559,18 @@ def delete_course(course_id):
 @login_required
 def universities():
   username = session.get('username')
-  role = session.get('user_role')
+  user_role = session.get('user_role')
   user_first_name, user_last_name = get_user_name()
   universities = get_universities()
   
-  return render_template('university.html', user_first_name=user_first_name, user_last_name=user_last_name, header=True, footer=True, universities=universities)
+  return render_template('university.html', header=True, footer=True, user_role=user_role,
+                        user_first_name=user_first_name, user_last_name=user_last_name, universities=universities)
 
 @main.route('/manage_university', methods=['GET', 'POST'])
 @login_required
 def manage_university():
 	username = session.get('username')
-	role = session.get('user_role')
+	user_role = session.get('user_role')
 	user_first_name, user_last_name = get_user_name()
 
 	university_id = request.args.get('university_id')
@@ -578,7 +587,8 @@ def manage_university():
 	if university_id:
 		university = get_university_by_id(university_id)
 
-	return render_template('manage_university.html',  user_first_name=user_first_name, user_last_name=user_last_name, header=True, footer=True, university=university)
+	return render_template('manage_university.html', header=True, footer=True, user_role=user_role,
+                        user_first_name=user_first_name, user_last_name=user_last_name, university=university)
 
 @main.route('/delete_university/<int:university_id>', methods=['POST'])
 @login_required
@@ -591,17 +601,18 @@ def delete_university(university_id):
 @login_required
 def occupations():
 	username = session.get('username')
-	role = session.get('user_role')
+	user_role = session.get('user_role')
 	user_first_name, user_last_name = get_user_name()
 	occupations = get_occupations()
 
-	return render_template('occupation.html', user_first_name=user_first_name, user_last_name=user_last_name, header=True, footer=True, occupations=occupations)
+	return render_template('occupation.html', header=True, footer=True, user_role=user_role,
+                        user_first_name=user_first_name, user_last_name=user_last_name, occupations=occupations)
 
 @main.route('/manage_occupation', methods=['GET', 'POST'])
 @login_required
 def manage_occupation():
 	username = session.get('username')
-	role = session.get('user_role')
+	user_role = session.get('user_role')
 	user_first_name, user_last_name = get_user_name()
 
 	occupation_id = request.args.get('occupation_id')
@@ -618,7 +629,8 @@ def manage_occupation():
 	if occupation_id:
 		occupation = get_occupation_by_id(occupation_id)
 
-	return render_template('manage_occupation.html', user_first_name=user_first_name, user_last_name=user_last_name, header=True, footer=True, occupation=occupation)
+	return render_template('manage_occupation.html', header=True, footer=True, user_role=user_role,
+                        user_first_name=user_first_name, user_last_name=user_last_name, occupation=occupation)
 
 @main.route('/delete_occupation/<int:occupation_id>', methods=['POST'])
 @login_required
@@ -631,17 +643,18 @@ def delete_occupation(occupation_id):
 @login_required
 def living_cost():
 	username = session.get('username')
-	role = session.get('user_role')
+	user_role = session.get('user_role')
 	user_first_name, user_last_name = get_user_name()
 	costs = get_living_costs()
 
-	return render_template('living_cost.html', header=True, footer=True, user_first_name=user_first_name, user_last_name=user_last_name, costs=costs)
+	return render_template('living_cost.html', header=True, footer=True, user_role=user_role,
+                        user_first_name=user_first_name, user_last_name=user_last_name, costs=costs)
 
 @main.route('/manage_living_cost', methods=['GET', 'POST'])
 @login_required
 def manage_living_cost():
 	username = session.get('username')
-	role = session.get('user_role')
+	user_role = session.get('user_role')
 	user_first_name, user_last_name = get_user_name()
   
 	living_cost_id = request.args.get('living_cost_id')
@@ -659,7 +672,8 @@ def manage_living_cost():
 	if living_cost_id:
 		cost = get_living_cost_by_id(living_cost_id)
 	
-	return render_template('manage_living_cost.html', header=True, footer=True, user_first_name=user_first_name, user_last_name=user_last_name, cost=cost)
+	return render_template('manage_living_cost.html', header=True, footer=True, user_role=user_role,
+                        user_first_name=user_first_name, user_last_name=user_last_name, cost=cost)
 
 @main.route('/delete_living_cost/<int:living_cost_id>', methods=['POST'])
 @login_required
