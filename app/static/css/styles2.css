@@ -328,3 +328,19 @@ canvas {
 .hidden {
   display: none;
 }
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.button-edit {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.button-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
