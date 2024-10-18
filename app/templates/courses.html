@@ -22,7 +22,7 @@
         <th>Education Level</th>
         <th>Specialist Education</th>
         <th>Professional Year</th>
-        <th>Duration (Years)</th>
+        <th>Study Duration</th>
         <th>Tuition Fee</th>
         <th>Regional Study</th>
         <th>Action</th>
@@ -37,18 +37,20 @@
         <td>{{ course.University.university }}</td>
         <td>{{ course.University.street }}, {{ course.University.suburb }} {{ course.University.state }} {{ course.University.postcode }}</td>
         <td>{{ course.UniCourse.level }}</td>
-        <td>{{ 'Yes' if course.UniCourse.specialist else 'No' }}</td>
+        <td>{{ course.UniCourse.specialist_education }}</td>
         <td>{{ 'Yes' if course.UniCourse.prof_year else 'No' }}</td>
-        <td>{{ course.UniCourse.duration }}</td>
-        <td>{{ course.UniCourse.tuition_fee }}</td>
+        <td>{{ course.UniCourse.duration }} Years</td>
+        <td>${{ course.UniCourse.tuition_fee }}</td>
         <td>{{ 'Yes' if course.UniCourse.regional else 'No' }}</td>
         <td>
-          <!-- Edit button triggers edit functionality -->
-          <button class="btn btn-warning" onclick="window.location.href='{{ url_for('main.manage_course', course_id=course.UniCourse.id) }}'">Edit</button>
-          <!-- Delete button triggers delete functionality -->
-          <form method="POST" action="{{ url_for('main.delete_course', course_id=course.UniCourse.id) }}" style="display:inline;">
-            <button class="btn btn-warning" type="submit" onclick="return confirm('Are you sure you want to delete this course?');">Delete</button>
-          </form>
+          <div class="button-group">
+            <!-- Edit button triggers edit functionality -->
+            <button class="button-edit" onclick="window.location.href='{{ url_for('main.manage_course', course_id=course.UniCourse.id) }}'">Edit</button>
+            <!-- Delete button triggers delete functionality -->
+            <form method="POST" action="{{ url_for('main.delete_course', course_id=course.UniCourse.id) }}">
+              <button class="button-danger" type="submit" onclick="return confirm('Are you sure you want to delete this course?');">Delete</button>
+            </form>
+          </div>
         </td>
       </tr>
     {% endfor %}
@@ -58,6 +60,5 @@
   <!-- jQuery and DataTables JS -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-  <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
-  <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 {% endblock %}

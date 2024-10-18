@@ -5,6 +5,7 @@
 {% block css %}
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/styles2.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles3.css') }}">
+
 {% endblock %}
 
 {% block content %}
@@ -14,7 +15,7 @@
     <div class="cards">
         <div class="card">
             <div class="card-content">
-                <div class="number">1217</div>
+                <div class="number">50</div>
                 <div class="card-name">18-24 Years old</div>
             </div>
             <div class="icon-box">
@@ -23,7 +24,7 @@
         </div>
         <div class="card">
             <div class="card-content">
-                <div class="number">42</div>
+                <div class="number">35</div>
                 <div class="card-name">28-32 Years old</div>
             </div>
             <div class="icon-box">
@@ -32,7 +33,7 @@
         </div>
         <div class="card">
             <div class="card-content">
-                <div class="number">68</div>
+                <div class="number">70</div>
                 <div class="card-name">33-39 Years old</div>
             </div>
             <div class="icon-box">
@@ -41,7 +42,7 @@
         </div>
         <div class="card">
             <div class="card-content">
-                <div class="number">$4500</div>
+                <div class="number">15</div>
                 <div class="card-name">40-45 Years old</div>
             </div>
             <div class="icon-box">
@@ -50,7 +51,7 @@
         </div>
         <div class="card">
           <div class="card-content">
-              <div class="number">$4500</div>
+              <div class="number">5</div>
               <div class="card-name">Above 45 Years old</div>
           </div>
           <div class="icon-box">
@@ -84,13 +85,14 @@
         <canvas id="regionalStudyChart"></canvas>
     </div>
   </div>
-  <div class="chart-wrapper">
-    <div class="chart-container">
-        <h3>Applicants by Age Group</h3>
-        <canvas id="ageGroupChart"></canvas>
-    </div>
 
-    <div class="chart-container">
+  <div class="chart-wrapper">
+  <div class="chart-cont">
+      <h3>Highest Level of Education</h3>
+      <canvas id="educationLevelChart"></canvas>
+  </div>
+
+    <div class="chart-cont">
         <h3>Applicants by English Language Level</h3>
         <canvas id="englishLevelChart"></canvas>
     </div>
@@ -105,10 +107,6 @@
         <canvas id="australianEmploymentChart"></canvas>
     </div>
 
-    <div class="chart-container">
-        <h3>Highest Level of Education</h3>
-        <canvas id="educationLevelChart"></canvas>
-    </div>
 </div>
 
   <!-- Pass processed chart data from Flask to JS via the window object -->
@@ -130,9 +128,6 @@
     window.regionalStudyValues = {{ regional_study_values|tojson }};
 
     // Bar Chart Data
-    window.ageGroupLabels = {{ age_group_labels|tojson }};
-    window.ageGroupValues = {{ age_group_values|tojson }};
-
     window.englishLevelLabels = {{ english_level_labels|tojson }};
     window.englishLevelValues = {{ english_level_values|tojson }};
 

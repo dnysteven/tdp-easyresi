@@ -20,22 +20,68 @@
       <nav class="navbar">
         <ul class="nav-list">
           <li><a href="{{ url_for('main.index') }}">Home</a></li>
+          {% if user_role == 'applicant' %}
           <li class="dropdown">
-            <a href="#" class="dropbtn">Skilled Migration Visa</a>
+            <a href="#" class="dropbtn">Questionnaires</a>
             <div class="dropdown-content">
-              <a href="{{ url_for('main.visa_189') }}">Skilled Independent Visa - Subclass 189</a>
-              <a href="#">Skilled Nominated Visa - Subclass 190</a>
-              <a href="#">Skilled Work Regional Provisional Visa - Subclass 491</a>
+              <a href="{{ url_for('main.questionnaire') }}">Visa Eligibility Questionnaire</a>
+              <a href="{{ url_for('main.path_to_visa') }}">Study Pathway Recommendation Questionnaire</a>
+            </div>
+          </li>
+          {% elif user_role == 'agency' %}
+          <li class="dropdown">
+            <a href="#" class="dropbtn">Services</a>
+            <div class="dropdown-content">
+              <a href="{{ url_for('main.living_cost') }}">Manage Living Cost</a>
+              <a href="{{ url_for('main.occupations') }}">Manage Skill Occupation List</a>
             </div>
           </li>
           <li class="dropdown">
-            <a href="#" class="dropbtn">Latest Updates</a>
+            <a href="#" class="dropbtn">Statistics</a>
             <div class="dropdown-content">
-              <a href="#">Blogs</a>
-              <a href="#">News</a>
-              <a href="#">Events</a>
+              <a href="{{ url_for('main.migra_statistics') }}">Migrant Statistics</a>
             </div>
           </li>
+          {% elif user_role == 'education' %}
+          <li class="dropdown">
+            <a href="#" class="dropbtn">Services</a>
+            <div class="dropdown-content">
+              <a href="{{ url_for('main.universities') }}">Manage University</a>
+              <a href="{{ url_for('main.courses') }}">Manage Courses</a>
+            </div>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropbtn">Statistics</a>
+            <div class="dropdown-content">
+              <a href="{{ url_for('main.edu_statistics') }}">Education Statistics</a>
+            </div>
+          </li>
+          {% elif user_role == 'admin' %}
+          <li class="dropdown">
+            <a href="#" class="dropbtn">Questionnaires</a>
+            <div class="dropdown-content">
+              <a href="{{ url_for('main.questionnaire') }}">Visa Eligibility Questionnaire</a>
+              <a href="{{ url_for('main.path_to_visa') }}">Study Pathway Recommendation Questionnaire</a>
+            </div>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropbtn">Services</a>
+            <div class="dropdown-content">
+              <a href="{{ url_for('main.living_cost') }}">Manage Living Cost</a>
+              <a href="{{ url_for('main.occupations') }}">Manage Skill Occupation List</a>
+              <a href="{{ url_for('main.universities') }}">Manage University</a>
+              <a href="{{ url_for('main.courses') }}">Manage Courses</a>
+            </div>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropbtn">Statistics</a>
+            <div class="dropdown-content">
+              <a href="{{ url_for('main.migra_statistics') }}">Migrant Statistics</a>
+              <a href="{{ url_for('main.edu_statistics') }}">Education Statistics</a>
+              <a href="{{ url_for('main.admin_statistics') }}">Admin Statistics</a>
+            </div>
+          </li>
+          {% endif %}
           {% if session.get('username') %}
             <li class="dropdown">
               <a href="#" class="dropbtn">{{ user_first_name }} {{ user_last_name }}</a>

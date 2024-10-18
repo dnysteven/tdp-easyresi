@@ -1,7 +1,7 @@
 import os
 import joblib
 import pandas as pd
-from flask import request, session
+from flask import session
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -26,6 +26,7 @@ def check_login(email, password):
   
   return False, None
 
+# Get a user first name and last name
 def get_user_name():
   if 'username' in session:
     # Get the user from the database
@@ -530,10 +531,6 @@ def get_chart_migrant():
   regional_study_labels = ['yes', 'no']
   regional_study_values = [100, 300]
   
-  # Bar Chart Data (Applicants by Age Group)
-  age_group_labels = ['18-24', '25-32', '33-39', '40-44', '>=45']
-  age_group_values = [50, 100, 120, 200, 70]
-  
   # Bar Chart Data (Applicants by English Language Level)
   english_level_labels = ['competent', 'proficient', 'superior']
   english_level_values = [50, 100, 120]
@@ -548,13 +545,53 @@ def get_chart_migrant():
   
   # Bar Chart Data (Highest Level of Education)
   education_level_labels = ['doctorate', 'bachelor', 'diploma_or_trade', 'other_recognised']
-  education_level_values = [100, 80, 60, 40]
+  education_level_values = [90, 80, 60, 40]
   
-  return specialist_education_labels, specialist_education_values, australian_study_labels, australian_study_values, professional_year_labels, professional_year_values, community_language_labels, community_language_values, regional_study_labels, regional_study_values, age_group_labels, age_group_values, english_level_labels, english_level_values, overseas_employment_labels, overseas_employment_values, australian_employment_labels, australian_employment_values, education_level_labels, education_level_values
+  return specialist_education_labels, specialist_education_values, australian_study_labels, australian_study_values, professional_year_labels, professional_year_values, community_language_labels, community_language_values, regional_study_labels, regional_study_values, english_level_labels, english_level_values, overseas_employment_labels, overseas_employment_values, australian_employment_labels, australian_employment_values, education_level_labels, education_level_values
 
-# Function to get all universities
-def get_universities():
-  return University.query.all()
+def get_chart_education():
+    # Pie Chart Data (Applicants Completed Professional Year in Australia)
+    professional_year_labels = ['Yes', 'No']
+    professional_year_values = [100, 100]
+    
+    # Pie Chart Data (Applicants Completed Regional Study)
+    regional_study_labels = ['Yes', 'No']
+    regional_study_values = [100, 300]
+    
+    # Pie Chart Data (Interested State to Study)
+    state_labels = ['NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'ACT', 'NT']
+    state_values = [50, 40, 30, 20, 10, 5, 3, 2]
+    
+    # Bar Chart Data (Applicants Completed Specialist Education Qualification)
+    specialist_education_labels = ['science', 'technology', 'engineering', 'mathematics', 'ict']
+    specialist_education_values = [300, 200, 50, 40, 100]
+    
+    # Bar Chart Data (Interested Course Duration)
+    course_duration_labels = ['Above 2 year', 'Above 4 years', 'Above 6 years']
+    course_duration_values = [60, 100, 80]
+    
+    # Bar Chart Data (Expected Maximum Course Fee)
+    tuition_fee_labels = ['Below 60k', '60k-100k', 'Above 100k']
+    tuition_fee_values = [50, 70, 30]
+    
+    # Bar Chart Data (Highest Level of Education)
+    education_level_labels = ['Doctorate', 'Bachelor', 'Diploma or Trade', 'Other Recognised']
+    education_level_values = [90, 80, 60, 40]
+    
+    # Bar Chart Data (Applicants by English Language Level)
+    english_level_labels = ['Competent', 'Proficient', 'Superior']
+    english_level_values = [50, 100, 120]
+    
+    return (
+        professional_year_labels, professional_year_values,
+        regional_study_labels, regional_study_values,
+        state_labels, state_values,
+        specialist_education_labels, specialist_education_values,
+        course_duration_labels, course_duration_values,
+        tuition_fee_labels, tuition_fee_values,
+        education_level_labels, education_level_values,
+        english_level_labels, english_level_values
+    )
 
 # Get all courses
 def get_courses(username, user_role):
@@ -633,11 +670,117 @@ def update_course(data, course_id):
     db.session.commit()
 
 # Delete course
-def delete_course(course_id):
+def delete_course_by_id(course_id):
   course = UniCourse.query.filter_by(id=course_id).first()
   # Log the course data for debugging
   print(f"Attempting to delete course with ID: {course_id}")
   
   if course:
     db.session.delete(course)
+    db.session.commit()
+
+# Function to get all universities
+def get_universities():
+  return University.query.all()
+
+def get_university_by_id(university_id):
+  return University.query.filter_by(id=university_id).first()
+
+def add_new_university(data):
+  university = University(
+    university=data['university'],
+    street=data.get('street'),
+    suburb=data.get('suburb'),
+    state=data['state'],
+    postcode=data['postcode'],
+    phone=data.get('phone'),
+    email=data['email']
+  )
+  db.session.add(university)
+  db.session.commit()
+
+def update_university(data, university_id):
+  university = University.query.filter_by(id=university_id).first()
+  if university:
+    university.university = data['university']
+    university.street = data.get('street')
+    university.suburb = data.get('suburb')
+    university.state = data['state']
+    university.postcode = data['postcode']
+    university.phone = data.get('phone')
+    university.email = data['email']
+    db.session.commit()
+
+def delete_university_by_id(university_id):
+  university = University.query.filter_by(id=university_id).first()
+  if university:
+    db.session.delete(university)
+    db.session.commit()
+    
+# Controller for occupation list management
+def get_occupations():
+  return OccupationList.query.all()
+
+def get_occupation_by_id(occupation_id):
+  return OccupationList.query.filter_by(id=occupation_id).first()
+
+def add_new_occupation(data):
+  occupation = OccupationList(
+    occupation=data['occupation'],
+    anzsco=data['anzsco'],
+    type=data['type'].upper()  # Ensure type is in uppercase
+  )
+  db.session.add(occupation)
+  db.session.commit()
+
+def update_occupation(data, occupation_id):
+  occupation = OccupationList.query.filter_by(id=occupation_id).first()
+  if occupation:
+    occupation.occupation = data['occupation']
+    occupation.anzsco = data['anzsco']
+    occupation.type = data['type'].upper()  # Ensure type is in uppercase
+    db.session.commit()
+
+def delete_occupation_by_id(occupation_id):
+  occupation = OccupationList.query.filter_by(id=occupation_id).first()
+  if occupation:
+    db.session.delete(occupation)
+    db.session.commit()
+
+# Controller for living cost management
+def get_living_costs():
+  return CostOfLiving.query.all()
+
+def get_living_cost_by_id(living_cost_id):
+  return CostOfLiving.query.filter_by(id=living_cost_id).first()
+
+def add_new_living_cost(data):
+  living_cost = CostOfLiving(
+    state=data['state'],
+    area=data['area'],
+    rent=float(data['rent']),
+    grocery=float(data['grocery']),
+    transportation=float(data['transportation']),
+    utilities=float(data['utilities']),
+    entertainment=float(data['entertainment'])
+  )
+  db.session.add(living_cost)
+  db.session.commit()
+
+def update_living_cost(data, living_cost_id):
+  living_cost = CostOfLiving.query.filter_by(id=living_cost_id).first()
+  if living_cost:
+    living_cost.state = data['state']
+    living_cost.area = data['area']
+    living_cost.rent = float(data['rent'])
+    living_cost.grocery = float(data['grocery'])
+    living_cost.transportation = float(data['transportation'])
+    living_cost.utilities = float(data['utilities'])
+    living_cost.entertainment = float(data['entertainment'])
+    db.session.commit()
+
+def delete_living_cost_by_id(living_cost_id):
+  living_cost = CostOfLiving.query.filter_by(id=living_cost_id).first()
+  if living_cost:
+    db.session.delete(living_cost)
     db.session.commit()

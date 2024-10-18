@@ -22,9 +22,9 @@ h3 {
 .main {
     position: absolute;
     top: 200px;
-    left: 20px; 
-    width: 97%;
-    min-height: 150px;
+    left: 50px; 
+    width: 92%;
+    height: 750px;
     background: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -39,6 +39,7 @@ h3 {
 
 .cards .card {
     padding: 20px;
+    height: 80px; 
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -73,7 +74,7 @@ h3 {
 }
 .chart-container {
     background-color: #ffffff;
-    width: 18%; /* Adjusted width to fit five charts in a row */
+    width: 20%; /* Adjusted width to fit five charts in a row */
     display: flex; 
     padding: 10px;
     border-radius: 10px;
@@ -88,6 +89,17 @@ h3 {
     border-radius: 10px;
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
     flex-direction: column;
+}
+
+.chart-bar {
+background-color: #ffffff;
+    width: 25%; /* Adjusted width to fit five charts in a row */
+    display: flex; 
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    flex-direction: column;
+
 }
 
 /* The labels section should take the remaining space */

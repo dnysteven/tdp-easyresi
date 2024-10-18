@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Skilled Occupation{% endblock %}
+
+{% block content %}
+  <h1>{{ 'Edit' if occupation else 'Add New' }} Skilled Occupation</h1>  
+  <form class="questionnaire-form" method="POST" action="{{ url_for('main.manage_occupation', occupation_id=occupation.id if occupation else None) }}">
+    <label for="anzsco">ANZSCO:</label>
+    <input type="text" class="input-register" id="anzsco" name="anzsco" value="{% if occupation %}{{ occupation.anzsco }}{% endif %}" required><br><br>
+
+    <label for="occupation">Occupation:</label>
+    <input type="text" class="input-register" id="occupation" name="occupation" value="{% if occupation %}{{ occupation.occupation }}{% endif %}" required><br><br>
+
+    <label for="type">Type:</label>
+    <select class="input-register" id="type" name="type" required>
+      <option value="" selected disabled>Select</option>
+      <option value="MLTSSL" {% if occupation and occupation.type == 'MLTSSL' %}selected{% endif %}>MLTSSL</option>
+      <option value="STSOL" {% if occupation and occupation.type == 'STSOL' %}selected{% endif %}>STSOL</option>
+      <option value="ROL" {% if occupation and occupation.type == 'ROL' %}selected{% endif %}>ROL</option>
+    </select><br><br>
+
+    <div class="button-container">
+      <button type="submit" class="button-edit">{% if occupation %}Update{% else %}Add New{% endif %} Occupation</button>
+      <button class="button-danger" onclick="window.location.href='{{ url_for('main.occupations') }}'">Cancel</button>
+    </div>
+  </form>
+{% endblock %}

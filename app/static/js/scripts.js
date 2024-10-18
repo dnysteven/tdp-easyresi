@@ -59,9 +59,9 @@ $(document).ready(function() {
     "pageLength": 10,      // Set the default page length
     "order": [[14, "desc"]],  // Use the hidden "points" column (index 14) for sorting in descending order
     "columnDefs": [
-        {
-          "targets": [14], "visible": false
-        },
+      {
+        "targets": [14], "visible": false
+      },
     ]
   });
 
@@ -74,8 +74,35 @@ $(document).ready(function() {
     "pageLength": 10       // Set the default page length
   });
 
+  // Initialize DataTables for the courses table
+  $('#universityTable').DataTable({
+    "paging": true,        // Enable pagination
+    "searching": true,     // Enable searching
+    "ordering": true,      // Enable column-based sorting
+    "info": true,          // Show table information (e.g., "Showing X of Y entries")
+    "pageLength": 10       // Set the default page length
+  });
+
   // Initialize DataTables for the occupation table
   $('#occupationTable').DataTable({
+    "paging": true,        // Enable pagination
+    "searching": true,     // Enable searching
+    "ordering": true,      // Enable column-based sorting
+    "info": true,          // Show table information (e.g., "Showing X of Y entries")
+    "pageLength": 10       // Set the default page length
+  });
+
+  // Initialize DataTables for the occupation manage table
+  $('#occupationManageTable').DataTable({
+    "paging": true,        // Enable pagination
+    "searching": true,     // Enable searching
+    "ordering": true,      // Enable column-based sorting
+    "info": true,          // Show table information (e.g., "Showing X of Y entries")
+    "pageLength": 10       // Set the default page length
+  });
+
+  // Initialize DataTables for the living cost table
+  $('#livingCostTable').DataTable({
     "paging": true,        // Enable pagination
     "searching": true,     // Enable searching
     "ordering": true,      // Enable column-based sorting
