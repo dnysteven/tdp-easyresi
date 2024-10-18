@@ -291,16 +291,7 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 		datasets: [{
 		  label: 'Total Registered Users',
 		  data: pieValues,
-		  backgroundColor: [
-			'rgba(255, 99, 132)',
-			'rgba(54, 162, 235)',
-			'rgba(94, 235, 52)'
-		  ],
-		  borderColor: [
-			'rgba(255, 99, 132)',
-			'rgba(54, 162, 235)',
-			'rgba(94, 235, 52)'
-		  ],
+		  backgroundColor: ['#48AAAD','#3A43BA','#3B8132'],
 		  borderWidth: 1
 		}]
 	  },
@@ -321,24 +312,24 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 		  {
 			label: 'Applicants',
 			data: lineValuesApplicants,
-			borderColor: 'rgba(255, 99, 132)',
-			backgroundColor: 'rgba(255, 99, 132)',
+			backgroundColor: ['#48AAAD'],
+			borderColor: ['#48AAAD'],
 			fill: false,
 			tension: 0.1
 		  },
 		  {
 			label: 'Educational Institutions',
 			data: lineValuesInstitutions,
-			borderColor: 'rgba(54, 162, 235)',
-			backgroundColor: 'rgba(54, 162, 235)',
+			backgroundColor: ['#3A43BA'],
+			borderColor: ['#3A43BA'],
 			fill: false,
 			tension: 0.1
 		  },
 		  {
 			label: 'Migration Agencies',
 			data: lineValuesAgencies,
-			borderColor: 'rgba(94, 235, 52)',
-			backgroundColor: 'rgba(94, 235, 52)',
+			backgroundColor: ['#3B8132'],
+			borderColor: ['#3B8132'],
 			fill: false,
 			tension: 0.1
 		  }
@@ -366,43 +357,37 @@ function rsPieChart(regionalStudyLabels, regionalStudyValues) {
 		  {
 			label: 'Science',
 			data: barValuesScience,
-			backgroundColor: 'rgba(255, 99, 132)',
-			borderColor: 'rgba(255, 99, 132)',
+			backgroundColor: ['#48AAAD'],
 			borderWidth: 1
 		  },
 		  {
 			label: 'Technology',
 			data: barValuesTechnology,
-			backgroundColor: 'rgba(54, 162, 235)',
-			borderColor: 'rgba(54, 162, 235)',
+			backgroundColor: ['#3A43BA'],
 			borderWidth: 1
 		  },
 		  {
 			label: 'Engineering',
 			data: barValuesEngineering,
-			backgroundColor: 'rgba(235, 64, 52)',
-			borderColor: 'rgba(235, 64, 52)',
+			backgroundColor: ['#6693FA'],
 			borderWidth: 1
 		  },
 		  {
 			label: 'Mathematics',
 			data: barValuesMath,
-			backgroundColor: 'rgba(153, 102, 255)',
-			borderColor: 'rgba(153, 102, 255)',
+			backgroundColor: ['#3B8132'],
 			borderWidth: 1
 		  },
 		  {
 			label: 'ICT',
 			data: barValuesICT,
-			backgroundColor: 'rgba(255, 159, 64)',
-			borderColor: 'rgba(255, 159, 64)',
+			backgroundColor: ['#95C8D8'],
 			borderWidth: 1
 		  },
 		  {
 			label: 'Others',
 			data: barValuesOthers,
-			backgroundColor: 'rgba(18, 196, 44)',
-			borderColor: 'rgba(18, 196, 44)',
+			backgroundColor: ['#12C42C'],
 			borderWidth: 1
 		  }
 		]

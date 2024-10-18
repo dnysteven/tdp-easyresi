@@ -13,7 +13,9 @@
     <li>
       <a href="{{ url_for('main.migra_statistics') }}">Agencies Statistics</a>
     </li>
-    <li><a href="#">Agencies Management</a></li>
+    <li>
+      <a href="{{ url_for('main.agent_profile') }}">Agencies Management</a>
+    </li>
     <li>
       <a href="{{ url_for('main.edu_statistics') }}"
         >Educational Institutions Statistics</a
@@ -46,14 +48,14 @@
     </div>
 
     <!-- Stacked Bar Chart -->
-    <div class="chart-card full-width">
+    <div class="chart-card">
       <h3>Total Courses Added in the Last 6 Months</h3>
       <canvas id="myBarChart"></canvas>
     </div>
   </section>
 </div>
 
-<!-- Pass processed chart data from Flask to JS via the window object -->
+<!-- Dynamic Chart Data passed from Flask to JS -->
 <script>
   window.pieLabels = {{ pie_labels | tojson }};
   window.pieValues = {{ pie_values | tojson }};
