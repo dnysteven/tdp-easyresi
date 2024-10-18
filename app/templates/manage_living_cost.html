@@ -29,7 +29,9 @@
     <label for="entertainment">Entertainment:</label>
     <input type="number" class="input-register" id="entertainment" name="entertainment" value="{% if cost %}{{ cost.entertainment }}{% endif %}" step="0.01" required><br><br>
 
-    <button type="submit" class="btn btn-success">{% if cost %}Update{% else %}Add New{% endif %} living Cost</button>
-    <a href="{{ url_for('main.living_cost') }}" class="btn btn-secondary">Cancel</a>
+    <div class="button-container">
+      <button type="submit" class="button-edit">{% if cost %}Update{% else %}Add New{% endif %} living Cost</button>
+      <button class="button-danger" onclick="window.location.href='{{ url_for('main.living_cost') }}'">Cancel</button>
+    </div>
   </form>
 {% endblock %}

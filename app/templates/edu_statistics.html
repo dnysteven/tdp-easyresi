@@ -9,101 +9,92 @@
 
 {% block content %}
   <h1>Education Provider Dashboard</h1>
-
   <div class="main">
     <div class="cards">
-        <div class="card">
-            <div class="card-content">
-                <div class="number">50</div>
-                <div class="card-name">18-24 Years old</div>
-            </div>
-            <div class="icon-box">
-                <i class="fas fa-user-graduate"></i>
-            </div>
+      <div class="card">
+        <div class="card-content">
+          <div class="number">50</div>
+          <div class="card-name">18-24 Years old</div>
         </div>
-        <div class="card">
-            <div class="card-content">
-                <div class="number">35</div>
-                <div class="card-name">28-32 Years old</div>
-            </div>
-            <div class="icon-box">
-                <i class="fas fa-chalkboard-teacher"></i>
-            </div>
+        <div class="icon-box">
+          <i class="fas fa-user-graduate"></i>
         </div>
-        <div class="card">
-            <div class="card-content">
-                <div class="number">70</div>
-                <div class="card-name">33-39 Years old</div>
-            </div>
-            <div class="icon-box">
-                <i class="fas fa-users"></i>
-            </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <div class="number">35</div>
+          <div class="card-name">28-32 Years old</div>
         </div>
+        <div class="icon-box">
+          <i class="fas fa-chalkboard-teacher"></i>
+        </div>
+      </div>
         <div class="card">
-            <div class="card-content">
-                <div class="number">15</div>
-                <div class="card-name">40-45 Years old</div>
-            </div>
-            <div class="icon-box">
-                <i class="fas fa-dollar-sign"></i>
-            </div>
+          <div class="card-content">
+            <div class="number">70</div>
+            <div class="card-name">33-39 Years old</div>
+          </div>
+          <div class="icon-box">
+            <i class="fas fa-users"></i>
+          </div>
         </div>
         <div class="card">
           <div class="card-content">
-              <div class="number">5</div>
-              <div class="card-name">Above 45 Years old</div>
+            <div class="number">15</div>
+            <div class="card-name">40-45 Years old</div>
           </div>
           <div class="icon-box">
-              <i class="fas fa-dollar-sign"></i>
+            <i class="fas fa-dollar-sign"></i>
           </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div class="number">5</div>
+            <div class="card-name">Above 45 Years old</div>
+          </div>
+          <div class="icon-box">
+            <i class="fas fa-dollar-sign"></i>
+          </div>
+        </div>
       </div>
     </div>
   <div class="chart-wrapper">
     <div class="chart-container">
-        <h3>Willing to complete Professional Year Program</h3>
-        <canvas id="willingtocompleteprofessionalYearProgram"></canvas>
+      <h3>Willing to complete Professional Year Program</h3>
+      <canvas id="willingtocompleteprofessionalYearProgram"></canvas>
     </div>
-  
     <div class="chart-container">
-        <h3>Willing to study in Regional Area</h3>
-        <canvas id="willingtostudyinRegionalArea"></canvas>
+      <h3>Willing to study in Regional Area</h3>
+      <canvas id="willingtostudyinRegionalArea"></canvas>
     </div>
-
     <div class="chart-container">
       <h3>Interested State to Study</h3>
       <canvas id="interestedstatetoStudy"></canvas>
-  </div>
-
-    <div class="chart-cont">
-       <h3>Applicants by English Language Level</h3>
-       <canvas id="englishLevelChart"></canvas>
     </div>
-
   </div>
-
+    <div class="chart-cont">
+      <h3>Applicants by English Language Level</h3>
+      <canvas id="englishLevelChart"></canvas>
+    </div>
+  </div>
   <div class="chart-wrapper">
-  <div class="chart-bar">
-    <h3>Interested Study Categories</h3>
-    <canvas id="interestedStudyCategories"></canvas>
+    <div class="chart-bar">
+      <h3>Interested Study Categories</h3>
+      <canvas id="interestedStudyCategories"></canvas>
+    </div>
+    <div class="chart-bar">
+      <h3>Interested Course Duration</h3>
+      <canvas id="interestedCourseDuration"></canvas>
+    </div>
+    <div class="chart-bar">
+      <h3>Expected Maximum Course Fee</h3>
+      <canvas id="expectedMaximumCourseFee"></canvas>
+    </div>
+    <div class="chart-cont">
+        <h3>Highest Level of Education Willing to Achieve</h3>
+        <canvas id="educationLevelChart"></canvas>
+    </div>
   </div>
-
-  <div class="chart-bar">
-    <h3>Interested Course Duration</h3>
-    <canvas id="interestedCourseDuration"></canvas>
-  </div>
-
-  <div class="chart-bar">
-    <h3>Expected Maximum Course Fee</h3>
-    <canvas id="expectedMaximumCourseFee"></canvas>
-  </div>
-
-  <div class="chart-cont">
-      <h3>Highest Level of Education Willing to Achieve</h3>
-      <canvas id="educationLevelChart"></canvas>
-  </div>
-
-
-</div>
 
   <!-- Pass processed chart data from Flask to JS via the window object -->
   <script>
@@ -117,8 +108,7 @@
     window.interestedstatetoStudyLabels = {{ state_labels|tojson }};
     window.interestedstatetoStudyValues = {{ state_values|tojson }};
 
-     // Bar Chart Data
-
+    // Bar Chart Data
     window.interestedStudyCategoriesLabels = {{ specialist_education_labels|tojson }};
     window.interestedStudyCategoriesValues = {{ specialist_education_values|tojson }};
 
@@ -133,8 +123,6 @@
 
     window.englishLevelLabels = {{ english_level_labels|tojson }};
     window.englishLevelValues = {{ english_level_values|tojson }};
-
-
   </script>
 
   <!-- Link to external JavaScript files -->

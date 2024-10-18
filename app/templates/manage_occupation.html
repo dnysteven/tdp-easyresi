@@ -19,7 +19,9 @@
       <option value="ROL" {% if occupation and occupation.type == 'ROL' %}selected{% endif %}>ROL</option>
     </select><br><br>
 
-    <button type="submit" class="btn btn-success">{% if occupation %}Update{% else %}Add New{% endif %} Occupation</button>
-    <a href="{{ url_for('main.occupations') }}" class="btn btn-secondary">Cancel</a>
+    <div class="button-container">
+      <button type="submit" class="button-edit">{% if occupation %}Update{% else %}Add New{% endif %} Occupation</button>
+      <button class="button-danger" onclick="window.location.href='{{ url_for('main.occupations') }}'">Cancel</button>
+    </div>
   </form>
 {% endblock %}
