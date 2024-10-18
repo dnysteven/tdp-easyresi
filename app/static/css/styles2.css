@@ -344,3 +344,9 @@ canvas {
   background-color: #dc3545;
   border-color: #dc3545;
 }
+
+.button-container {
+  display: flex;
+  justify-content: right;
+  gap: 10px;
+}
