@@ -24,8 +24,8 @@ Key Features:
 7. Admin Dashboard: Statistical data visualization for admins, including login and course data.
 
 ## Team Members
-- Danny Steven Simanungkalit
-- Hani Omar M. Alharbi
-- Ha Ngo
-- Tserennadmid Battulga
-- Chiara To
+- Hani Omar M. Alharbi - Team Leader & Backend Developer
+- Danny Steven Simanungkalit - Backend Developer
+- Ha Ngo - Frontend Developer
+- Tserennadmid Battulga - Frontend Developer
+- Chiara To - Backend Developer
