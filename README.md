@@ -9,9 +9,8 @@
 7. [Project Structure](#project-structure)
 8. [License](#license)
 
-Author: Danny Steven Simanungkalit, Hani Omar M. Alharbi, Ha Ngo, Tserennadmid Battulga, Chiara To
 ## Project Overview
-EasyResi is a Flask web application that assists users in visa-related processes, educational and migration course selection, and cost-of-living analysis. The application follows a Model-View-Controller (MVC) architecture to ensure maintainability and scalability, organizing code into distinct components: Models for database handling, Views for rendering web pages, and Controllers for processing user inputs.
+EasyResi is a Flask web application designed to assist users in planning to migrate to Australia. Applicants can use the questionnaires to check visa eligibility, find the optimal study pathway, and analyse the cost of living. Education providers, such as universities, can input their available courses and see the statistics related to education. Migration agencies can also use this application to input the cost of living and occupation list as well as statistics relevant to them. This application follows a Model-View-Controller (MVC) architecture to ensure maintainability and scalability. It organizes code into distinct components: models for database handling, Views for rendering web pages, and Controllers for processing user inputs.
 
 Key Features:
 1. Visa Eligibility Calculation: Users can calculate their eligibility for different visa subclasses (Visa 189, 190, 491) based on various factors such as age, work experience, education, and more.
@@ -29,3 +28,14 @@ Key Features:
 - Ha Ngo - Frontend Developer
 - Tserennadmid Battulga - Frontend Developer
 - Chiara To - Backend Developer
+
+## Technologies Used
+- Python 3.8+
+- Flask (Web Framework)
+- SQLAlchemy (ORM for database management)
+- PostgreSQL (Database)
+- Jinja2 (Templating Engine for HTML)
+- Flask-Migrate (Database migrations)
+- DataTables (Client-side table management)
+- jQuery (JavaScript library)
+- HTML5/CSS3 (Frontend)
