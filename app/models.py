@@ -76,48 +76,6 @@ class UserSession(db.Model):
 		self.email = email
 		self.login_time = login_time
 
-class Data(db.Model):
-	__tablename__ = 'data'
-
-	id = db.Column(db.Integer, primary_key=True)
-	occupation_pathway = db.Column(db.Integer, nullable=False)  # e.g., IT, Engineering, etc.
-	location = db.Column(db.Integer, nullable=False)  # e.g., SA metro, VIA metro
-	commitment_regional = db.Column(db.Integer, nullable=False)  # Binary (Yes/No)
-	state_nomination = db.Column(db.Integer, nullable=False)  # Binary (Yes/No)
-	course_duration = db.Column(db.Integer, nullable=False)  # Duration in years
-	course_cost = db.Column(db.Float, nullable=False)  # Cost of the course in AUD
-	cost_of_living = db.Column(db.Float, nullable=False)  # Cost of living in AUD
-	visa_processing_time = db.Column(db.Integer, nullable=False)  # Visa processing time in months
-	visa_cost = db.Column(db.Float, nullable=False)  # Cost of visa in AUD
-	approval_probability = db.Column(db.Float, nullable=False)  # Probability of visa approval (0-1)
-	recommended_visa = db.Column(db.String(10), nullable=False)  # Predicted visa type (e.g., '189', '190')
-
-	def __init__(self, occupation_pathway, location, commitment_regional, state_nomination, course_duration, course_cost, cost_of_living, visa_processing_time, visa_cost, approval_probability, recommended_visa):
-		self.occupation_pathway = occupation_pathway
-		self.location = location
-		self.commitment_regional = commitment_regional
-		self.state_nomination = state_nomination
-		self.course_duration = course_duration
-		self.course_cost = course_cost
-		self.cost_of_living = cost_of_living
-		self.visa_processing_time = visa_processing_time
-		self.visa_cost = visa_cost
-		self.approval_probability = approval_probability
-		self.recommended_visa = recommended_visa
-
-
-class ModelResult(db.Model):
-	__tablename__ = 'model_result'
-
-	id = db.Column(db.Integer, primary_key=True)
-	model_type = db.Column(db.String(50), nullable=False)  # e.g., 'DecisionTree'
-	accuracy = db.Column(db.Float, nullable=False)  # Accuracy of the model
-	created_at = db.Column(db.DateTime, default=db.func.current_timestamp())  # Timestamp when the model was trained
-
-	def __init__(self, model_type, accuracy):
-		self.model_type = model_type
-		self.accuracy = accuracy
-
 class OccupationList(db.Model):
 	__tablename__ = 'occupation_list'
 
@@ -208,14 +166,14 @@ class UniCourse(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	course_num = db.Column(db.String(50), unique=True, nullable=False)
 	course_name = db.Column(db.String(150), nullable=False)
-	provider_id = db.Column(db.String(50), db.ForeignKey('users.email'), nullable=False)  # ForeignKey to User
-	univ_id = db.Column(db.Integer, db.ForeignKey('university.id'), nullable=False)  # ForeignKey to University
-	level = db.Column(db.String(50), nullable=False)  # Bachelor, Master, Doctorate
-	specialist_education = db.Column(db.String(50), nullable=False)  # Specialist options: science, technology, etc.
-	prof_year = db.Column(db.Boolean, default=False)  # Professional year program
-	duration = db.Column(db.Integer, nullable=False)  # Course duration in years
-	tuition_fee = db.Column(db.Float, nullable=False)  # Fee range (<60k, 60k-100k, >100k)
-	regional = db.Column(db.Boolean, default=False)  # Regional study
+	provider_id = db.Column(db.String(50), db.ForeignKey('users.email'), nullable=False)
+	univ_id = db.Column(db.Integer, db.ForeignKey('university.id'), nullable=False)
+	level = db.Column(db.String(50), nullable=False)
+	specialist_education = db.Column(db.String(50), nullable=False)
+	prof_year = db.Column(db.Boolean, default=False)
+	duration = db.Column(db.Integer, nullable=False)
+	tuition_fee = db.Column(db.Float, nullable=False)
+	regional = db.Column(db.Boolean, default=False)
 	created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
 	# Define relationship with Other model
@@ -271,7 +229,6 @@ class CostOfLiving(db.Model):
 		self.utilities = utilities
 		self.entertainment = entertainment
 
-# ---- Admin Dashboard Charts ----
 class UserGroup(db.Model):
 	__tablename__ = 'user_groups'
 
@@ -295,7 +252,6 @@ class UserLogin(db.Model):
 		self.group_name = group_name
 		self.login_month = login_month
 		self.total_logins = total_logins
-
 
 class CourseAdded(db.Model):
 	__tablename__ = 'courses_added'

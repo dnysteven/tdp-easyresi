@@ -1,8 +1,7 @@
-
 from functools import wraps
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash, current_app
-from app.models import Data, db, User, UserRole, UserGroup, CourseAdded, UserLogin, UniCourse
-from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, train_model, predict_model, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_pref, get_user_visa_points, get_chart_migrant, get_chart_education, get_courses, get_course_by_id, add_new_course, update_course, delete_course_by_id, get_universities, add_new_university, update_university, get_university_by_id, delete_university_by_id, get_occupations, get_occupation_by_id, add_new_occupation, update_occupation, delete_occupation_by_id, get_living_costs, get_living_cost_by_id, add_new_living_cost, update_living_cost, delete_living_cost_by_id
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from app.models import db, User, UserRole, UserGroup, CourseAdded, UserLogin
+from app.controllers import register_user, get_user_name, check_login, record_login, record_logout, visa_points_calculator, process_visa_path, save_user_course_pref, get_user_course_pref, get_user_visa_points, get_chart_migrant, get_chart_education, get_courses, get_course_by_id, add_new_course, update_course, delete_course_by_id, get_universities, add_new_university, update_university, get_university_by_id, delete_university_by_id, get_occupations, get_occupation_by_id, add_new_occupation, update_occupation, delete_occupation_by_id, get_living_costs, get_living_cost_by_id, add_new_living_cost, update_living_cost, delete_living_cost_by_id
 
 main = Blueprint('main', __name__)
 
@@ -130,101 +129,9 @@ def profile():
 		user_courses = None
 		user_visa_points = None
 
-	# # Fetch specific data based on user role
-	# if user.user_role == 'admin':
-	# 	# Fetch admin-specific data
-	# 	user_profile = fetch_admin_data()
-	# elif user.user_role == 'applicant':
-	# 	# Fetch applicant-specific data
-	# 	user_profile = fetch_applicant_data()
-	# elif user.user_role == 'agency':
-	# 	# Fetch agency-specific data
-	# 	user_profile = fetch_agency_data()
-	# elif user.user_role == 'education':
-	# 	# Fetch education-specific data
-	# 	user_profile = fetch_education_data()
-	# else:
-	# 	user_profile = None
-
-	# Fetch the user's saved course preferences
-
 	return render_template('profile.html', header=True, footer=True, user_role=user_role,
                         user=user, user_first_name=user_first_name, user_last_name=user_last_name,
                         user_courses=user_courses, user_visa_points=user_visa_points)
-
-@main.route('/189', methods=['GET'])
-def visa_189():
-	return render_template('189.html', header=True, footer=True)
-
-@main.route('/train', methods=['GET', 'POST'])
-# @login_required
-def train():
-	if request.method == 'POST':
-		# Get user-provided settings from the form
-		max_depth = int(request.form.get('max_depth'))
-		criterion = request.form.get('criterion')
-		test_size = float(request.form.get('test_size'))
-		
-		# Train the model with the provided settings
-		message = train_model(max_depth=max_depth, criterion=criterion, test_size=test_size)
-		
-		# Fetch the data table after training
-		data_entries = Data.query.all()
-		
-		# Show a success message and display the data table
-		return render_template('training.html', message=message, data_entries=data_entries)
-	
-	# Fetch the data table if no form submission yet
-	data_entries = Data.query.all()
-	return render_template('training.html', header=True, footer=True, data_entries=data_entries)
-
-@main.route('/test', methods=['GET', 'POST'])
-# @login_required
-def test():
-	if request.method == 'POST':
-		# Fetch form data
-		occupation_pathway = int(request.form.get('occupation_pathway'))
-		location = int(request.form.get('location'))
-		commitment_regional = int(request.form.get('commitment_regional'))
-		state_nomination = int(request.form.get('state_nomination'))
-		course_duration = int(request.form.get('course_duration'))
-		course_cost = float(request.form.get('course_cost'))
-		cost_of_living = float(request.form.get('cost_of_living'))
-		visa_processing_time = int(request.form.get('visa_processing_time'))
-		visa_cost = float(request.form.get('visa_cost'))
-		approval_probability = float(request.form.get('approval_probability'))
-		
-		# Prepare data for prediction (same format as what the model expects)
-		features = [
-			occupation_pathway, location, commitment_regional, state_nomination, 
-			course_duration, course_cost, cost_of_living, visa_processing_time, 
-			visa_cost, approval_probability
-		]
-			
-		# Get the prediction from the model (recommended_visa)
-		prediction = predict_model(features)
-		
-		# Store the data and prediction in the database
-		new_data = Data(
-			occupation_pathway=occupation_pathway,
-			location=location,
-			commitment_regional=commitment_regional,
-			state_nomination=state_nomination,
-			course_duration=course_duration,
-			course_cost=course_cost,
-			cost_of_living=cost_of_living,
-			visa_processing_time=visa_processing_time,
-			visa_cost=visa_cost,
-			approval_probability=approval_probability,
-			recommended_visa=prediction
-		)
-		db.session.add(new_data)
-		db.session.commit()
-
-		# Pass the prediction (recommended_visa) to the template
-		return render_template('test.html', prediction=prediction)
-
-	return render_template('test.html', header=True, footer=True,)
 
 @main.route('/questionnaire', methods=['GET', 'POST'])
 @login_required
@@ -263,6 +170,7 @@ def questionnaire():
 
 @main.route('/visa_points', methods=['GET'])
 @login_required
+@role_required('applicant')
 def visa_points():
   # Redirect if questionnaire not completed
   if not session.get('completed_questionnaire'):
@@ -338,6 +246,7 @@ def recommendation():
 
 @main.route('/user_course_pref', methods=['POST'])
 @login_required
+@role_required('applicant')
 def user_course_pref():
 	selected_courses = request.form.getlist('user_courses_pref')
 	username = session.get('username')
@@ -351,6 +260,8 @@ def user_course_pref():
 
 # Route for the charts (admin_statistics)
 @main.route('/admin_statistics')
+@login_required
+@role_required('admin')
 def admin_statistics():
     # Query for pie chart data (User Groups)
     user_groups = UserGroup.query.all()
@@ -400,6 +311,8 @@ def admin_statistics():
     
 
 @main.route('/edu_statistics')
+@login_required
+@role_required('education')
 def edu_statistics():
 	user_role = session.get('user_role')
 	user_first_name, user_last_name = get_user_name()
@@ -427,7 +340,7 @@ def edu_statistics():
 
 	# Render the template and pass all necessary data for the charts
 	return render_template( 
-		'edu_statistics.html', header=True, user_role=user_role,
+		'edu_statistics.html', header=True, footer=True, user_role=user_role,
 		user_first_name=user_first_name, user_last_name=user_last_name,
 		professional_year_labels=professional_year_labels,
 		professional_year_values=professional_year_values,
@@ -448,6 +361,8 @@ def edu_statistics():
 	)
 
 @main.route('/migra_statistics')
+@login_required
+@role_required('agency')
 def migra_statistics():
 	user_role = session.get('user_role')
 	user_first_name, user_last_name = get_user_name()
@@ -498,20 +413,9 @@ def migra_statistics():
 			education_level_values=education_level_values
 	)
 
-@main.route('/applicant_profile')
-def applicant_profile():
-	return render_template('applicant_profile.html', header=True, footer=True)
-
-@main.route('/edu_profile')
-def edu_profile():
-	return render_template('edu_profile.html', header=True, footer=True)
-
-@main.route('/agent_profile')
-def agent_profile():
-	return render_template('agent_profile.html', header=True, footer=True)
-
 @main.route('/courses')
 @login_required
+@role_required('education')
 def courses():
   username = session.get('username')
   role = session.get('user_role')
@@ -524,6 +428,7 @@ def courses():
 # Route for adding/editing courses via manage_courses.html
 @main.route('/manage_course', methods=['GET', 'POST'])
 @login_required
+@role_required('education')
 def manage_course():
   username = session.get('username')
   user_role = session.get('user_role')
@@ -554,6 +459,7 @@ def manage_course():
 
 @main.route('/delete_course/<int:course_id>', methods=['POST'])
 @login_required
+@role_required('education')
 def delete_course(course_id):
 	delete_course_by_id(course_id)
 
@@ -561,6 +467,7 @@ def delete_course(course_id):
 
 @main.route('/universities')
 @login_required
+@role_required('education')
 def universities():
   username = session.get('username')
   user_role = session.get('user_role')
@@ -572,6 +479,7 @@ def universities():
 
 @main.route('/manage_university', methods=['GET', 'POST'])
 @login_required
+@role_required('education')
 def manage_university():
 	username = session.get('username')
 	user_role = session.get('user_role')
@@ -596,6 +504,7 @@ def manage_university():
 
 @main.route('/delete_university/<int:university_id>', methods=['POST'])
 @login_required
+@role_required('education')
 def delete_university(university_id):
 	delete_university_by_id(university_id)
 	return redirect(url_for('main.universities'))
@@ -603,6 +512,7 @@ def delete_university(university_id):
 # Occupation
 @main.route('/occupations')
 @login_required
+@role_required('agency')
 def occupations():
 	username = session.get('username')
 	user_role = session.get('user_role')
@@ -614,6 +524,7 @@ def occupations():
 
 @main.route('/manage_occupation', methods=['GET', 'POST'])
 @login_required
+@role_required('agency')
 def manage_occupation():
 	username = session.get('username')
 	user_role = session.get('user_role')
@@ -638,6 +549,7 @@ def manage_occupation():
 
 @main.route('/delete_occupation/<int:occupation_id>', methods=['POST'])
 @login_required
+@role_required('agency')
 def delete_occupation(occupation_id):
 	delete_occupation_by_id(occupation_id)
 	return redirect(url_for('main.occupations'))
@@ -645,6 +557,7 @@ def delete_occupation(occupation_id):
 # View for living_cost.html
 @main.route('/living_cost')
 @login_required
+@role_required('agency')
 def living_cost():
 	username = session.get('username')
 	user_role = session.get('user_role')
@@ -656,6 +569,7 @@ def living_cost():
 
 @main.route('/manage_living_cost', methods=['GET', 'POST'])
 @login_required
+@role_required('agency')
 def manage_living_cost():
 	username = session.get('username')
 	user_role = session.get('user_role')
@@ -681,6 +595,7 @@ def manage_living_cost():
 
 @main.route('/delete_living_cost/<int:living_cost_id>', methods=['POST'])
 @login_required
+@role_required('agency')
 def delete_living_cost(living_cost_id):
 	delete_living_cost_by_id(living_cost_id)
 
