@@ -60,7 +60,7 @@ $(document).ready(function() {
     "order": [[15, "desc"]],  // Use the hidden "points" column (index 14) for sorting in descending order
     "columnDefs": [
       {
-        "targets": [15], "visible": false
+        "targets": [15], "visible": true
       },
     ]
   });
