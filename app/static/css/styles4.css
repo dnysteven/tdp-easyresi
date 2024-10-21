@@ -21,25 +21,25 @@ h3 {
 }
 .main {
     position: absolute;
-    top: 200px;
-    left: 50px; 
-    width: 92%;
-    height: 750px;
+    top: 150px;
+    left: 20px; 
+    width: 97%;
+    min-height: 90px;
     background: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .cards {
-    width: 98%;
-    padding: 20px;
+    width: 100%;
+    padding: 5px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 20px;
 }
 
 .cards .card {
-    padding: 20px;
-    height: 80px; 
+    padding: 10px;
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -70,13 +70,25 @@ h3 {
     display: flex;
     justify-content: space-between; /* Spread the charts evenly */
     flex-wrap: wrap; /* Allow wrapping if necessary on small screens */
-    padding: 10px;
+    padding: 2px;
 }
 .chart-container {
+    margin-top: 80px;
     background-color: #ffffff;
-    width: 20%; /* Adjusted width to fit five charts in a row */
+    width: 17%; /* Adjusted width to fit five charts in a row */
     display: flex; 
-    padding: 10px;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    flex-direction: column;
+}
+.chart-conta {
+    margin-top: 80px;
+    background-color: #ffffff;
+    width: 30%; /* Adjusted width to fit five charts in a row */
+    height: 250px; 
+    display: flex; 
+    padding: 5px;
     border-radius: 10px;
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
     flex-direction: column;
@@ -130,8 +142,8 @@ background-color: #ffffff;
 /* Responsive design for canvas elements */
 canvas {
     color: #48AAAD; 
-    width: 100% !important; /* Full width for canvas */
-    height: 200px !important; /* Fixed height for charts */
+    width: 80% !important; /* Full width for canvas */
+    height: 180px !important; /* Fixed height for charts */
     max-width: 90%; /* Responsive canvas */
     height: auto; /* Maintain aspect ratio */
 }
