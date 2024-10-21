@@ -14,8 +14,5 @@ env/
 *.db
 *.log
 
-# Ignore VSCode settings (optional)
+# Ignore VSCode settings
 .vscode/
-
-# Ignore Jupyter Notebook checkpoints (if using notebooks)
-.ipynb_checkpoints/
